@@ -3,18 +3,28 @@ import Logo from "../../public/logo.png";
 
 export default function Header() {
   return (
-    <div className="container mx-auto h-16">
-      <div className="grid md:grid-cols-3 h-full justify-center content-center">
+    <div className="h-fit w-full py-2 shadow">
+      <div className="container md:mx-auto flex flex-row justify-around h-full content-center items-center">
         <Image
           alt="Logo de la pagina"
           src={Logo}
-          layout={"fixed"}
-          width={"100%"}
+          placeholder={"blur"}
+          height={120}
+          width={120}
         />
-        <h1 className="text-4xl text-center font-bold h-full">
-          Las bolsitas de mariaje
-        </h1>
-        <div></div>
+        <div className="hidden md:block">
+          <ul className="flex flex-row gap-3 content-center font-bold underline">
+            <li>Bolsas</li>
+            <li>Delantal</li>
+            <li>Delantal</li>
+            <li>Delantal</li>
+            <li>Delantal</li>
+            <li>Delantal</li>
+          </ul>
+        </div>
+        <a className="text-4xl text-center font-bold h-full py-3 px-10 bg-sky-500 rounded-xl">
+          Comprar
+        </a>
       </div>
     </div>
   );
