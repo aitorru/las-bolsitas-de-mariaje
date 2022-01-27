@@ -1,14 +1,8 @@
 import "../styles/index.css";
 import type { AppProps } from "next/app";
-import Header from "../components/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <Component {...pageProps} />
-    </div>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

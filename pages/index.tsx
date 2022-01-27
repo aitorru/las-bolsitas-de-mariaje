@@ -1,29 +1,58 @@
-import type { NextPage } from "next";
-import Image from "next/image";
-import Puesto from "../public/puesto.jpg";
+import type {
+  NextPage,
+  GetStaticProps,
+  GetStaticPaths,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+} from "next";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+// import ItemsReview from "../components/ItemsReview";
+const ItemsReview = dynamic(() => import("../components/ItemsReview"), {
+  suspense: true,
+});
+type Item = {
+  nombre: string;
+  image: string;
+};
+interface Props {
+  items: Item[];
+}
 
-const Home: NextPage = () => {
+const Home: NextPage<Props> = (props) => {
   return (
-    <div
-      className="h-full flex flex-grow bg-cover bg-center"
-      style={{
-        backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url("${Puesto.src}")`,
-      }}>
-      <div className="h-full container mx-auto grid grid-flow-col md:grid-cols-2 items-center content-center my-auto">
-        <h1 className="text-7xl font-bold flex-auto self-center justify-items-center">
-          Las Bolsitas de Mariaje
-        </h1>
-        <div className="skew-y-3">
-          <Image
-            alt="Puesto en un mercadillo"
-            src={Puesto}
-            layout={"intrinsic"}
-            placeholder={"blur"}
-          />
-        </div>
+    <>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <Hero />
       </div>
-    </div>
+      <Suspense fallback={<h1>Cargando...</h1>}>
+        <ItemsReview items={props.items} />
+      </Suspense>
+    </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const db = (await import("../utils/db/webDB")).default;
+  const { collection, getDocs } = await import("firebase/firestore/lite");
+  const itemsColletion = collection(db, "articulos");
+  const snapshot = await getDocs(itemsColletion);
+  let items: Item[] = [];
+  snapshot.forEach((doc) => {
+    items.push({
+      nombre: doc.data().nombre,
+      image: doc.data().image,
+    });
+  });
+  return {
+    props: {
+      items,
+    }, // will be passed to the page component as props
+    revalidate: 3600, // In seconds
+  };
 };
 
 export default Home;

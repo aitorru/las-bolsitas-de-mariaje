@@ -13,7 +13,7 @@ export default function Header() {
           width={120}
         />
         <div className="hidden md:block">
-          <ul className="flex flex-row gap-3 content-center font-bold underline">
+          <ul className="flex flex-row gap-3 content-center font-bold underline flex-wrap items-center justify-center">
             <li>Bolsas</li>
             <li>Delantal</li>
             <li>Delantal</li>
