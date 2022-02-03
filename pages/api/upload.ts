@@ -10,6 +10,8 @@ type Data = {
 export const config = {
     api: {
         bodyParser: false,
+        json: {limit: '50mb', extended: true},
+        urlencoded: {limit: '50mb', extended: true},
     },
 };
 
