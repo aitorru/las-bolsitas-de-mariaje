@@ -35,7 +35,7 @@ const CategoryName: NextPage<Props> = ({ categories, items }) => {
             <Header categories={categories} />
             <div className="container mx-auto w-11/12 md:w-full">
                 <h1 className="mx-auto text-center text-6xl mt-5">Categoria: {id}</h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-32 w-11/12 md:w-full mx-auto mt-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-32 w-11/12 md:w-full mx-auto my-10">
                     {items.map((item) => (
                         <Card key={item.image} nombre={item.nombre} image={item.image} />
                     ))}

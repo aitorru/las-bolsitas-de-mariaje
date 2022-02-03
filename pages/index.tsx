@@ -22,7 +22,7 @@ const Home: NextPage<Props> = (props) => {
             <Head>
                 <title>Las bolsitas de mariaje</title>
             </Head>
-            <div className="min-h-screen flex flex-col">
+            <div className="md:min-h-screen flex flex-col">
                 <Header categories={props.categories} />
                 <Hero />
             </div>
