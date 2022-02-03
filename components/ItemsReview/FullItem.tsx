@@ -18,7 +18,6 @@ const FullItem: NextPage<Props> = ({item}) => {
     useEffect(() => {
         setHref(window.location.toString());
     }, []);
-    /* 
     useEffect(() => {
         const storage = getStorage(app);
         const reference = ref(storage, item.image);
@@ -30,7 +29,6 @@ const FullItem: NextPage<Props> = ({item}) => {
             imageTag.current?.setAttribute('src', url);
         });
     }, [imageTag, item.image]);
-    */
     return (
         <div className='container mx-auto grid md:grid-cols-2 h-full flex-grow justify-center items-center'>
             <img
