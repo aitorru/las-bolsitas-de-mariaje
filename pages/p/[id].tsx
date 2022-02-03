@@ -21,6 +21,19 @@ interface Props {
 const Product: NextPage<Props> = ({categories, item}) => {
     const router = useRouter();
     const { id } = router.query;
+
+    if (router.isFallback) {
+        return (
+            <div className='min-h-screen flex flex-col'>
+                <Head>
+                    <title>{id}</title>
+                </Head>
+                <Header categories={categories} />
+                <h1 className='text-center text-5xl'>Cargando...</h1>
+            </div>
+        );
+    }
+
     return (
         <div className='min-h-screen flex flex-col'>
             <Head>
