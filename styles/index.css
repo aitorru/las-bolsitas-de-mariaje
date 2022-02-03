@@ -58,7 +58,7 @@
 
 .fire {
   position: absolute;
-  top: calc(30% - 50px);
+  top: calc(25% - 50px);
   left: calc(50% - 50px);
   width: 100px;
   height: 100px;

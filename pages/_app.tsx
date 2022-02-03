@@ -7,11 +7,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <>
             <NextNprogress
                 color="rgb(238, 153, 59)"
-                startPosition={0.9}
-                stopDelayMs={200}
-                height={3}
+                startPosition={0.5}
+                stopDelayMs={600}
+                height={5}
                 showOnShallow={true}
-                options={{ easing: 'ease', speed: 500 }}
+                options={{ easing: 'ease', speed: 100, showSpinner: false }}
             />
             <Component {...pageProps} />
         </>
