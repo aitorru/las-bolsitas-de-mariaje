@@ -28,7 +28,7 @@ const Product: NextPage<Props> = ({categories, item}) => {
                 <Head>
                     <title>{id}</title>
                 </Head>
-                <Header categories={categories} />
+                <Header categories={[{nombre: 'Cargando...'}]} />
                 <h1 className='text-center text-5xl'>Cargando...</h1>
             </div>
         );
