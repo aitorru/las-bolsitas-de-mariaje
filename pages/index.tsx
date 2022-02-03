@@ -26,7 +26,7 @@ const Home: NextPage<Props> = (props) => {
                 <Header categories={props.categories} />
                 <Hero />
             </div>
-            <ItemsReview title='Mira nustra tienda' items={props.items} />
+            <ItemsReview title='Mira nuestra tienda' items={props.items} />
         </>
     );
 };

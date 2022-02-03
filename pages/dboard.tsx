@@ -39,7 +39,7 @@ const DBoard: NextPage<Props> = ({ categories }) => {
                     }}
                 />
                 <PageSelector
-                    name="Crear articulo"
+                    name="Crear categoria"
                     selected={subirCategoriaSelected}
                     onClick={() => {
                         // Set main selected to true
