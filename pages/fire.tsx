@@ -53,7 +53,7 @@ const Fire: NextPage = () => {
                     id="name"
                     name="name"
                     type="text"
-                    autoComplete="name"
+                    autoComplete="username"
                     required
                     className="border-orange-600 shadow-lg shadow-orange-600/50 border-2 p-2 px-5 rounded-xl text-xl"
                     ref={nameTag}

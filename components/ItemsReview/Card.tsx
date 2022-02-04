@@ -26,7 +26,7 @@ const Card: NextPage<Props> = ({ nombre, image }) => {
         });
     }, [image, imageTag]);
     return (
-        <div className="flex flex-col p-5 border-2 mx-auto border-blue-700 rounded-xl h-full min-h-fit min-w-full hover:-translate-y-2 transition-transform">
+        <div className="flex flex-col p-5 border-2 mx-auto border-blue-700 rounded-xl h-full min-h-fit min-w-full">
             <img
                 className="rounded-xl"
                 alt={nombre}
@@ -37,7 +37,7 @@ const Card: NextPage<Props> = ({ nombre, image }) => {
                 {nombre}
             </h1>
             <Link passHref href={'/p/' + nombre}>
-                <a className="py-3 w-4/5 mx-auto text-center  mt-auto bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white">
+                <a className="py-3 w-4/5 mx-auto text-center font-semibold mt-auto bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl text-white hover:-translate-y-2 transition-transform">
           Comprar
                 </a>
             </Link>

@@ -9,6 +9,9 @@ const UploadItem = dynamic(
 const UploadCategory = dynamic(
     () => import('../components/UploadBoard/UploadCategory')
 );
+const ModifyItem = dynamic(
+    () => import('../components/UploadBoard/ModifyItem')
+);
 
 type Categories = {
   nombre: string;
@@ -20,6 +23,8 @@ interface Props {
 const DBoard: NextPage<Props> = ({ categories }) => {
     const [subirArticuloSelected, setSubirArticuloSelected] =
     useState<boolean>(true);
+    const [modificarArticuloSelected, setmodificarArticuloSelected] =
+    useState<boolean>(false);
     const [subirCategoriaSelected, setSubirCategoriaSelected] =
     useState<boolean>(false);
     return (
@@ -27,7 +32,7 @@ const DBoard: NextPage<Props> = ({ categories }) => {
             <Head>
                 <title>Board</title>
             </Head>
-            <div className="flex flex-row bg-slate-50 shadow shadow-slate-100">
+            <div className="flex flex-row bg-blue-700/50 shadow shadow-blue-700/50 m-5 rounded-2xl">
                 <PageSelector
                     name="Subir articulo"
                     selected={subirArticuloSelected}
@@ -35,6 +40,18 @@ const DBoard: NextPage<Props> = ({ categories }) => {
                         // Set main selected to true
                         setSubirArticuloSelected(true);
                         // Set the rest to false
+                        setSubirCategoriaSelected(false);
+                        setmodificarArticuloSelected(false);
+                    }}
+                />
+                <PageSelector
+                    name="Modificar articulo"
+                    selected={modificarArticuloSelected}
+                    onClick={() => {
+                        // Set main selected to true
+                        setmodificarArticuloSelected(true);
+                        // Set the rest to false
+                        setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
                     }}
                 />
@@ -46,10 +63,12 @@ const DBoard: NextPage<Props> = ({ categories }) => {
                         setSubirCategoriaSelected(true);
                         // Set the rest to false
                         setSubirArticuloSelected(false);
+                        setmodificarArticuloSelected(false);
                     }}
                 />
             </div>
             {subirArticuloSelected && <UploadItem categories={categories} />}
+            {modificarArticuloSelected && <ModifyItem />}
             {subirCategoriaSelected && <UploadCategory />}
         </div>
     );
@@ -90,14 +109,14 @@ const PageSelector: NextPage<PropsPageSelector> = ({
 }) => {
     if (selected) {
         return (
-            <h1 className="bg-blue-600 p-3 shadow-lg shadow-blue-600/50 text-white rounded-xl m-10">
+            <h1 className="bg-blue-600 p-3 shadow-lg shadow-blue-600/50 text-white rounded-xl m-2">
                 {name}
             </h1>
         );
     }
     return (
         <h1
-            className="bg-blue-300 p-3 shadow-sm shadow-blue-300/50 text-white rounded-xl m-10 cursor-pointer"
+            className="bg-blue-300 p-3 shadow-sm shadow-blue-300/50 text-white rounded-xl m-2 cursor-pointer"
             onClick={onClick}>
             {name}
         </h1>

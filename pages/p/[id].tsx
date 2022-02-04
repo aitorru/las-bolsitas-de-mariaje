@@ -35,7 +35,7 @@ const Product: NextPage<Props> = ({categories, item}) => {
     }
 
     return (
-        <div className='min-h-screen flex flex-col'>
+        <div className='min-h-screen max-h-screen flex flex-col'>
             <Head>
                 <title>{id}</title>
             </Head>

@@ -30,9 +30,9 @@ const FullItem: NextPage<Props> = ({item}) => {
         });
     }, [imageTag, item.image]);
     return (
-        <div className='container mx-auto grid md:grid-cols-2 h-full flex-grow justify-center items-center'>
+        <div className='container mx-auto grid md:grid-cols-2 gap-5 my-5 h-full max-h-full flex-grow justify-center items-center'>
             <img
-                className="rounded-xl shadow-2xl mx-auto w-11/12"
+                className="rounded-xl shadow-2xl mx-auto w-2/3"
                 alt={item.nombre}
                 ref={imageTag}
             />
@@ -41,7 +41,7 @@ const FullItem: NextPage<Props> = ({item}) => {
                 <a 
                     href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '. ' + href} 
                     target="_blank" 
-                    className='text-4xl text-white px-10 py-3 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center' 
+                    className='text-4xl text-white px-10 py-3 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
                     rel="noreferrer">Contactar<Phone /></a>
             </div>
         </div>
