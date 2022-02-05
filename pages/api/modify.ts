@@ -53,7 +53,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         // Get rid of gs://las-bolsitas-de-mariaje.appspot.com/ 61qv3+vfz3L._AC_UX385_.jpg
                         const sliced = image.split('/');
                         // Operate as normal
-                        await bucket.file(sliced[sliced.length - 1]).delete();
+                        try {
+                            await bucket.file(sliced[sliced.length - 1]).delete();
+                        } catch (error) {
+                            console.error(error);
+                        }
                         await bucket.file(files.image.originalFilename).save(fs.readFileSync(files.image.filepath));
                         // Update firebase to end
                         ref.update({image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename});
