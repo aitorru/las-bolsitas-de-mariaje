@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import axios from '../../utils/fetch';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -38,7 +39,7 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
                 body.append('image', files[0]);
             }
         }
-        const status = await fetch('/api/upload', {method: 'POST', body});
+        const status = await axios.post('/api/upload', body);
         if (status.status === 200){ 
             setIsUploading(false);
             alert('Subida correcta');

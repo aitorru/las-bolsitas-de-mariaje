@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/prop-types */
+import axios from '../../../utils/fetch';
 import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
@@ -46,8 +47,8 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const handleDelete = async () => {
         const proceed = confirm('Vas a borrar (' + item.nombre  + '). ¿Quieres continuar?');
         if (proceed) {
-            const result = await fetch('/api/delete', {body: JSON.stringify({id: item.id}), method: 'POST'});
-            if(result.status === 200 ) {
+            const status = await axios.post('/api/delete', {id: item.id});
+            if(status.status === 200 ) {
                 router.push('/dboard?ma');
             }
         } else {
@@ -74,7 +75,8 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                 body.append('image', files[0]);
             }
         }
-        const status = await fetch('/api/modify', {method: 'POST', body});
+        const status = await axios.post('/api/modify', body);
+        //const status = await fetch('/api/modify', {method: 'POST', body});
         if (status.status === 200){ 
             setIsUploading(false);
             alert('Modificacion correcta');

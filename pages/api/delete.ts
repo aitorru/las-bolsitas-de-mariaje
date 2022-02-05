@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(400).json({ status: 400 });
             return;
         }
-        const { id } = JSON.parse(req.body);
+        const { id } = req.body;
         const ref = db.collection('articulos').doc(id);
         const doc = await ref.get();
         const { image } = doc.data() as Item;
