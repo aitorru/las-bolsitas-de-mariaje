@@ -53,7 +53,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                     }}>
                         <Burger />
                     </a>
-                    <div className="origin-top-right absolute right-0 top-20 mt-2 w-11/12 mx-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1} style={!menuVisible ? {display: 'none'} : {}} onBlur={() => setMenuVisible(false)} ref={dropDown}>
+                    <div className="z-10 origin-top-right absolute right-0 top-20 mt-2 w-11/12 mx-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1} style={!menuVisible ? {display: 'none'} : {}} onBlur={() => setMenuVisible(false)} ref={dropDown}>
                         <div className="py-1" role="none">
                             {categories.map((category) => (
                                 <Link

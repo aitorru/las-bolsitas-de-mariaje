@@ -8,14 +8,14 @@ const Hero: NextPage = () => {
             <div className="md:h-full container mx-auto grid grid-flow-col md:grid-flow-row grid-cols-1 md:grid-cols-2 md:grid-rows-1 items-center content-center my-auto gap-5">
                 <div className='mt-1 md:mt-0'>
                     <div className="flex md:hidden justify-center mx-auto w-3/5">
-                    <Image
-                        alt="Logo de la pagina"
-                        src={Logo}
-                        layout={'intrinsic'}
-                        placeholder={'blur'}
+                        <Image
+                            alt="Logo de la pagina"
+                            src={Logo}
+                            layout={'intrinsic'}
+                            placeholder={'blur'}
 
-                    />
-                </div>
+                        />
+                    </div>
                     <h1 className="text-5xl md:text-7xl font-bold flex-auto self-center justify-items-center text-center w-11/12  mx-auto md:w-full md:mx-0">
             Las Bolsitas de Mariaje
                     </h1>

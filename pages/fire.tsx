@@ -24,7 +24,7 @@ const Fire: NextPage = () => {
             username: nameTag.current?.value,
             password: passwordTag.current?.value,
         });
-        const result = await status.data
+        const result = await status.data;
         console.log(result);
         if (result.success && result.token) {
             Cookies.set('token', result.token, { expires: 31556926 });
