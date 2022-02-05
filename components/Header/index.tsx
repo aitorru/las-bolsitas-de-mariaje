@@ -41,7 +41,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                         ))}
                     </ul>
                 </div>
-                <a className="hidden md:block text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white">
+                <a className="hidden md:block text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white cursor-not-allowed">
           Comprar
                 </a>
                 <div className='md:hidden w-full flex justify-end relative text-left'>

@@ -26,7 +26,7 @@ const Card: NextPage<Props> = ({ nombre, image }) => {
         });
     }, [image, imageTag]);
     return (
-        <div className="flex flex-col p-5 border-2 mx-auto border-blue-700 rounded-xl h-full min-h-fit min-w-full">
+        <div className="flex flex-col p-5 border-2 mx-auto border-blue-700 rounded-xl shadow-xl shadow-blue-700/50 h-full min-h-fit min-w-full">
             <img
                 className="rounded-xl"
                 alt={nombre}

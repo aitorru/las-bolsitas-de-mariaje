@@ -39,7 +39,7 @@ const FullItem: NextPage<Props> = ({item}) => {
             <div className='flex flex-col gap-10 justify-center mx-auto w-11/12'>
                 <h1 className='text-center text-5xl md:text-6xl text-ellipsis font-bold'>{item.nombre}</h1>
                 <a 
-                    href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '. ' + href} 
+                    href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'} 
                     target="_blank" 
                     className='text-4xl text-white px-10 py-3 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
                     rel="noreferrer">Contactar<Phone /></a>
