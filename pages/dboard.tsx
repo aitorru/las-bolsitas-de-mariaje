@@ -1,7 +1,8 @@
 import { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 //import UploadItem from "../components/UploadBoard/UploadItem";
 const UploadItem = dynamic(
     () => import('../components/UploadBoard/UploadItem')
@@ -13,20 +14,45 @@ const ModifyItem = dynamic(
     () => import('../components/UploadBoard/ModifyItem')
 );
 
-type Categories = {
-  nombre: string;
+type Item = {
+    id: string;
+    categoria: string;
+    nombre: string;
+    image: string;
 };
+
+type Categories = {
+    nombre: string;
+  };
 interface Props {
   categories: Categories[];
+  items: Item[];
 }
 
-const DBoard: NextPage<Props> = ({ categories }) => {
+const DBoard: NextPage<Props> = ({ categories, items }) => {
+    const router = useRouter();
+
+
     const [subirArticuloSelected, setSubirArticuloSelected] =
     useState<boolean>(true);
     const [modificarArticuloSelected, setmodificarArticuloSelected] =
     useState<boolean>(false);
     const [subirCategoriaSelected, setSubirCategoriaSelected] =
     useState<boolean>(false);
+    useEffect(() => {
+        if( Object.keys(router.query).length !== 0) {
+            if(router.query.ma === ''){
+                // Set main selected to true
+                setmodificarArticuloSelected(true);
+                // Set the rest to false
+                setSubirArticuloSelected(false);
+                setSubirCategoriaSelected(false);
+            }
+        }
+    }, [router.query]);
+    
+
+
     return (
         <div className="min-h-screen min-w-max max-w-[100vw] flex flex-col justify-start">
             <Head>
@@ -68,7 +94,7 @@ const DBoard: NextPage<Props> = ({ categories }) => {
                 />
             </div>
             {subirArticuloSelected && <UploadItem categories={categories} />}
-            {modificarArticuloSelected && <ModifyItem />}
+            {modificarArticuloSelected && <ModifyItem categories={categories} items={items} />}
             {subirCategoriaSelected && <UploadCategory />}
         </div>
     );
@@ -78,6 +104,7 @@ export const getServerSideProps: GetServerSideProps = async (_context) => {
     return {
         props: {
             categories: await getCategories(),
+            items: await getItems(),
         },
     };
 };
@@ -94,6 +121,26 @@ async function getCategories(): Promise<Categories[]> {
         });
     });
     return categories;
+}
+
+async function getItems(): Promise<Item[]> {
+    const db = (await import('../utils/db/webDB')).default;
+    const { collection, getDocs, query, orderBy } = await import(
+        'firebase/firestore/lite'
+    );
+    const itemsColletion = collection(db, 'articulos');
+    const q = query(itemsColletion, orderBy('categoria'));
+    const snapshot = await getDocs(q);
+    const items: Item[] = [];
+    snapshot.forEach((doc) => {
+        items.push({
+            nombre: doc.data().nombre,
+            image: doc.data().image,
+            categoria: doc.data().categoria,
+            id: doc.id,
+        });
+    });
+    return items;
 }
 
 interface PropsPageSelector {

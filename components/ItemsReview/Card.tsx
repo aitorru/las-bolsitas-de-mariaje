@@ -37,7 +37,7 @@ const Card: NextPage<Props> = ({ nombre, image }) => {
                 {nombre}
             </h1>
             <Link passHref href={'/p/' + nombre}>
-                <a className="py-3 w-4/5 mx-auto text-center font-semibold mt-auto bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl text-white hover:-translate-y-2 transition-transform">
+                <a className="py-3 w-4/5 mx-auto text-center font-semibold mt-auto bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl text-white hover:-translate-y-1 transition-transform">
           Comprar
                 </a>
             </Link>
