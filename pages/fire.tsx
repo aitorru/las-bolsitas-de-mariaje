@@ -5,6 +5,7 @@ import { createRef, FormEventHandler, useState } from 'react';
 const FirePlace = dynamic(() => import('../components/Fireplace/index'));
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const Fire: NextPage = () => {
     const nameTag = createRef<HTMLInputElement>();
@@ -18,16 +19,13 @@ const Fire: NextPage = () => {
         event.preventDefault();
 
         setLogginIn(true);
-
-        const body = {
+        
+        const status = await axios.post('/api/login', {
             username: nameTag.current?.value,
             password: passwordTag.current?.value,
-        };
-        const status = await fetch('/api/login', {
-            body: JSON.stringify(body),
-            method: 'POST',
         });
-        const result = await status.json();
+        const result = await status.data
+        console.log(result);
         if (result.success && result.token) {
             Cookies.set('token', result.token, { expires: 31556926 });
             Cookies.set('username', result.username, { expires: 31556926 });
