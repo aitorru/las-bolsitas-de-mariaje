@@ -1,3 +1,4 @@
+//ModifyCategoryForm
 import { NextPage } from 'next';
 import { FormEventHandler, RefObject } from 'react';
 
@@ -9,28 +10,22 @@ interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
     nameForm: RefObject<HTMLInputElement>;
     categoryForm: RefObject<HTMLSelectElement>;
-    imageForm: RefObject<HTMLInputElement>;
-    categories: Categories[];
     isUploading: boolean;
     isNameRequired?: boolean;
+    categories: Categories[];
 }
 
-const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryForm, categories, imageForm, isNameRequired }) => {
+const ModifyCategoryForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, isNameRequired, categories, categoryForm }) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
+        <h1 
+            className='flex flex-row align-middle p-5 bg-yellow-300/100 border-yellow-500 shadow-2xl shadow-yellow-300/50 border-2 rounded-xl gap-5 text-xl text-yellow-900'>
+            <ExclamationIcon/>
+            Asegurate que la categoria que vas a modificar esta vacia.
+        </h1>
         <label className="text-center text-3xl">
-          Nombre
-        </label>
-        <input
-            type="text"
-            placeholder='Bolsa...'
-            required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
-            ref={nameForm}
-        />
-        <label className="text-center text-3xl">
-          Categoria
+          Categoria a cambiar
         </label>
         <select
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"
@@ -39,17 +34,19 @@ const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryFor
                 <option key={category.nombre}>{category.nombre}</option>
             ))}
         </select>
-        <label className="text-center text-3xl">Imagen</label>
+        <label className="text-center text-3xl mt-20">
+          Categoria destino
+        </label>
         <input
-            type="file"
-            accept="image/*"
+            type="text"
+            placeholder='Bolsa...'
             required={isNameRequired}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
-            ref={imageForm}
+            ref={nameForm}
         />
         <button
             type="submit"
-            className="bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
+            className="mt-20 bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
           Subir{isUploading && <FireIcon />}
         </button>
     </form>;
@@ -61,4 +58,10 @@ const FireIcon = () => {
     </svg>;
 };
 
-export default ItemForm;
+const ExclamationIcon = () => {
+    return <svg xmlns="http://www.w3.org/2000/svg" className="h-[2rem] w-[2rem] animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>;
+};
+
+export default ModifyCategoryForm;

@@ -8,14 +8,11 @@ type Categories = {
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
     nameForm: RefObject<HTMLInputElement>;
-    categoryForm: RefObject<HTMLSelectElement>;
-    imageForm: RefObject<HTMLInputElement>;
-    categories: Categories[];
     isUploading: boolean;
     isNameRequired?: boolean;
 }
 
-const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryForm, categories, imageForm, isNameRequired }) => {
+const CategoryForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, isNameRequired }) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
@@ -28,24 +25,6 @@ const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryFor
             required={isNameRequired}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
             ref={nameForm}
-        />
-        <label className="text-center text-3xl">
-          Categoria
-        </label>
-        <select
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"
-            ref={categoryForm}>
-            {categories.map((category) => (
-                <option key={category.nombre}>{category.nombre}</option>
-            ))}
-        </select>
-        <label className="text-center text-3xl">Imagen</label>
-        <input
-            type="file"
-            accept="image/*"
-            required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
-            ref={imageForm}
         />
         <button
             type="submit"
@@ -61,4 +40,4 @@ const FireIcon = () => {
     </svg>;
 };
 
-export default ItemForm;
+export default CategoryForm;

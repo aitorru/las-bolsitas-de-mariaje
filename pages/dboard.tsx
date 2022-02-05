@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import DeleteCategory from '../components/UploadBoard/DeleteCategory';
+import ModifyCategory from '../components/UploadBoard/ModifyCategory';
 //import UploadItem from "../components/UploadBoard/UploadItem";
 const UploadItem = dynamic(
     () => import('../components/UploadBoard/UploadItem')
@@ -22,6 +24,7 @@ type Item = {
 };
 
 type Categories = {
+    id: string;
     nombre: string;
   };
 interface Props {
@@ -39,14 +42,42 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
     useState<boolean>(false);
     const [subirCategoriaSelected, setSubirCategoriaSelected] =
     useState<boolean>(false);
+    const [modificarCategoria, setModificarCategoria] = useState<boolean>(false);
+    const [borrarCategoria, setBorrarCategoria] = useState<boolean>(false);
     useEffect(() => {
         if( Object.keys(router.query).length !== 0) {
             if(router.query.ma === ''){
                 // Set main selected to true
                 setmodificarArticuloSelected(true);
                 // Set the rest to false
+                setBorrarCategoria(false);
                 setSubirArticuloSelected(false);
                 setSubirCategoriaSelected(false);
+                setModificarCategoria(false);
+            } else if (router.query.cc === '') {
+                // Set main selected to true
+                setSubirCategoriaSelected(true);
+                // Set the rest to false
+                setBorrarCategoria(false);
+                setSubirArticuloSelected(false);
+                setmodificarArticuloSelected(false);
+                setModificarCategoria(false);
+            } else if (router.query.mc === '') {
+                // Set main selected to true
+                setModificarCategoria(true);
+                // Set the rest to false
+                setBorrarCategoria(false);
+                setSubirArticuloSelected(false);
+                setSubirCategoriaSelected(false);
+                setmodificarArticuloSelected(false);
+            } else if (router.query.bc === '') {
+                // Set main selected to true
+                setBorrarCategoria(true);
+                // Set the rest to false
+                setModificarCategoria(false);
+                setSubirArticuloSelected(false);
+                setSubirCategoriaSelected(false);
+                setmodificarArticuloSelected(false);
             }
         }
     }, [router.query]);
@@ -68,6 +99,8 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set the rest to false
                         setSubirCategoriaSelected(false);
                         setmodificarArticuloSelected(false);
+                        setModificarCategoria(false);
+                        setBorrarCategoria(false);
                     }}
                 />
                 <PageSelector
@@ -79,6 +112,8 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set the rest to false
                         setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
+                        setBorrarCategoria(false);
+                        setModificarCategoria(false);
                     }}
                 />
                 <PageSelector
@@ -90,12 +125,42 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set the rest to false
                         setSubirArticuloSelected(false);
                         setmodificarArticuloSelected(false);
+                        setBorrarCategoria(false);
+                        setModificarCategoria(false);
+                    }}
+                />
+                <PageSelector
+                    name="Modificar categoria"
+                    selected={modificarCategoria}
+                    onClick={() => {
+                        // Set main selected to true
+                        setModificarCategoria(true);
+                        // Set the rest to false
+                        setSubirArticuloSelected(false);
+                        setSubirCategoriaSelected(false);
+                        setBorrarCategoria(false);
+                        setmodificarArticuloSelected(false);
+                    }}
+                />
+                <PageSelector
+                    name="Borrar categoria"
+                    selected={borrarCategoria}
+                    onClick={() => {
+                        // Set main selected to true
+                        setBorrarCategoria(true);
+                        // Set the rest to false
+                        setModificarCategoria(false);
+                        setSubirArticuloSelected(false);
+                        setSubirCategoriaSelected(false);
+                        setmodificarArticuloSelected(false);
                     }}
                 />
             </div>
             {subirArticuloSelected && <UploadItem categories={categories} />}
             {modificarArticuloSelected && <ModifyItem categories={categories} items={items} />}
             {subirCategoriaSelected && <UploadCategory />}
+            {modificarCategoria && <ModifyCategory items={items} categories={categories} />}
+            {borrarCategoria && <DeleteCategory items={items} categories={categories} />}
         </div>
     );
 };
@@ -117,6 +182,7 @@ async function getCategories(): Promise<Categories[]> {
     const categories: Categories[] = [];
     snapshot.forEach((doc) => {
         categories.push({
+            id: doc.id,
             nombre: doc.data().nombre,
         });
     });
