@@ -82,12 +82,13 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         if (status.status === 200){ 
             setIsUploading(false);
             alert('Modificacion correcta');
-            router.push('/dboard?ma');
+            router.push(`/dboard?ma#${item.id}`);
         } else {
             if((await axios.post('/api/modify', body)).status === 200){
                 setIsUploading(false);
                 alert('Modificacion correcta');
-                router.push('/dboard?ma');
+                router.push(`/dboard?ma#${item.id}`
+                );
             } else {
                 setIsUploading(false);
                 alert('Modificacion incorrecta');
