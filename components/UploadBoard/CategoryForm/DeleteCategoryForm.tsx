@@ -20,10 +20,10 @@ const DeleteCategoryForm: NextPage<Props> = ({onSubmit, isUploading, categories,
         <h1 
             className='flex flex-row align-middle p-5 bg-yellow-300/100 border-yellow-500 shadow-2xl shadow-yellow-300/50 border-2 rounded-xl gap-5 text-xl text-yellow-900'>
             <ExclamationIcon/>
-            Asegurate que la categoria que vas a borrar esta vacia.
+            Comprueba que la categoria que vas a borrar esta vacia.
         </h1>
         <label className="text-center text-3xl">
-          Categoria a cambiar
+          Categoria a borrar
         </label>
         <select
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"

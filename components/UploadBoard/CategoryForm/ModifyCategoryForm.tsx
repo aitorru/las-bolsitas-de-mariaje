@@ -22,7 +22,7 @@ const ModifyCategoryForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, i
         <h1 
             className='flex flex-row align-middle p-5 bg-yellow-300/100 border-yellow-500 shadow-2xl shadow-yellow-300/50 border-2 rounded-xl gap-5 text-xl text-yellow-900'>
             <ExclamationIcon/>
-            Asegurate que la categoria que vas a modificar esta vacia.
+            Comprueba que la categoria que vas a modificar esta vacia.
         </h1>
         <label className="text-center text-3xl">
           Categoria a cambiar
@@ -35,7 +35,7 @@ const ModifyCategoryForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, i
             ))}
         </select>
         <label className="text-center text-3xl mt-20">
-          Categoria destino
+          Nombre destino de la categoria
         </label>
         <input
             type="text"
