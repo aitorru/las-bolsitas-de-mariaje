@@ -32,12 +32,13 @@ const Header: NextPage<Props> = ({ categories }) => {
                 <div className="hidden md:block">
                     <ul className="flex flex-row gap-3 content-center font-bold underline flex-wrap items-center justify-center lg:w-11/12 mx-auto">
                         {categories.map((category) => (
-                            <Link
-                                key={category.nombre}
-                                passHref
-                                href={'/c/' + category.nombre}>
-                                <a className=''>{category.nombre}</a>
-                            </Link>
+                            <li key={category.nombre}>
+                                <Link
+                                    passHref
+                                    href={'/c/' + category.nombre}>
+                                    <a className=''>{category.nombre}</a>
+                                </Link>
+                            </li>
                         ))}
                     </ul>
                 </div>
@@ -45,14 +46,14 @@ const Header: NextPage<Props> = ({ categories }) => {
           Comprar
                 </a>
                 <div className='md:hidden w-full flex justify-end relative text-left'>
-                    <a className="text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white" onClick={() => {
+                    <button className="text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white" onClick={() => {
                         setMenuVisible(!menuVisible);
                         if (!menuVisible){
                             dropDown.current?.focus();
                         }
                     }}>
                         <Burger />
-                    </a>
+                    </button>
                     <div className="z-10 origin-top-right absolute right-0 top-20 mt-2 w-11/12 mx-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1} style={!menuVisible ? {display: 'none'} : {}} onBlur={() => setMenuVisible(false)} ref={dropDown}>
                         <div className="py-1" role="none">
                             {categories.map((category) => (

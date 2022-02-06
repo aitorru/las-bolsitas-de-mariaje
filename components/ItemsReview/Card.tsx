@@ -4,6 +4,7 @@ import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import { createRef, useEffect, useState } from 'react';
 import { app } from '../../utils/db/webDB';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Props {
   nombre: string;
@@ -11,28 +12,20 @@ interface Props {
 }
 
 const Card: NextPage<Props> = ({ nombre, image }) => {
-    const imageTag = createRef<HTMLImageElement>();
-    const [isImageLoaded, setImageLoaded] = useState<boolean>(false);
-    useEffect(() => {
-        const storage = getStorage(app);
-        const reference = ref(storage, image);
-        getDownloadURL(reference).then((url) => {
-            const xhr = new XMLHttpRequest();
-            xhr.responseType = 'blob';
-            xhr.open('GET', url);
-            xhr.send();
-            imageTag.current?.setAttribute('src', url);
-            setImageLoaded(true);
-        });
-    }, [image, imageTag]);
+
     return (
         <div className="flex flex-col p-5 border-2 mx-auto border-blue-700 rounded-xl shadow-xl shadow-blue-700/50 h-full min-h-fit min-w-full">
-            <img
-                className="rounded-xl"
-                alt={nombre}
-                ref={imageTag}
-                style={isImageLoaded ? { minHeight: '8rem' } : { display: 'none' }}
-            />
+            <div>
+                <div className='relative h-[20rem]'>
+                    <Image
+                        className="rounded-xl"
+                        alt={nombre}
+                        src={image}
+                        layout={'fill'} 
+                        objectFit={'contain'}
+                    />
+                </div>
+            </div>
             <h1 className="text-3xl w-4/5 mx-auto text-center my-3 font-bold">
                 {nombre}
             </h1>

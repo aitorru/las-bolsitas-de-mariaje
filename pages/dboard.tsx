@@ -88,6 +88,7 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
         <div className="min-h-screen min-w-max max-w-[100vw] flex flex-col justify-start">
             <Head>
                 <title>Board</title>
+                <meta name="robots" content="nofollow"/>
             </Head>
             <div className="flex flex-row bg-blue-700/50 shadow shadow-blue-700/50 m-5 rounded-2xl">
                 <PageSelector

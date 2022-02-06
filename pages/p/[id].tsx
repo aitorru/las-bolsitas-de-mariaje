@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import dynamic from 'next/dynamic';
+import { FirebaseStorage } from 'firebase/storage';
 const FullItem = dynamic(() => import('../../components/ItemsReview/FullItem'));
 
 type Categories = {
@@ -99,6 +100,9 @@ async function getItem(
         where('nombre', '==', context?.params?.id)
     );
     const snapshot = await getDocs(q);
+    const {app} = await import('../../utils/db/webDB');
+    const {getStorage } = await import('firebase/storage');
+    const storage = getStorage(app);
     const items: Item[] = [];
     snapshot.forEach((doc) => {
         items.push({
@@ -106,7 +110,21 @@ async function getItem(
             image: doc.data().image,
         });
     });
-    return items[0];
+    const result = await Promise.all(items.map(async (item) => {
+        return {
+            nombre: item.nombre,
+            image: await getUrlFromRef(storage, item.image),
+        };
+    }));
+    return result[0];
+}
+
+async function getUrlFromRef(storage: FirebaseStorage, image: string): Promise<string> {
+    const { ref, getDownloadURL } = await import('firebase/storage');
+    const reference = ref(storage, image);
+    const url = await getDownloadURL(reference);
+    return url;
+    
 }
 
 export default Product;

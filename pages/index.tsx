@@ -1,3 +1,4 @@
+import { FirebaseStorage, getDownloadURL } from 'firebase/storage';
 import type { NextPage, GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -21,6 +22,7 @@ const Home: NextPage<Props> = (props) => {
         <>
             <Head>
                 <title>Las bolsitas de mariaje</title>
+                <meta name="robots" content="index"/>
             </Head>
             <div className="md:min-h-screen flex flex-col">
                 <Header categories={props.categories} />
@@ -43,9 +45,12 @@ export const getStaticProps: GetStaticProps = async (_context) => {
 
 async function getItems(): Promise<Item[]> {
     const db = (await import('../utils/db/webDB')).default;
+    const {app} = await import('../utils/db/webDB');
     const { collection, getDocs, query, limit } = await import(
         'firebase/firestore/lite'
     );
+    const {getStorage } = await import('firebase/storage');
+    const storage = getStorage(app);
     const itemsColletion = collection(db, 'articulos');
     const q = query(itemsColletion, limit(6));
     const snapshot = await getDocs(q);
@@ -56,7 +61,21 @@ async function getItems(): Promise<Item[]> {
             image: doc.data().image,
         });
     });
-    return items;
+    const result = await Promise.all(items.map(async (item) => {
+        return {
+            nombre: item.nombre,
+            image: await getUrlFromRef(storage, item.image),
+        };
+    }));
+    return result;
+}
+
+async function getUrlFromRef(storage: FirebaseStorage, image: string): Promise<string> {
+    const { ref, getDownloadURL } = await import('firebase/storage');
+    const reference = ref(storage, image);
+    const url = await getDownloadURL(reference);
+    return url;
+    
 }
 async function getCategories(): Promise<Categories[]> {
     const db = (await import('../utils/db/webDB')).default;

@@ -1,3 +1,4 @@
+import { FirebaseStorage } from 'firebase/storage';
 import type {
     NextPage,
     GetStaticProps,
@@ -68,12 +69,15 @@ async function getItems(
     const { collection, getDocs, query, where } = await import(
         'firebase/firestore/lite'
     );
+    const {app} = await import('../../utils/db/webDB');
+    const {getStorage } = await import('firebase/storage');
     const itemsColletion = collection(db, 'articulos');
     const q = query(
         itemsColletion,
         where('categoria', '==', context?.params?.id)
     );
     const snapshot = await getDocs(q);
+    const storage = getStorage(app);
     const items: Item[] = [];
     snapshot.forEach((doc) => {
         items.push({
@@ -81,7 +85,19 @@ async function getItems(
             image: doc.data().image,
         });
     });
-    return items;
+    const result = await Promise.all(items.map(async (item) => {
+        return {
+            nombre: item.nombre,
+            image: await getUrlFromRef(storage, item.image),
+        };
+    }));
+    return result;
+}
+
+async function getUrlFromRef(storage: FirebaseStorage, image: string): Promise<string> {
+    const { ref, getDownloadURL } = await import('firebase/storage');
+    const reference = ref(storage, image);
+    return await getDownloadURL(reference);
 }
 
 async function getCategories(): Promise<Categories[]> {

@@ -39,6 +39,7 @@ const Fire: NextPage = () => {
         <div className="container mx-auto flex flex-col justify-center content-center min-h-screen h-full align-middle">
             <Head>
                 <title>Fire handle</title>
+                <meta name="robots" content="nofollow"/>
             </Head>
             <FirePlace />
             <form
