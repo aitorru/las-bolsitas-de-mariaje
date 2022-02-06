@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <meta name="keywords" content="Bolsas, Tela, Mochilas, Bolsos, Bolsas de costado, Gorros, Diademas, Coleteros"></meta>
                 <meta name="author" content="Aitor Ruiz Garcia"></meta>
                 <meta property='og:image' content={Logo.src}></meta>
+                <link rel="icon" type="image/png" href={Logo.src}></link>
             </Head>
             <NextNprogress
                 color="rgb(238, 153, 59)"
