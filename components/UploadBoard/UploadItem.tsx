@@ -18,6 +18,7 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
     const nameForm = createRef<HTMLInputElement>();
     const categoryForm = createRef<HTMLSelectElement>();
     const imageForm = createRef<HTMLInputElement>();
+    const priceForm = createRef<HTMLInputElement>();
     const [ isUploading, setIsUploading ] = useState<boolean>(false);
     const uploadItem: FormEventHandler<HTMLFormElement> = async (event) => {
         // Fuck browsers
@@ -27,6 +28,7 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
         const body = new FormData();
         body.append('name', nameForm.current?.value || '');
         body.append('category', categoryForm.current?.value || '');
+        body.append('price', priceForm.current?.value || '');
         const files = imageForm.current?.files;
         if (files === null) {
             alert('La imagen esta vacia');
@@ -52,7 +54,16 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
     };
     return (
         <div className="container mx-auto flex flex-col justify-center content-center mt-5">
-            <ItemForm onSubmit={uploadItem} isUploading={isUploading} nameForm={nameForm} categoryForm={categoryForm} categories={categories} imageForm={imageForm} isNameRequired={true} />
+            <ItemForm 
+                onSubmit={uploadItem} 
+                isUploading={isUploading} 
+                nameForm={nameForm} 
+                categoryForm={categoryForm} 
+                categories={categories} 
+                imageForm={imageForm} 
+                isNameRequired={true} 
+                priceForm={priceForm} 
+            />
         </div>
     );
 };

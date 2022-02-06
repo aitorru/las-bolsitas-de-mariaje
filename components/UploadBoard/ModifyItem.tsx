@@ -10,6 +10,7 @@ type Item = {
     categoria: string;
     nombre: string;
     image: string;
+    precio: number;
 };
 type Categories = {
     nombre: string;
@@ -24,7 +25,12 @@ const ModifyItem: NextPage<Props> = ({ items, categories }) => {
     return (
         <div className='container mx-auto flex flex-col gap-5 my-5'>
             {
-                items.map(item => <DetailElement key={item.id} item={item} categories={categories} />
+                items.map(
+                    item => <DetailElement 
+                        key={item.id} 
+                        item={item} 
+                        categories={categories} 
+                    />
                 )
             }
         </div>
@@ -40,7 +46,7 @@ const DetailElement: NextPage<SecondaryProps> = ({item, categories}) => {
     const detailElement = createRef<HTMLDetailsElement>();
     const [isOpenned, setIsOpenned] = useState<boolean>(false);
     useEffect(() => {
-        detailElement.current?.addEventListener('toggle', (e) => {
+        detailElement.current?.addEventListener('toggle', () => {
             if(detailElement.current?.open) {
                 setIsOpenned(true);
             } else {
@@ -52,8 +58,8 @@ const DetailElement: NextPage<SecondaryProps> = ({item, categories}) => {
     return (
         <details key={item.id} ref={detailElement} className='border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl cursor-pointer'>
             <summary className='list-none font-bold grid grid-cols-2 text-ellipsis overflow-hidden select-none'>
-                <h1 className=''>{item.nombre}</h1>
-                <h1 className='text-right'>{item.categoria}</h1>
+                <h1 className=''>{item.categoria}</h1>
+                <h1 className='text-right'>{`${item.nombre} (${item.precio} €)`}</h1>
             </summary>
             {isOpenned && <ItemDetail categories={categories} item={item} /> }
         </details>

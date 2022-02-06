@@ -31,6 +31,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const categoryForm = createRef<HTMLSelectElement>();
     const imageForm = createRef<HTMLInputElement>();
     const imageTag = createRef<HTMLImageElement>();
+    const priceForm = createRef<HTMLInputElement>();
     const [ isUploading, setIsUploading ] = useState<boolean>(false);
     useEffect(() => {
         const storage = getStorage(app);
@@ -63,6 +64,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         setIsUploading(true);
         const body = new FormData();
         body.append('id', item.id);
+        body.append('price', priceForm.current?.value || '');
         body.append('name', nameForm.current?.value || '');
         body.append('category', categoryForm.current?.value || '');
         const files = imageForm.current?.files;
@@ -82,8 +84,15 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
             alert('Modificacion correcta');
             router.push('/dboard?ma');
         } else {
-            setIsUploading(false);
-            alert('Modificacion incorrenta');
+            if((await axios.post('/api/modify', body)).status === 200){
+                setIsUploading(false);
+                alert('Modificacion correcta');
+                router.push('/dboard?ma');
+            } else {
+                setIsUploading(false);
+                alert('Modificacion incorrecta');
+            }
+            
         }
     };
     return (
@@ -94,7 +103,16 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                     ref={imageTag}
                 />
                 <div className='col-span-3'>
-                    <ItemForm onSubmit={modifyItem} isUploading={isUploading} nameForm={nameForm} categoryForm={categoryForm} categories={categories} imageForm={imageForm} isNameRequired={false} />
+                    <ItemForm 
+                        onSubmit={modifyItem} 
+                        isUploading={isUploading} 
+                        nameForm={nameForm} 
+                        categoryForm={categoryForm} 
+                        categories={categories} 
+                        imageForm={imageForm} 
+                        isNameRequired={false} 
+                        priceForm={priceForm}
+                    />
                 </div>
             </div>
             <button onClick={handleDelete} className='mb-4 bg-red-600 shadow-lg shadow-red-600/50 p-2 rounded-2xl text-white font-bold text-2xl hover:-translate-y-1 transition-transform'>Borrar</button>

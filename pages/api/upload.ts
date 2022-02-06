@@ -35,8 +35,18 @@ export default async function handler(
             form.on('error', console.error );
             form.parse(req, async function (err, fields, files: any) {
                 if(err) console.log(err);
-                await bucket.file(files.image.originalFilename).save(fs.readFileSync(files.image.filepath));
-                await db.collection('articulos').add({image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename, nombre: fields.name, categoria: fields.category});
+                await bucket
+                    .file(files.image.originalFilename)
+                    .save(fs.readFileSync(files.image.filepath));
+                await db.collection('articulos')
+                    .add(
+                        {
+                            image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename,
+                            nombre: fields.name,
+                            categoria: fields.category,
+                            precio: fields.price
+                        }
+                    );
                 res.status(200).json({ status: 200 });
                 return resolve('ok');
             });

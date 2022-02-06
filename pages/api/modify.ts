@@ -8,6 +8,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 type Item = {
     image: string;
     categoria: string;
+    precio: string;
 };
 
 export const config = {
@@ -38,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     if (err) console.log(err);
                     const ref = db.collection('articulos').doc(fields.id as string);
                     const doc = await ref.get();
-                    const { categoria, image } = doc.data() as Item;
+                    const { categoria, image, precio } = doc.data() as Item;
                     console.log(fields, doc.data());
                     if (fields.name !== '') {
                         console.log('Updating name...');
@@ -48,17 +49,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         console.log('Updating category...');
                         ref.update({categoria: fields.category});
                     }
+                    if(fields.price !== precio) {
+                        console.log('Updating price');
+                        ref.update({precio: fields.price});
+                    }
                     if(Object.keys(files).length !== 0) {
                         console.log('Updating image...');
                         // Get rid of gs://las-bolsitas-de-mariaje.appspot.com/ 61qv3+vfz3L._AC_UX385_.jpg
                         const sliced = image.split('/');
                         // Operate as normal
                         try {
-                            await bucket.file(sliced[sliced.length - 1]).delete();
+                            await bucket
+                                .file(sliced[sliced.length - 1]).delete();
                         } catch (error) {
                             console.error(error);
                         }
-                        await bucket.file(files.image.originalFilename).save(fs.readFileSync(files.image.filepath));
+                        await bucket
+                            .file(files.image.originalFilename)
+                            .save(fs.readFileSync(files.image.filepath));
                         // Update firebase to end
                         ref.update({image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename});
                     }

@@ -28,6 +28,14 @@
     ],
     "rules": {
         "react/prop-types": "off",
+        "max-len": [
+            "warn",
+            80,
+            {
+                "ignoreComments": true,
+                "ignoreStrings": true
+            }
+        ],
         "indent": [
             "error",
             4

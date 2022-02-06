@@ -8,6 +8,7 @@ type Categories = {
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
     nameForm: RefObject<HTMLInputElement>;
+    priceForm: RefObject<HTMLInputElement>;
     categoryForm: RefObject<HTMLSelectElement>;
     imageForm: RefObject<HTMLInputElement>;
     categories: Categories[];
@@ -15,7 +16,7 @@ interface Props {
     isNameRequired?: boolean;
 }
 
-const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryForm, categories, imageForm, isNameRequired }) => {
+const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, priceForm, categoryForm, categories, imageForm, isNameRequired }) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
@@ -28,6 +29,19 @@ const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryFor
             required={isNameRequired}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
             ref={nameForm}
+        />
+        <label className="text-center text-3xl">
+          Precio
+        </label>
+        <input
+            type="number"
+            placeholder='10.95'
+            pattern="[0-9]+.[0-9]+"
+            step=".01"
+            min={0.1}
+            required={isNameRequired}
+            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
+            ref={priceForm}
         />
         <label className="text-center text-3xl">
           Categoria
@@ -50,7 +64,7 @@ const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, categoryFor
         <button
             type="submit"
             className="bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
-          Subir{isUploading && <FireIcon />}
+          Enviar{isUploading && <FireIcon />}
         </button>
     </form>;
 };

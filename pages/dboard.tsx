@@ -21,12 +21,13 @@ type Item = {
     categoria: string;
     nombre: string;
     image: string;
+    precio: number;
 };
 
 type Categories = {
     id: string;
     nombre: string;
-  };
+};
 interface Props {
   categories: Categories[];
   items: Item[];
@@ -42,7 +43,8 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
     useState<boolean>(false);
     const [subirCategoriaSelected, setSubirCategoriaSelected] =
     useState<boolean>(false);
-    const [modificarCategoria, setModificarCategoria] = useState<boolean>(false);
+    const [modificarCategoria,
+        setModificarCategoria] = useState<boolean>(false);
     const [borrarCategoria, setBorrarCategoria] = useState<boolean>(false);
     useEffect(() => {
         if( Object.keys(router.query).length !== 0) {
@@ -158,10 +160,16 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                 />
             </div>
             {subirArticuloSelected && <UploadItem categories={categories} />}
-            {modificarArticuloSelected && <ModifyItem categories={categories} items={items} />}
+            {modificarArticuloSelected && 
+            <ModifyItem categories={categories} items={items} />
+            }
             {subirCategoriaSelected && <UploadCategory />}
-            {modificarCategoria && <ModifyCategory items={items} categories={categories} />}
-            {borrarCategoria && <DeleteCategory items={items} categories={categories} />}
+            {modificarCategoria && 
+            <ModifyCategory items={items} categories={categories} />
+            }
+            {borrarCategoria &&
+             <DeleteCategory items={items} categories={categories} />
+            }
         </div>
     );
 };
@@ -204,6 +212,7 @@ async function getItems(): Promise<Item[]> {
             nombre: doc.data().nombre,
             image: doc.data().image,
             categoria: doc.data().categoria,
+            precio: doc.data().precio || 1,
             id: doc.id,
         });
     });
