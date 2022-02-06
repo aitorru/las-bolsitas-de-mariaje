@@ -13,13 +13,14 @@ interface Props {
 const FullItem: NextPage<Props> = ({item}) => {
     return (
         <div className='container mx-auto grid md:grid-cols-2 gap-5 my-5 h-full max-h-full flex-grow justify-center items-center'>
-            <div className='rounded-xl'>
-                <div className='relative h-[20rem] md:h-[30rem]'>
+            <div className='relative h-[75%] w-auto'>
+                <div className='h-full w-auto'>
                     <Image
-                        className="rounded-xl"
+                        className='shadow-2xl'
+                        priority
                         alt={item.nombre}
                         src={item.image}
-                        layout={'fill'} 
+                        layout={'fill'}
                         objectFit={'contain'}
                     />
                 </div>
@@ -27,7 +28,7 @@ const FullItem: NextPage<Props> = ({item}) => {
             <div className='flex flex-col gap-10 justify-center mx-auto w-11/12'>
                 <h1 className='text-center text-5xl md:text-6xl text-ellipsis font-bold'>{item.nombre}</h1>
                 <a 
-                    href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'} 
+                    href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'}
                     target="_blank" 
                     className='text-4xl text-white px-10 py-3 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
                     rel="noreferrer">Contactar<Phone /></a>

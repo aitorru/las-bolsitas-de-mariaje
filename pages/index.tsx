@@ -1,4 +1,4 @@
-import { FirebaseStorage, getDownloadURL } from 'firebase/storage';
+import { FirebaseStorage } from 'firebase/storage';
 import type { NextPage, GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -28,12 +28,15 @@ const Home: NextPage<Props> = (props) => {
                 <Header categories={props.categories} />
                 <Hero />
             </div>
-            <ItemsReview title='Destacados' items={props.items} />
+            <div id='destacados'>
+                <ItemsReview title='Destacados' items={props.items} />
+            </div>
+            
         </>
     );
 };
 
-export const getStaticProps: GetStaticProps = async (_context) => {
+export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {
             items: await getItems(),
