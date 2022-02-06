@@ -1,11 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import { NextPage } from 'next';
-
-type Item = {
-    nombre: string;
-    image: string;
-};
+import { Item } from '../../utils/types/types';
 interface Props {
     item: Item;
 }
@@ -13,7 +9,7 @@ interface Props {
 const FullItem: NextPage<Props> = ({item}) => {
     return (
         <div className='container mx-auto grid md:grid-cols-2 gap-5 my-5 h-full max-h-full flex-grow justify-center items-center'>
-            <div className='relative h-[75%] w-auto'>
+            <div className='relative w-[90%] min-h-[20rem] md:h-[80%] md:w-[80%] mx-auto'>
                 <div className='h-full w-auto'>
                     <Image
                         className='shadow-2xl'
@@ -27,6 +23,7 @@ const FullItem: NextPage<Props> = ({item}) => {
             </div>
             <div className='flex flex-col gap-10 justify-center mx-auto w-11/12'>
                 <h1 className='text-center text-5xl md:text-6xl text-ellipsis font-bold'>{item.nombre}</h1>
+                <h2 className='text-center text-4xl font-semibold border-t-2 border-b-2 py-2 border-black/20'>{item.precio} €</h2>
                 <a 
                     href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'}
                     target="_blank" 

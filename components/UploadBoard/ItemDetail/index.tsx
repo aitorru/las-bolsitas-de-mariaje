@@ -94,6 +94,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
             }
             
         }
+        
     };
     return (
         <div className='flex flex-col'>
@@ -112,6 +113,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                         imageForm={imageForm} 
                         isNameRequired={false} 
                         priceForm={priceForm}
+                        defaultOption={item.categoria}
                     />
                 </div>
             </div>

@@ -10,7 +10,7 @@ type Item = {
     categoria: string;
     nombre: string;
     image: string;
-    precio: number;
+    precio: string;
 };
 type Categories = {
     nombre: string;

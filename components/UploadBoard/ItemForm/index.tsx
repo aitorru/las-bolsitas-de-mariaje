@@ -14,9 +14,22 @@ interface Props {
     categories: Categories[];
     isUploading: boolean;
     isNameRequired?: boolean;
+    defaultOption?: string;
 }
 
-const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, priceForm, categoryForm, categories, imageForm, isNameRequired }) => {
+const ItemForm: NextPage<Props> = (
+    {
+        onSubmit,
+        isUploading,
+        nameForm,
+        priceForm,
+        categoryForm,
+        categories,
+        imageForm,
+        isNameRequired,
+        defaultOption
+    }
+) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
@@ -34,11 +47,8 @@ const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, priceForm, 
           Precio
         </label>
         <input
-            type="number"
+            type="text"
             placeholder='10.95'
-            pattern="[0-9]+.[0-9]+"
-            step=".01"
-            min={0.1}
             required={isNameRequired}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
             ref={priceForm}
@@ -47,6 +57,7 @@ const ItemForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, priceForm, 
           Categoria
         </label>
         <select
+            value={defaultOption}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"
             ref={categoryForm}>
             {categories.map((category) => (

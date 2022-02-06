@@ -1,9 +1,9 @@
 type Item = {
-    id?: string;
+    id: string;
     categoria: string;
     nombre: string;
-    image?: string;
-    precio?: number;
+    image: string;
+    precio: string;
 };
 type Category = {
     id: string;

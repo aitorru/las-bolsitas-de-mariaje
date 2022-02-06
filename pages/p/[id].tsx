@@ -5,14 +5,11 @@ import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import dynamic from 'next/dynamic';
 import { FirebaseStorage } from 'firebase/storage';
+import { Item } from '../../utils/types/types';
 const FullItem = dynamic(() => import('../../components/ItemsReview/FullItem'));
 
 type Categories = {
     nombre: string;
-};
-type Item = {
-    nombre: string;
-    image: string;
 };
 interface Props {
     categories: Categories[];
@@ -106,20 +103,29 @@ async function getItem(
     const items: Item[] = [];
     snapshot.forEach((doc) => {
         items.push({
+            id: doc.id,
             nombre: doc.data().nombre,
             image: doc.data().image,
+            categoria: doc.data().categoria,
+            precio: doc.data().precio
         });
     });
-    const result = await Promise.all(items.map(async (item) => {
+    const result: Item[] = await Promise.all(items.map(async (item) => {
         return {
+            id: item.id,
             nombre: item.nombre,
             image: await getUrlFromRef(storage, item.image),
+            categoria: item.categoria,
+            precio: item.precio,
         };
     }));
     return result[0];
 }
 
-async function getUrlFromRef(storage: FirebaseStorage, image: string): Promise<string> {
+async function getUrlFromRef(
+    storage: FirebaseStorage,
+    image: string
+): Promise<string> {
     const { ref, getDownloadURL } = await import('firebase/storage');
     const reference = ref(storage, image);
     const url = await getDownloadURL(reference);

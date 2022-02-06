@@ -21,7 +21,7 @@ type Item = {
     categoria: string;
     nombre: string;
     image: string;
-    precio: number;
+    precio: string;
 };
 
 type Categories = {
@@ -212,7 +212,7 @@ async function getItems(): Promise<Item[]> {
             nombre: doc.data().nombre,
             image: doc.data().image,
             categoria: doc.data().categoria,
-            precio: doc.data().precio || 1,
+            precio: doc.data().precio,
             id: doc.id,
         });
     });
