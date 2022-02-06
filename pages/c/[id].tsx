@@ -27,6 +27,19 @@ interface Props {
 const CategoryName: NextPage<Props> = ({ categories, items }) => {
     const router = useRouter();
     const { id } = router.query;
+
+    if (router.isFallback) {
+        return (
+            <>
+                <Head>
+                    <title>{id}</title>
+                </Head>
+                <Header categories={[{nombre: 'Cargando...'}]} />
+                <ItemsReview title={'Categoria: ' + id } items={[]} />
+            </>
+        );
+    }
+
     return (
         <>
             <Head>
@@ -98,7 +111,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     });
     return {
         paths: PATHS,
-        fallback: false, // false or 'blocking'
+        fallback: true, // false or 'blocking'
     };
 };
 
