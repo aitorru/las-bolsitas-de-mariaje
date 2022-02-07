@@ -3,9 +3,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import DeleteCategory from '../components/UploadBoard/DeleteCategory';
-import ModifyCategory from '../components/UploadBoard/ModifyCategory';
-//import UploadItem from "../components/UploadBoard/UploadItem";
+import { Category, Highlight, Item } from '../utils/types/types';
 const UploadItem = dynamic(
     () => import('../components/UploadBoard/UploadItem')
 );
@@ -15,25 +13,22 @@ const UploadCategory = dynamic(
 const ModifyItem = dynamic(
     () => import('../components/UploadBoard/ModifyItem')
 );
-
-type Item = {
-    id: string;
-    categoria: string;
-    nombre: string;
-    image: string;
-    precio: string;
-};
-
-type Categories = {
-    id: string;
-    nombre: string;
-};
+const DeleteCategory = dynamic(
+    () => import('../components/UploadBoard/DeleteCategory')
+);
+const EditHighLight = dynamic(
+    () => import('../components/UploadBoard/EditHighlight')
+);
+const ModifyCategory = dynamic(
+    () => import('../components/UploadBoard/ModifyCategory')
+);
 interface Props {
-  categories: Categories[];
+  categories: Category[];
   items: Item[];
+  highlights: Highlight[];
 }
 
-const DBoard: NextPage<Props> = ({ categories, items }) => {
+const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
     const router = useRouter();
 
 
@@ -46,9 +41,10 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
     const [modificarCategoria,
         setModificarCategoria] = useState<boolean>(false);
     const [borrarCategoria, setBorrarCategoria] = useState<boolean>(false);
+    const [editarDestacados, setEditarDestacados] = useState(false);
     useEffect(() => {
         if( Object.keys(router.query).length !== 0) {
-            if(router.query.ma === ''){
+            if(router.query.ma === ''){  // lasbolsitasdemariaje.es/dboard?ma
                 // Set main selected to true
                 setmodificarArticuloSelected(true);
                 // Set the rest to false
@@ -80,6 +76,15 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                 setSubirArticuloSelected(false);
                 setSubirCategoriaSelected(false);
                 setmodificarArticuloSelected(false);
+            } else if (router.query.eh === '') {
+                // Set main selected to true
+                setEditarDestacados(true);
+                // Set the rest to false
+                setBorrarCategoria(false);
+                setModificarCategoria(false);
+                setSubirArticuloSelected(false);
+                setSubirCategoriaSelected(false);
+                setmodificarArticuloSelected(false);
             }
         }
     }, [router.query]);
@@ -102,6 +107,7 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set the rest to false
                         setSubirCategoriaSelected(false);
                         setmodificarArticuloSelected(false);
+                        setEditarDestacados(false);
                         setModificarCategoria(false);
                         setBorrarCategoria(false);
                     }}
@@ -116,6 +122,7 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
                         setBorrarCategoria(false);
+                        setEditarDestacados(false);
                         setModificarCategoria(false);
                     }}
                 />
@@ -128,6 +135,7 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set the rest to false
                         setSubirArticuloSelected(false);
                         setmodificarArticuloSelected(false);
+                        setEditarDestacados(false);
                         setBorrarCategoria(false);
                         setModificarCategoria(false);
                     }}
@@ -141,6 +149,7 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set the rest to false
                         setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
+                        setEditarDestacados(false);
                         setBorrarCategoria(false);
                         setmodificarArticuloSelected(false);
                     }}
@@ -152,6 +161,21 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
                         // Set main selected to true
                         setBorrarCategoria(true);
                         // Set the rest to false
+                        setEditarDestacados(false);
+                        setModificarCategoria(false);
+                        setSubirArticuloSelected(false);
+                        setSubirCategoriaSelected(false);
+                        setmodificarArticuloSelected(false);
+                    }}
+                />
+                <PageSelector
+                    name="Editar Destacados"
+                    selected={editarDestacados}
+                    onClick={() => {
+                        // Set main selected to true
+                        setEditarDestacados(true);
+                        // Set the rest to false
+                        setBorrarCategoria(false);
                         setModificarCategoria(false);
                         setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
@@ -170,25 +194,46 @@ const DBoard: NextPage<Props> = ({ categories, items }) => {
             {borrarCategoria &&
              <DeleteCategory items={items} categories={categories} />
             }
+            {editarDestacados && 
+            <EditHighLight highlights={highlights} items={items} />
+            }
         </div>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (_context) => {
+export const getServerSideProps: GetServerSideProps = async () => {
     return {
         props: {
             categories: await getCategories(),
             items: await getItems(),
+            highlights: await getHighlight(),
         },
     };
 };
-
-async function getCategories(): Promise<Categories[]> {
+async function getHighlight(): Promise<Highlight[]> {
     const db = (await import('../utils/db/webDB')).default;
     const { collection, getDocs } = await import('firebase/firestore/lite');
-    const itemsColletion = collection(db, 'categorias');
+    const itemsColletion = collection(db, 'highlight');
     const snapshot = await getDocs(itemsColletion);
-    const categories: Categories[] = [];
+    const highlights: Highlight[] = [];
+    snapshot.forEach((doc) => {
+        highlights.push({
+            id: doc.id,
+            refID: doc.data().refID,
+            pos: doc.data().pos
+        });
+    });
+    return highlights;
+
+}
+
+async function getCategories(): Promise<Category[]> {
+    const db = (await import('../utils/db/webDB')).default;
+    const { collection, getDocs, query, orderBy } = await import('firebase/firestore/lite');
+    const itemsColletion = collection(db, 'categorias');
+    const q = query(itemsColletion, orderBy('pos'));
+    const snapshot = await getDocs(q);
+    const categories: Category[] = [];
     snapshot.forEach((doc) => {
         categories.push({
             id: doc.id,

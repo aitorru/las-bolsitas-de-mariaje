@@ -27,7 +27,7 @@ const FullItem: NextPage<Props> = ({item}) => {
                 <a 
                     href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'}
                     target="_blank" 
-                    className='text-4xl text-white px-10 py-3 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
+                    className='text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
                     rel="noreferrer">Contactar<Phone /></a>
             </div>
         </div>

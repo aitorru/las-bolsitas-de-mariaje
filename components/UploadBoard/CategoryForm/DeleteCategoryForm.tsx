@@ -13,7 +13,9 @@ interface Props {
     categories: Categories[];
 }
 
-const DeleteCategoryForm: NextPage<Props> = ({onSubmit, isUploading, categories, categoryForm }) => {
+const DeleteCategoryForm: NextPage<Props> = (
+    {onSubmit, isUploading, categories, categoryForm}
+) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">

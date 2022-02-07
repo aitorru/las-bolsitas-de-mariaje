@@ -9,7 +9,13 @@ type Category = {
     id: string;
     nombre: string;
 };
+type Highlight = {
+    id: string;
+    refID: string;
+    pos: number;
+};
 export type {
     Item,
-    Category
+    Category,
+    Highlight,
 };

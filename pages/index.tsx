@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import { Item } from '../utils/types/types';
+import { Highlight, Item } from '../utils/types/types';
 const ItemsReview = dynamic(() => import('../components/ItemsReview'));
 
 type Categories = {
@@ -47,24 +47,43 @@ export const getStaticProps: GetStaticProps = async () => {
 async function getItems(): Promise<Item[]> {
     const db = (await import('../utils/db/webDB')).default;
     const {app} = await import('../utils/db/webDB');
-    const { collection, getDocs, query, limit } = await import(
+    const { collection, getDocs, query, orderBy, doc, getDoc } = await import(
         'firebase/firestore/lite'
     );
-    const {getStorage } = await import('firebase/storage');
+    const { getStorage } = await import('firebase/storage');
     const storage = getStorage(app);
-    const itemsColletion = collection(db, 'articulos');
-    const q = query(itemsColletion, limit(6));
+    const itemsColletion = collection(db, 'highlight');
+    const q = query(itemsColletion, orderBy('pos'));
     const snapshot = await getDocs(q);
-    const items: Item[] = [];
+    const hls: Highlight[] = [];
     snapshot.forEach((doc) => {
-        items.push({
+        hls.push({
             id: doc.id,
-            nombre: doc.data().nombre,
-            image: doc.data().image,
-            categoria: doc.data().categoria,
-            precio: doc.data().precio,
+            refID: doc.data().refID,
+            pos: doc.data().pos,
         });
     });
+    const items: Item[] = await Promise.all(hls.map(async (hl) => {
+        const docRef = doc(db, 'articulos', hl.refID);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()) {
+            return {
+                id: docSnap.id,
+                categoria: docSnap.data().categoria,
+                nombre: docSnap.data().nombre,
+                image: docSnap.data().image,
+                precio: docSnap.data().precio
+            };
+        } else {
+            return {
+                id: '',
+                categoria: '',
+                nombre: '',
+                image: 'gs://las-bolsitas-de-mariaje.appspot.com/220px-Red_X.svg.png',
+                precio: '-',
+            };
+        }
+    }));
     const result = await Promise.all(items.map(async (item) => {
         return {
             id: item.id,
