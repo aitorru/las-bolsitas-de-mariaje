@@ -44,7 +44,7 @@ const CategoryName: NextPage<Props> = ({ categories, items }) => {
                 <title>{id}</title>
             </Head>
             <Header categories={categories} />
-            <ItemsReview title={'Categoria: ' + id } items={items} />
+            <ItemsReview title={`${id}`} items={items} />
         </>
     );
 };

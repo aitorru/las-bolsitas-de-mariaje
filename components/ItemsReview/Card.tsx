@@ -30,12 +30,18 @@ const Card: NextPage<Props> = ({ nombre, image }) => {
                 {nombre}
             </h1>
             <Link passHref href={'/p/' + nombre}>
-                <a className="py-3 w-4/5 mx-auto text-center font-semibold mt-auto bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl text-white hover:-translate-y-1 transition-transform">
-          Comprar
+                <a className="flex flex-row justify-center py-3 w-4/5 mx-auto text-center font-semibold mt-auto bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl text-white hover:-translate-y-1 transition-transform">
+                Más información<Plus />
                 </a>
             </Link>
         </div>
     );
+};
+
+const Plus = () => {
+    return <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+    </svg>;
 };
 
 export default Card;
