@@ -229,9 +229,9 @@ async function getHighlight(): Promise<Highlight[]> {
 
 async function getCategories(): Promise<Category[]> {
     const db = (await import('../utils/db/webDB')).default;
-    const { collection, getDocs, query, orderBy } = await import('firebase/firestore/lite');
+    const { collection, getDocs, query} = await import('firebase/firestore/lite');
     const itemsColletion = collection(db, 'categorias');
-    const q = query(itemsColletion, orderBy('pos'));
+    const q = query(itemsColletion);
     const snapshot = await getDocs(q);
     const categories: Category[] = [];
     snapshot.forEach((doc) => {

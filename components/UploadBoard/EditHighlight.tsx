@@ -128,7 +128,7 @@ const getNameFromID = async (id:string): Promise<string> => {
     const { doc, getDoc } = await import(
         'firebase/firestore/lite'
     );
-    const docRef = doc(db, 'highlight', id);
+    const docRef = doc(db, 'articulos', id);
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
         return docSnap.data().name;

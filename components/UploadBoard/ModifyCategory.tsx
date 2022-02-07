@@ -27,7 +27,8 @@ const ModifyCategory: NextPage<Props> = ({categories, items}) => {
     const categoryNameRef = createRef<HTMLInputElement>();
     const categoryOriginRef = createRef<HTMLSelectElement>();
 
-    const handleCategoryChange: FormEventHandler<HTMLFormElement> = async (event) => {
+    const handleCategoryChange: 
+    FormEventHandler<HTMLFormElement> = async (event) => {
         // meh
         event.preventDefault();
 
@@ -41,7 +42,6 @@ const ModifyCategory: NextPage<Props> = ({categories, items}) => {
             }
         }
         for (const i in categories) {
-            console.log(categories[i].nombre, categoryOriginRef.current?.value, categories[i].nombre === categoryOriginRef.current?.value);
             if(categories[i].nombre === categoryOriginRef.current?.value){
                 id = categories[i].id;
             }
@@ -62,7 +62,12 @@ const ModifyCategory: NextPage<Props> = ({categories, items}) => {
         }
     };
 
-    return <ModifyCategoryForm onSubmit={handleCategoryChange} nameForm={categoryNameRef} categories={categories} categoryForm={categoryOriginRef} isUploading={isUploading}  />;
+    return <ModifyCategoryForm 
+        onSubmit={handleCategoryChange} 
+        nameForm={categoryNameRef} 
+        categories={categories} 
+        categoryForm={categoryOriginRef} 
+        isUploading={isUploading}  />;
 };
 
 export default ModifyCategory;
