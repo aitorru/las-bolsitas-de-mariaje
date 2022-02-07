@@ -49,7 +49,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         console.log('Updating category...');
                         ref.update({categoria: fields.category});
                     }
-                    if(fields.price !== precio) {
+
+                    if(fields.price !== precio && fields.price !== '') {
                         console.log('Updating price');
                         ref.update({precio: fields.price});
                     }

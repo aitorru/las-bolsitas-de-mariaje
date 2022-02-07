@@ -224,7 +224,6 @@ async function getHighlight(): Promise<Highlight[]> {
             pos: doc.data().pos
         });
     });
-    console.log(highlights);
     return highlights;
 
 }
