@@ -17,13 +17,18 @@ const Hero: NextPage = () => {
                         />
                     </div>
                     <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold flex-auto self-center justify-items-center text-center w-11/12  mx-auto md:w-full md:mx-0">
-            Las Bolsitas de Mariaje
+                        Las Bolsitas de Mariaje
                     </h1>
+                    <h2 className='text-lg md:text-xl lg:text-3xl mt-6 text-center w-11/12 mb-3 md:mb-0 mx-auto md:w-full md:mx-0 font-semibold'>
+                        Bolsas artesanales de tela con calidad y buen gusto
+                    </h2>
                     <h2 className="text-lg md:text-xl lg:text-3xl mt-6 text-center w-11/12 mb-10 md:mb-0 mx-auto md:w-full md:mx-0">
-            Bolsas artesanales de tela con calidad y buen gusto: Bolsitas de tela, mochilas, bolsos, bolsas de costado, 
-            bolsas para bebes personalizadas, bolsas de pan, fundas para robot de cocina, delantales, gorro de cocinero, 
-            gorro higiénico, fundas de gafas, soportes para movil, complementos, diadema turbante, coleteros,
-            buf y mucho más... 
+                    Bolsitas de tela, mochilas, bolsos, bolsas de costado, 
+                    bolsas para bebes personalizadas, bolsas de pan,
+                    fundas para robot de cocina, delantales, gorro de cocinero, 
+                    gorro higiénico, fundas de gafas, soportes para movil,
+                    complementos, diadema turbante, coleteros,
+                    buf y mucho más... 
                     </h2>
                 </div>
                 <div className="hidden md:flex md:justify-center md:skew-y-3">
