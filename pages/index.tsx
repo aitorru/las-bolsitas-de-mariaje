@@ -19,7 +19,7 @@ const Home: NextPage<Props> = (props) => {
     return (
         <>
             <Head>
-                <title>Las bolsitas de mariaje</title>
+                <title>Las bolsitas de Mariaje</title>
                 <meta name="robots" content="index"/>
             </Head>
             <div className="md:min-h-screen flex flex-col">
