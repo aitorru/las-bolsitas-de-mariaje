@@ -212,9 +212,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 async function getHighlight(): Promise<Highlight[]> {
     const db = (await import('../utils/db/webDB')).default;
-    const { collection, getDocs } = await import('firebase/firestore/lite');
+    const { collection, getDocs, query,orderBy } = await import('firebase/firestore/lite');
     const itemsColletion = collection(db, 'highlight');
-    const snapshot = await getDocs(itemsColletion);
+    const q = query(itemsColletion, orderBy('pos'));
+    const snapshot = await getDocs(q);
     const highlights: Highlight[] = [];
     snapshot.forEach((doc) => {
         highlights.push({
@@ -223,6 +224,7 @@ async function getHighlight(): Promise<Highlight[]> {
             pos: doc.data().pos
         });
     });
+    console.log(highlights);
     return highlights;
 
 }

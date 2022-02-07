@@ -84,6 +84,21 @@ async function getItems(): Promise<Item[]> {
             };
         }
     }));
+    // Promise.all mixes the array
+    items.sort(function(a, b) {
+        const hla: Highlight | undefined = hls.find(hl => {
+            return hl.refID === a.id;
+        });
+        const hlb : Highlight | undefined = hls.find(hl => {
+            return hl.refID === b.id;
+        });
+        if (hla !== undefined && hlb !== undefined) {
+            return hla.pos - hlb.pos;
+        } else {
+            return 1;
+        }
+    }
+    );
     const result = await Promise.all(items.map(async (item) => {
         return {
             id: item.id,
