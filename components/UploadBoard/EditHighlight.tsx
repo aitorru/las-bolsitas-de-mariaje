@@ -82,7 +82,7 @@ NextPage<{hl: Highlight, items: Item[]}> = (
     const [value, setvalue] = useState('');
     useEffect(() => {
         getNameFromID(hl.refID)
-            .then(name => {setvalue(name);});
+            .then(name => {setvalue(name); console.log('Setting ' + name);});
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
@@ -131,7 +131,7 @@ const getNameFromID = async (id:string): Promise<string> => {
     const docRef = doc(db, 'articulos', id);
     const docSnap = await getDoc(docRef);
     if(docSnap.exists()){
-        return docSnap.data().name;
+        return docSnap.data().nombre;
     } else {
         return '';
     }
