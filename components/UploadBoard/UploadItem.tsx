@@ -48,6 +48,12 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
             router.push('/dboard');
 
         } else {
+            if((await axios.post('/api/upload', body)).status === 200){
+                setIsUploading(false);
+                alert('Subida correcta');
+                router.push('/dboard');
+                return;
+            }
             setIsUploading(false);
             alert('Subida incorrenta');
         }
