@@ -57,7 +57,7 @@ const ItemForm: NextPage<Props> = (
           Categoria
         </label>
         <select
-            value={defaultOption}
+            defaultValue={defaultOption}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"
             ref={categoryForm}>
             {categories.map((category) => (
