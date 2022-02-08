@@ -18,7 +18,8 @@ const ItemsReview: NextPage<Props> = ({ items, title }) => {
                         <Card 
                             key={item.image} 
                             nombre={item.nombre} 
-                            image={item.image} 
+                            image={item.image}
+                            blur={item.blur}
                         />
                     ))}
                 </div>

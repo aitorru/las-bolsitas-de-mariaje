@@ -4,6 +4,7 @@ type Item = {
     nombre: string;
     image: string;
     precio: string;
+    blur: string;
 };
 type Category = {
     id: string;

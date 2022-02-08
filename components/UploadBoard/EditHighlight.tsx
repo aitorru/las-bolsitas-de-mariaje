@@ -119,6 +119,7 @@ const findItemID = async (
             categoria: '',
             image: '',
             precio: '',
+            blur: '',
         };
     }
 };

@@ -260,6 +260,7 @@ async function getItems(): Promise<Item[]> {
             categoria: doc.data().categoria,
             precio: doc.data().precio,
             id: doc.id,
+            blur: '',
         });
     });
     return items;

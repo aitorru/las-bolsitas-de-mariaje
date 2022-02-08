@@ -9,6 +9,7 @@ import type {
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { getPlaiceholder } from 'plaiceholder';
 import { ParsedUrlQuery } from 'querystring';
 import Header from '../../components/Header';
 import { Item } from '../../utils/types/types';
@@ -82,7 +83,8 @@ async function getItems(
             nombre: doc.data().nombre,
             image: doc.data().image,
             categoria: doc.data().categoria,
-            precio: doc.data().precio
+            precio: doc.data().precio,
+            blur: '',
         });
     });
     const result: Item[] = await Promise.all(items.map(async (item) => {
@@ -91,10 +93,22 @@ async function getItems(
             nombre: item.nombre,
             image: await getUrlFromRef(storage, item.image),
             categoria: item.categoria,
-            precio: item.precio
+            precio: item.precio,
+            blur: '',
         };
     }));
-    return result;
+    const whithPlaceHolder: Item[] = await Promise.all(
+        result.map(async (item) => {
+            return {
+                id: item.id,
+                nombre: item.nombre,
+                image: item.image,
+                blur: (await getPlaiceholder(item.image)).base64,
+                categoria: item.categoria,
+                precio: item.precio,
+            };
+        }));
+    return whithPlaceHolder;
 }
 
 async function getUrlFromRef(

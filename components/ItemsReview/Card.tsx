@@ -9,9 +9,10 @@ import Image from 'next/image';
 interface Props {
   nombre: string;
   image: string;
+  blur: string;
 }
 
-const Card: NextPage<Props> = ({ nombre, image }) => {
+const Card: NextPage<Props> = ({ nombre, image, blur }) => {
 
     return (
         <div className="flex flex-col p-5 border-2 mx-auto border-blue-700 rounded-xl shadow-xl shadow-blue-700/50 h-full min-h-fit min-w-full">
@@ -21,6 +22,8 @@ const Card: NextPage<Props> = ({ nombre, image }) => {
                         className="rounded-xl"
                         alt={nombre}
                         src={image}
+                        placeholder='blur'
+                        blurDataURL={blur}
                         layout={'fill'} 
                         objectFit={'contain'}
                     />

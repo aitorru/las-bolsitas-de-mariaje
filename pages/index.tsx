@@ -2,6 +2,7 @@ import { FirebaseStorage } from 'firebase/storage';
 import type { NextPage, GetStaticProps } from 'next';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+import { getPlaiceholder } from 'plaiceholder';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import { Highlight, Item } from '../utils/types/types';
@@ -72,7 +73,8 @@ async function getItems(): Promise<Item[]> {
                 categoria: docSnap.data().categoria,
                 nombre: docSnap.data().nombre,
                 image: docSnap.data().image,
-                precio: docSnap.data().precio
+                precio: docSnap.data().precio,
+                blur: ''
             };
         } else {
             return {
@@ -81,6 +83,7 @@ async function getItems(): Promise<Item[]> {
                 nombre: '',
                 image: 'gs://las-bolsitas-de-mariaje.appspot.com/220px-Red_X.svg.png',
                 precio: '-',
+                blur: '',
             };
         }
     }));
@@ -108,7 +111,18 @@ async function getItems(): Promise<Item[]> {
             precio: item.precio,
         };
     }));
-    return result;
+    const whithPlaceHolder: Item[] = await Promise.all(
+        result.map(async (item) => {
+            return {
+                id: item.id,
+                nombre: item.nombre,
+                image: item.image,
+                blur: (await getPlaiceholder(item.image)).base64,
+                categoria: item.categoria,
+                precio: item.precio,
+            };
+        }));
+    return whithPlaceHolder;
 }
 
 async function getUrlFromRef(

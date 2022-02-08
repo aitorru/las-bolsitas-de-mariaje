@@ -16,6 +16,8 @@ const FullItem: NextPage<Props> = ({item}) => {
                         priority
                         alt={item.nombre}
                         src={item.image}
+                        placeholder='blur'
+                        blurDataURL={item.blur}
                         layout={'fill'}
                         objectFit={'contain'}
                     />
