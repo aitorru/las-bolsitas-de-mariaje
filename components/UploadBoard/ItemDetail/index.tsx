@@ -32,6 +32,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const imageForm = createRef<HTMLInputElement>();
     const imageTag = createRef<HTMLImageElement>();
     const priceForm = createRef<HTMLInputElement>();
+    const textAreaForm = createRef<HTMLTextAreaElement>();
     const [ isUploading, setIsUploading ] = useState<boolean>(false);
     useEffect(() => {
         const storage = getStorage(app);
@@ -114,6 +115,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                         isNameRequired={false} 
                         priceForm={priceForm}
                         defaultOption={item.categoria}
+                        textAreaForm={textAreaForm}
                     />
                 </div>
             </div>

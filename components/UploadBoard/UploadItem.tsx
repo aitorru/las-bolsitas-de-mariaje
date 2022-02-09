@@ -19,6 +19,7 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
     const categoryForm = createRef<HTMLSelectElement>();
     const imageForm = createRef<HTMLInputElement>();
     const priceForm = createRef<HTMLInputElement>();
+    const textAreaForm = createRef<HTMLTextAreaElement>();
     const [ isUploading, setIsUploading ] = useState<boolean>(false);
     const uploadItem: FormEventHandler<HTMLFormElement> = async (event) => {
         // Fuck browsers
@@ -68,7 +69,8 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
                 categories={categories} 
                 imageForm={imageForm} 
                 isNameRequired={true} 
-                priceForm={priceForm} 
+                priceForm={priceForm}
+                textAreaForm={textAreaForm}
             />
         </div>
     );
