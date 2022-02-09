@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 showOnShallow={true}
                 options={{ easing: 'ease', speed: 1000, showSpinner: false, trickleSpeed: 800 }}
             />
-            <div className='h-0 sticky origin-right top-[90vh] overflow-x-clip flex justify-end'>
+            <div className='h-0 sticky origin-right top-[85vh] md:top-[90vh] z-10 overflow-x-clip flex justify-end'>
                 <BackToTop visible={passTheVisiblePoint} />
             </div>
             <Component {...pageProps} />
