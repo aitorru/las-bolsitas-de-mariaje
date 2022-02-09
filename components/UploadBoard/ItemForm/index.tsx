@@ -11,6 +11,7 @@ interface Props {
     priceForm: RefObject<HTMLInputElement>;
     categoryForm: RefObject<HTMLSelectElement>;
     imageForm: RefObject<HTMLInputElement>;
+    textAreaForm: RefObject<HTMLTextAreaElement>;
     categories: Categories[];
     isUploading: boolean;
     isNameRequired?: boolean;
@@ -27,7 +28,8 @@ const ItemForm: NextPage<Props> = (
         categories,
         imageForm,
         isNameRequired,
-        defaultOption
+        defaultOption,
+        textAreaForm
     }
 ) => {
     return <form
@@ -42,6 +44,17 @@ const ItemForm: NextPage<Props> = (
             required={isNameRequired}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
             ref={nameForm}
+        />
+        <label className="text-center text-3xl">
+          Descripcion
+        </label>
+        <textarea
+            placeholder='Tela...'
+            value={''}
+            onChange={() => {console.log('not yet');}}
+            required={isNameRequired}
+            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl resize-y cursor-not-allowed"
+            ref={textAreaForm}
         />
         <label className="text-center text-3xl">
           Precio
