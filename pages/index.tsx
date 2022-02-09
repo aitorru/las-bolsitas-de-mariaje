@@ -41,7 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
             items: await getItems(),
             categories: await getCategories(),
         }, // will be passed to the page component as props
-        revalidate: 3600, // In seconds
+        revalidate: 86400, // In seconds
     };
 };
 
