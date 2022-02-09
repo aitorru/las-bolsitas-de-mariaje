@@ -51,6 +51,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                 <div className='md:hidden w-full flex justify-end relative text-left'>
                     <button 
                         className="text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white" 
+                        onBlur={() => setMenuVisible(false)} 
                         onClick={() => {
                             setMenuVisible(!menuVisible);
                             if (!menuVisible){
@@ -66,7 +67,6 @@ const Header: NextPage<Props> = ({ categories }) => {
                         aria-labelledby="menu-button" 
                         tabIndex={-1} 
                         style={!menuVisible ? {display: 'none'} : {}} 
-                        onBlur={() => setMenuVisible(false)} 
                         ref={dropDown}>
                         <div className="py-1 w-full" role="none">
                             {categories.map((category) => (
