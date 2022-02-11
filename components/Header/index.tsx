@@ -48,15 +48,19 @@ const Header: NextPage<Props> = ({ categories }) => {
                     </a>
                 </Link>
                 
-                <div className='md:hidden w-full flex justify-end relative text-left'>
+                <div className='md:hidden w-full flex justify-end relative text-left'
+                    onBlur={(e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget)) {
+                            // code when clicked outside parent and children components
+                            setMenuVisible(false); 
+                            
+                        }
+                    }
+                    } >
                     <button 
                         className="text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white" 
-                        onBlur={() => setMenuVisible(false)} 
                         onClick={() => {
                             setMenuVisible(!menuVisible);
-                            if (!menuVisible){
-                                dropDown.current?.focus();
-                            }
                         }}>
                         <Burger />
                     </button>
