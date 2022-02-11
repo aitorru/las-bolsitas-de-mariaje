@@ -52,7 +52,6 @@ const ItemForm: NextPage<Props> = (
             placeholder='Tela...'
             value={''}
             onChange={() => {console.log('not yet');}}
-            required={isNameRequired}
             className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl resize-y cursor-not-allowed"
             ref={textAreaForm}
         />
