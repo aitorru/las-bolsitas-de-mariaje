@@ -120,6 +120,7 @@ const findItemID = async (
             image: '',
             precio: '',
             blur: '',
+            descripcion: '',
         };
     }
 };
