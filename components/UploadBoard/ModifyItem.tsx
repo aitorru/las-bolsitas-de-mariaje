@@ -2,22 +2,12 @@
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { createRef, useEffect, useState } from 'react';
+import { Category, Item } from '../../utils/types/types';
 //import ItemDetail from './ItemDetail';
 const ItemDetail = dynamic(() => import('./ItemDetail'));
 
-type Item = {
-    id: string;
-    categoria: string;
-    nombre: string;
-    image: string;
-    precio: string;
-};
-type Categories = {
-    nombre: string;
-  };
-
 interface Props {
-    categories: Categories[];
+    categories: Category[];
     items: Item[];
 }
 
@@ -38,7 +28,7 @@ const ModifyItem: NextPage<Props> = ({ items, categories }) => {
 };
 
 interface SecondaryProps {
-    categories: Categories[];
+    categories: Category[];
     item: Item;
 }
 

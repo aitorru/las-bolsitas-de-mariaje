@@ -109,6 +109,7 @@ async function getItem(
             image: doc.data().image,
             categoria: doc.data().categoria,
             precio: doc.data().precio,
+            descripcion: doc.data().descripcion || '',
             blur: '',
         });
     });
@@ -119,6 +120,7 @@ async function getItem(
             image: await getUrlFromRef(storage, item.image),
             categoria: item.categoria,
             precio: item.precio,
+            descripcion: item.descripcion,
             blur: '',
         };
     }));
@@ -130,6 +132,7 @@ async function getItem(
                 image: item.image,
                 blur: (await getPlaiceholder(item.image)).base64,
                 categoria: item.categoria,
+                descripcion: item.descripcion,
                 precio: item.precio,
             };
         }));

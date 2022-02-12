@@ -13,6 +13,7 @@ interface Props {
     imageForm: RefObject<HTMLInputElement>;
     textAreaForm: RefObject<HTMLTextAreaElement>;
     categories: Categories[];
+    descripcion: string;
     isUploading: boolean;
     isNameRequired?: boolean;
     defaultOption?: string;
@@ -29,7 +30,8 @@ const ItemForm: NextPage<Props> = (
         imageForm,
         isNameRequired,
         defaultOption,
-        textAreaForm
+        textAreaForm,
+        descripcion
     }
 ) => {
     return <form
@@ -50,9 +52,9 @@ const ItemForm: NextPage<Props> = (
         </label>
         <textarea
             placeholder='Tela...'
-            value={''}
-            onChange={() => {console.log('not yet');}}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl resize-y cursor-not-allowed"
+            required={isNameRequired}
+            defaultValue={descripcion}
+            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl resize-y"
             ref={textAreaForm}
         />
         <label className="text-center text-3xl">

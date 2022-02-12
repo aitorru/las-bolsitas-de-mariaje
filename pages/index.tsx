@@ -74,6 +74,7 @@ async function getItems(): Promise<Item[]> {
                 nombre: docSnap.data().nombre,
                 image: docSnap.data().image,
                 precio: docSnap.data().precio,
+                descripcion: docSnap.data().descripction || '',
                 blur: ''
             };
         } else {
@@ -83,6 +84,7 @@ async function getItems(): Promise<Item[]> {
                 nombre: '',
                 image: 'gs://las-bolsitas-de-mariaje.appspot.com/220px-Red_X.svg.png',
                 precio: '-',
+                descripcion: '',
                 blur: '',
             };
         }
@@ -102,13 +104,15 @@ async function getItems(): Promise<Item[]> {
         }
     }
     );
-    const result = await Promise.all(items.map(async (item) => {
+    const result: Item[] = await Promise.all(items.map(async (item) => {
         return {
             id: item.id,
             nombre: item.nombre,
             image: await getUrlFromRef(storage, item.image),
             categoria: item.categoria,
             precio: item.precio,
+            descripcion: item.descripcion,
+            blur: item.blur
         };
     }));
     const whithPlaceHolder: Item[] = await Promise.all(
@@ -120,6 +124,8 @@ async function getItems(): Promise<Item[]> {
                 blur: (await getPlaiceholder(item.image)).base64,
                 categoria: item.categoria,
                 precio: item.precio,
+                descripcion: item.descripcion
+
             };
         }));
     return whithPlaceHolder;

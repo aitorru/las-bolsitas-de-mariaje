@@ -36,7 +36,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                                 <Link
                                     passHref
                                     href={'/c/' + category.nombre}>
-                                    <a className=''>{category.nombre}</a>
+                                    <a className='text-lg underline-offset-4'>{category.nombre}</a>
                                 </Link>
                             </li>
                         ))}

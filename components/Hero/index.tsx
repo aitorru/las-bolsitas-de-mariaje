@@ -22,11 +22,11 @@ const Hero: NextPage = () => {
                     <h2 className='text-lg md:text-xl lg:text-3xl mt-6 text-center w-11/12 mb-3 md:mb-0 mx-auto md:w-full md:mx-0 font-semibold'>
                         Bolsas artesanales de tela con calidad y buen gusto
                     </h2>
-                    <h2 className="text-lg md:text-xl lg:text-3xl mt-6 text-center w-11/12 mb-10 md:mb-0 mx-auto md:w-full md:mx-0">
+                    <h2 className="text-lg md:text-xl lg:text-2xl mt-6 text-center w-11/12 mb-10 md:mb-0 mx-auto md:w-full md:mx-0">
                     Bolsitas de tela, mochilas, bolsos, bolsas de costado, 
                     bolsas para bebes personalizadas, bolsas de pan,
-                    fundas para robot de cocina, delantales, gorro de cocinero, 
-                    gorro higiénico, fundas de gafas, soportes para movil,
+                    fundas para robot de cocina, delantales, gorro de cocinero,
+                    fundas de gafas, soportes para movil,
                     complementos, diadema turbante, coleteros,
                     buf y mucho más... 
                     </h2>
@@ -42,7 +42,7 @@ const Hero: NextPage = () => {
             </div>
             <a 
                 href='#destacados' 
-                className='hidden lg:flex w-[40%] mx-auto mb-20 justify-center bg-blue-700 shadow-2xl shadow-blue-700/50 text-white p-5 rounded-2xl text-xl lg:text-3xl items-center gap-5'>
+                className='hidden lg:flex w-fit mx-auto mb-20 justify-center bg-blue-700 shadow-2xl shadow-blue-700/50 text-white px-10 p-5 rounded-2xl text-lg font-semibold items-center gap-5'>
                 Ver nuestra tienda <Arrow />
             </a>
         </div>
@@ -50,7 +50,7 @@ const Hero: NextPage = () => {
 };
 
 const Arrow = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" className="h-[2rem] w-[2rem] animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    return <svg xmlns="http://www.w3.org/2000/svg" className="h-[1.4rem] w-[1.4rem] animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l-4 4m0 0l-4-4m4 4V3" />
     </svg>;
 };

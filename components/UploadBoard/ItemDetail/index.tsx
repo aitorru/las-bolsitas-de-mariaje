@@ -7,21 +7,11 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { createRef, FormEventHandler, useEffect, useState } from 'react';
 import { app } from '../../../utils/db/webDB';
+import { Category, Item } from '../../../utils/types/types';
 const ItemForm = dynamic(() => import('../ItemForm'));
 
-
-type Item = {
-    id: string;
-    categoria: string;
-    nombre: string;
-    image: string;
-};
-type Categories = {
-    nombre: string;
-  };
-
 interface Props {
-    categories: Categories[];
+    categories: Category[];
     item: Item;
   }
 
@@ -68,6 +58,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         body.append('price', priceForm.current?.value || '');
         body.append('name', nameForm.current?.value || '');
         body.append('category', categoryForm.current?.value || '');
+        body.append('descripcion', textAreaForm.current?.value || '');
         const files = imageForm.current?.files;
         if (files === null) {
             console.log('Empty');
@@ -105,7 +96,8 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                     ref={imageTag}
                 />
                 <div className='col-span-3'>
-                    <ItemForm 
+                    <ItemForm
+                        descripcion={item.descripcion}
                         onSubmit={modifyItem} 
                         isUploading={isUploading} 
                         nameForm={nameForm} 

@@ -1,6 +1,7 @@
 type Item = {
     id: string;
     categoria: string;
+    descripcion: string;
     nombre: string;
     image: string;
     precio: string;

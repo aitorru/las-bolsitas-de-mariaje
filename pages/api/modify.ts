@@ -4,12 +4,7 @@ import formidable from 'formidable';
 import fs from 'fs';
 import db, { bucket } from '../../utils/db/index';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-type Item = {
-    image: string;
-    categoria: string;
-    precio: string;
-};
+import { Item } from '../../utils/types/types';
 
 export const config = {
     api: {
@@ -19,7 +14,9 @@ export const config = {
     },
 };
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+    req: NextApiRequest, res: NextApiResponse
+) {
     try {
         await new Promise((resolve, reject) => {
             const app: any = getAppCookies(req);
@@ -39,7 +36,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     if (err) console.log(err);
                     const ref = db.collection('articulos').doc(fields.id as string);
                     const doc = await ref.get();
-                    const { categoria, image, precio } = doc.data() as Item;
+                    const { 
+                        categoria,
+                        image,
+                        precio,
+                        descripcion
+                    } = doc.data() as Item;
                     console.log(fields, doc.data());
                     if (fields.name !== '') {
                         console.log('Updating name...');
@@ -49,10 +51,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         console.log('Updating category...');
                         ref.update({categoria: fields.category});
                     }
-
                     if(fields.price !== precio && fields.price !== '') {
                         console.log('Updating price');
                         ref.update({precio: fields.price});
+                    }
+                    if(fields.descripcion !== descripcion) {
+                        console.log('Updating description');
+                        ref.update({descripcion: fields.descripcion});
                     }
                     if(Object.keys(files).length !== 0) {
                         console.log('Updating image...');

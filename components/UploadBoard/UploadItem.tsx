@@ -30,6 +30,7 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
         body.append('name', nameForm.current?.value || '');
         body.append('category', categoryForm.current?.value || '');
         body.append('price', priceForm.current?.value || '');
+        body.append('descripcion', textAreaForm.current?.value || '');
         const files = imageForm.current?.files;
         if (files === null) {
             alert('La imagen esta vacia');
@@ -61,7 +62,8 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
     };
     return (
         <div className="container mx-auto flex flex-col justify-center content-center mt-5">
-            <ItemForm 
+            <ItemForm
+                descripcion=''
                 onSubmit={uploadItem} 
                 isUploading={isUploading} 
                 nameForm={nameForm} 
