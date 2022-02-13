@@ -202,7 +202,6 @@ async function getCarousel(): Promise<Carousel[]> {
 
             };
         }));
-    console.log(whithPlaceHolder);
     return whithPlaceHolder;
 }
 

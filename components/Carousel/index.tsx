@@ -6,7 +6,7 @@ interface Props {
     carousel: Carousel[];
 }
 
-const Carousel: NextPage<Props> = ({carousel}) => {
+const CarouselElement: NextPage<Props> = ({carousel}) => {
     return (
         <div className='w-11/12 mx-auto my-auto flex-grow flex flex-col justify-center'>
             <div className='relative rounded-xl overflow-hidden'>
@@ -35,4 +35,4 @@ const Carousel: NextPage<Props> = ({carousel}) => {
     );
 
 };
-export default Carousel;
+export default CarouselElement;
