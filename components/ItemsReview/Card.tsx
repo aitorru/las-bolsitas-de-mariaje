@@ -1,8 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import type { NextPage } from 'next';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import { createRef, useEffect, useState } from 'react';
-import { app } from '../../utils/db/webDB';
 import Link from 'next/link';
 import Image from 'next/image';
 

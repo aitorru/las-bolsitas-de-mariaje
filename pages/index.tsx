@@ -5,8 +5,9 @@ import Head from 'next/head';
 import { getPlaiceholder } from 'plaiceholder';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import { Highlight, Item } from '../utils/types/types';
+import { Highlight, Item, Carousel } from '../utils/types/types';
 const ItemsReview = dynamic(() => import('../components/ItemsReview'));
+const Carousel = dynamic(() => import('../components/Carousel'));
 
 type Categories = {
   nombre: string;
@@ -14,6 +15,7 @@ type Categories = {
 interface Props {
   items: Item[];
   categories: Categories[];
+  carousel: Carousel[];
 }
 
 const Home: NextPage<Props> = (props) => {
@@ -26,6 +28,12 @@ const Home: NextPage<Props> = (props) => {
             <div className="md:min-h-screen flex flex-col">
                 <Header categories={props.categories} />
                 <Hero />
+            </div>
+            <div className='md:min-h-screen flex flex-col'>
+                <h1 className="text-4xl md:text-6xl font-bold text-center py-5 text-ellipsis">
+                    Promociones
+                </h1>
+                <Carousel carousel={props.carousel} />
             </div>
             <div id='destacados'>
                 <ItemsReview title='Destacados' items={props.items} />
@@ -40,6 +48,7 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
             items: await getItems(),
             categories: await getCategories(),
+            carousel: await getCarousel(),
         }, // will be passed to the page component as props
         revalidate: 86400, // In seconds
     };
@@ -153,6 +162,48 @@ async function getCategories(): Promise<Categories[]> {
         });
     });
     return categories;
+}
+
+async function getCarousel(): Promise<Carousel[]> {
+    const db = (await import('../utils/db/webDB')).default;
+    const { collection, getDocs, query, orderBy } = await import(
+        'firebase/firestore/lite'
+    );
+    const {app} = await import('../utils/db/webDB');
+    const { getStorage } = await import('firebase/storage');
+    const storage = getStorage(app);
+    const itemsColletion = collection(db, 'carousel');
+    const q = query(itemsColletion, orderBy('pos'));
+    const snapshot = await getDocs(q);
+    const carousel: Carousel[] =[];
+    snapshot.forEach((doc) => {
+        carousel.push({
+            id: doc.id,
+            pos: doc.data().pos,
+            image: doc.data().image,
+            blur: '',
+        });
+    });
+    const result: Carousel[] = await Promise.all(carousel.map(async (item) => {
+        return {
+            id: item.id,
+            image: await getUrlFromRef(storage, item.image),
+            blur: item.blur,
+            pos: item.pos
+        };
+    }));
+    const whithPlaceHolder: Carousel[] = await Promise.all(
+        result.map(async (item) => {
+            return {
+                id: item.id,
+                image: item.image,
+                blur: (await getPlaiceholder(item.image)).base64,
+                pos: item.pos
+
+            };
+        }));
+    console.log(whithPlaceHolder);
+    return whithPlaceHolder;
 }
 
 export default Home;

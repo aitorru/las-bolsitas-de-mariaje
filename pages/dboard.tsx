@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Category, Highlight, Item } from '../utils/types/types';
+import { Carousel, Category, Highlight, Item } from '../utils/types/types';
 const UploadItem = dynamic(
     () => import('../components/UploadBoard/UploadItem')
 );
@@ -22,13 +22,19 @@ const EditHighLight = dynamic(
 const ModifyCategory = dynamic(
     () => import('../components/UploadBoard/ModifyCategory')
 );
+const CarouselEdit = dynamic(
+    () => import('../components/UploadBoard/UpdatePromotions')
+);
 interface Props {
   categories: Category[];
   items: Item[];
   highlights: Highlight[];
+  carousel: Carousel[];
 }
 
-const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
+const DBoard: NextPage<Props> = (
+    { categories, items, highlights, carousel }
+) => {
     const router = useRouter();
 
 
@@ -42,6 +48,7 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
         setModificarCategoria] = useState<boolean>(false);
     const [borrarCategoria, setBorrarCategoria] = useState<boolean>(false);
     const [editarDestacados, setEditarDestacados] = useState(false);
+    const [editarPromociones, setEditarPromociones] = useState(false);
     useEffect(() => {
         if( Object.keys(router.query).length !== 0) {
             if(router.query.ma === ''){  // lasbolsitasdemariaje.es/dboard?ma
@@ -85,6 +92,16 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                 setSubirArticuloSelected(false);
                 setSubirCategoriaSelected(false);
                 setmodificarArticuloSelected(false);
+            } else if (router.query.up === '') {
+                // Set main selected to true
+                setEditarPromociones(true);
+                // Set the rest to false
+                setEditarDestacados(false);
+                setBorrarCategoria(false);
+                setModificarCategoria(false);
+                setSubirArticuloSelected(false);
+                setSubirCategoriaSelected(false);
+                setmodificarArticuloSelected(false);
             }
         }
     }, [router.query]);
@@ -108,6 +125,7 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                         setSubirCategoriaSelected(false);
                         setmodificarArticuloSelected(false);
                         setEditarDestacados(false);
+                        setEditarPromociones(false);
                         setModificarCategoria(false);
                         setBorrarCategoria(false);
                     }}
@@ -122,6 +140,7 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                         setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
                         setBorrarCategoria(false);
+                        setEditarPromociones(false);
                         setEditarDestacados(false);
                         setModificarCategoria(false);
                     }}
@@ -135,6 +154,7 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                         // Set the rest to false
                         setSubirArticuloSelected(false);
                         setmodificarArticuloSelected(false);
+                        setEditarPromociones(false);
                         setEditarDestacados(false);
                         setBorrarCategoria(false);
                         setModificarCategoria(false);
@@ -150,6 +170,7 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                         setSubirArticuloSelected(false);
                         setSubirCategoriaSelected(false);
                         setEditarDestacados(false);
+                        setEditarPromociones(false);
                         setBorrarCategoria(false);
                         setmodificarArticuloSelected(false);
                     }}
@@ -161,6 +182,7 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                         // Set main selected to true
                         setBorrarCategoria(true);
                         // Set the rest to false
+                        setEditarPromociones(false);
                         setEditarDestacados(false);
                         setModificarCategoria(false);
                         setSubirArticuloSelected(false);
@@ -175,6 +197,22 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
                         // Set main selected to true
                         setEditarDestacados(true);
                         // Set the rest to false
+                        setEditarPromociones(false);
+                        setBorrarCategoria(false);
+                        setModificarCategoria(false);
+                        setSubirArticuloSelected(false);
+                        setSubirCategoriaSelected(false);
+                        setmodificarArticuloSelected(false);
+                    }}
+                />
+                <PageSelector
+                    name="Editar Promociones"
+                    selected={editarPromociones}
+                    onClick={() => {
+                        // Set main selected to true
+                        setEditarPromociones(true);
+                        // Set the rest to false
+                        setEditarDestacados(false);
                         setBorrarCategoria(false);
                         setModificarCategoria(false);
                         setSubirArticuloSelected(false);
@@ -192,11 +230,12 @@ const DBoard: NextPage<Props> = ({ categories, items, highlights }) => {
             <ModifyCategory items={items} categories={categories} />
             }
             {borrarCategoria &&
-             <DeleteCategory items={items} categories={categories} />
+            <DeleteCategory items={items} categories={categories} />
             }
             {editarDestacados && 
             <EditHighLight highlights={highlights} items={items} />
             }
+            {editarPromociones && <CarouselEdit carousel={carousel} />}
         </div>
     );
 };
@@ -207,6 +246,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
             categories: await getCategories(),
             items: await getItems(),
             highlights: await getHighlight(),
+            carousel: await getCarousel(),
         },
     };
 };
@@ -265,6 +305,26 @@ async function getItems(): Promise<Item[]> {
         });
     });
     return items;
+}
+
+async function getCarousel(): Promise<Carousel[]> {
+    const db = (await import('../utils/db/webDB')).default;
+    const { collection, getDocs, query, orderBy } = await import(
+        'firebase/firestore/lite'
+    );
+    const itemsColletion = collection(db, 'carousel');
+    const q = query(itemsColletion, orderBy('pos'));
+    const snapshot = await getDocs(q);
+    const carousel: Carousel[] =[];
+    snapshot.forEach((doc) => {
+        carousel.push({
+            id: doc.id,
+            pos: doc.data().pos,
+            image: doc.data().image,
+            blur: '',
+        });
+    });
+    return carousel;
 }
 
 interface PropsPageSelector {

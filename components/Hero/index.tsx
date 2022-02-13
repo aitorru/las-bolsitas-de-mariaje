@@ -22,7 +22,7 @@ const Hero: NextPage = () => {
                     <h2 className='text-lg md:text-xl lg:text-3xl mt-6 text-center w-11/12 mb-3 md:mb-0 mx-auto md:w-full md:mx-0 font-semibold'>
                         Bolsas artesanales de tela con calidad y buen gusto
                     </h2>
-                    <h2 className="text-lg md:text-xl lg:text-2xl mt-6 text-center w-11/12 mb-10 md:mb-0 mx-auto md:w-full md:mx-0">
+                    <h2 className="hidden md:block text-lg md:text-xl lg:text-2xl mt-6 text-center w-11/12 mb-10 md:mb-0 mx-auto md:w-full md:mx-0">
                     Bolsitas de tela, mochilas, bolsos, bolsas de costado, 
                     bolsas para bebes personalizadas, bolsas de pan,
                     fundas para robot de cocina, delantales, gorro de cocinero,

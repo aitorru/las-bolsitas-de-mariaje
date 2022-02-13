@@ -16,8 +16,15 @@ type Highlight = {
     refID: string;
     pos: number;
 };
+type Carousel = {
+    id: string;
+    image: string;
+    blur: string;
+    pos: number;
+}
 export type {
     Item,
     Category,
     Highlight,
+    Carousel
 };
