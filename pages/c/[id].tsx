@@ -11,6 +11,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getPlaiceholder } from 'plaiceholder';
 import { ParsedUrlQuery } from 'querystring';
+import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import { Item } from '../../utils/types/types';
 const ItemsReview = dynamic(() => import('../../components/ItemsReview'));
@@ -46,6 +47,7 @@ const CategoryName: NextPage<Props> = ({ categories, items }) => {
             </Head>
             <Header categories={categories} />
             <ItemsReview title={`${id}`} items={items} />
+            <Footer />
         </>
     );
 };

@@ -8,6 +8,7 @@ import Hero from '../components/Hero';
 import { Highlight, Item, Carousel } from '../utils/types/types';
 const ItemsReview = dynamic(() => import('../components/ItemsReview'));
 const CarouselElement = dynamic(() => import('../components/Carousel'));
+const Footer = dynamic(() => import('../components/Footer'));
 
 type Categories = {
   nombre: string;
@@ -29,7 +30,7 @@ const Home: NextPage<Props> = (props) => {
                 <Header categories={props.categories} />
                 <Hero />
             </div>
-            <div className='md:min-h-screen flex flex-col'>
+            <div className='flex flex-col md:gap-10'>
                 <h1 className="text-4xl md:text-6xl font-bold text-center py-5 text-ellipsis">
                     Promociones
                 </h1>
@@ -38,7 +39,7 @@ const Home: NextPage<Props> = (props) => {
             <div id='destacados'>
                 <ItemsReview title='Destacados' items={props.items} />
             </div>
-            
+            <Footer />
         </>
     );
 };
