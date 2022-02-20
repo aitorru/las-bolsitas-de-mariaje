@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { createRef, FormEventHandler, useEffect, useState } from 'react';
 import { app } from '../../../utils/db/webDB';
 import { Category, Item } from '../../../utils/types/types';
+import pride from '../../../utils/pride';
 const ItemForm = dynamic(() => import('../ItemForm'));
 
 interface Props {
@@ -70,15 +71,20 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
             }
         }
         const status = await axios.post('/api/modify', body);
+        const end = Date.now() + (500);
+        const colors = [
+            Math.floor(Math.random()*16777215).toString(16), 
+            Math.floor(Math.random()*16777215).toString(16)
+        ];
         //const status = await fetch('/api/modify', {method: 'POST', body});
         if (status.status === 200){ 
             setIsUploading(false);
-            alert('Modificacion correcta');
+            pride(end, colors);
             router.push('/dboard?ma', '', {scroll: false});
         } else {
             if((await axios.post('/api/modify', body)).status === 200){
                 setIsUploading(false);
-                alert('Modificacion correcta');
+                pride(end, colors);
                 router.push('/dboard?ma', '', {scroll: false});
             } else {
                 setIsUploading(false);
@@ -119,3 +125,4 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
 
 
 export default ItemDetail;
+

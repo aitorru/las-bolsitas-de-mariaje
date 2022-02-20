@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import { createRef, FormEventHandler, useEffect, useState } from 'react';
 import { Item, Highlight } from '../../utils/types/types';
 import { useRouter } from 'next/router';
+import pride from '../../utils/pride';
 
 interface Props {
     highlights: Highlight[];
@@ -45,9 +46,14 @@ const EditHighLight: NextPage<Props> = ({items, highlights}) => {
             p5: await findItemID(items, p5.value),
             p6: await findItemID(items, p6.value),
         });
+        const end = Date.now() + (500);
+        const colors = [
+            Math.floor(Math.random()*16777215).toString(16), 
+            Math.floor(Math.random()*16777215).toString(16)
+        ];
         if (status.status === 200) {
             router.prefetch('/dboard?eh');
-            alert('Modificacion correcta');
+            pride(end, colors);
             router.push('/dboard?eh');
         } else {
             alert('Modificacion incorrecta');

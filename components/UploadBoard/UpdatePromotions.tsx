@@ -6,6 +6,7 @@ import { app } from '../../utils/db/webDB';
 import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 import { Carousel } from '../../utils/types/types';
 import axios from '../../utils/fetch/index';
+import pride from '../../utils/pride';
 //import ItemDetail from './ItemDetail';
 
 interface Props {
@@ -46,6 +47,11 @@ const CarouselEditDetail: NextPage<PassProps> = ({item}) => {
     }, [imageTag, item.image]);
 
     const handleSubmit = async () => {
+        const end = Date.now() + (500);
+        const colors = [
+            Math.floor(Math.random()*16777215).toString(16), 
+            Math.floor(Math.random()*16777215).toString(16)
+        ];
         setIsUploading(true);
         const body = new FormData();
         body.append('id', item.id);
@@ -63,11 +69,11 @@ const CarouselEditDetail: NextPage<PassProps> = ({item}) => {
         }
         const status = await axios.post('/api/carousel/edit', body);
         if(status.status === 200) {
-            alert('Modificacion correcta');
+            pride(end, colors);
             setIsUploading(false);
         } else {
             if(((await axios.post('/api/carousel/edit', body)).status === 200)){
-                alert('Modificacion correcta');
+                pride(end, colors);
                 setIsUploading(false);
             } else {
                 alert('Modificacion incorrecta');

@@ -3,6 +3,7 @@ import { createRef, FormEventHandler, useState } from 'react';
 import axios from '../../utils/fetch';
 import { useRouter } from 'next/router';
 import ModifyCategoryForm from './CategoryForm/ModifyCategoryForm';
+import pride from '../../utils/pride';
 
 type Categories = {
     id: string;
@@ -52,11 +53,16 @@ const ModifyCategory: NextPage<Props> = ({categories, items}) => {
         }
 
         setisUploading(true);
+        const end = Date.now() + (500);
+        const colors = [
+            Math.floor(Math.random()*16777215).toString(16), 
+            Math.floor(Math.random()*16777215).toString(16)
+        ];
         const status = await axios.post('/api/category/modify',{ origin: id, destination: categoryNameRef.current?.value });
         if (status.status === 200) {
             router.prefetch('/dboard?mc');
             setisUploading(false);
-            alert('Modificacion de categoria correcta');
+            pride(end, colors);
             router.push('/dboard?mc');
             
         }

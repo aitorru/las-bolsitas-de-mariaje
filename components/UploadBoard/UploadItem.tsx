@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { createRef, FormEventHandler, useState } from 'react';
+import pride from '../../utils/pride';
 const ItemForm = dynamic(() => import('./ItemForm'));
 
 type Categories = {
@@ -43,16 +44,21 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
                 body.append('image', files[0]);
             }
         }
+        const end = Date.now() + (500);
+        const colors = [
+            Math.floor(Math.random()*16777215).toString(16), 
+            Math.floor(Math.random()*16777215).toString(16)
+        ];
         const status = await axios.post('/api/upload', body);
         if (status.status === 200){ 
             setIsUploading(false);
-            alert('Subida correcta');
+            pride(end, colors);
             router.push('/dboard');
 
         } else {
             if((await axios.post('/api/upload', body)).status === 200){
                 setIsUploading(false);
-                alert('Subida correcta');
+                pride(end, colors);
                 router.push('/dboard');
                 return;
             }
