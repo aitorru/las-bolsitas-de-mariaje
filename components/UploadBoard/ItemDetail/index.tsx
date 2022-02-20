@@ -96,7 +96,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     };
     return (
         <div className='flex flex-col'>
-            <div className='grid grid-cols-4 p-10 mt-2 rounded-xl'>
+            <div className='grid grid-cols-4 p-10 mt-2 rounded-xl items-center'>
                 <img className=''
                     alt={item.nombre}
                     ref={imageTag}

@@ -18,13 +18,13 @@ const Product: NextPage<Props> = ({categories}) => {
                 <h1 className='text-4xl md:text-6xl text-center font-semibold'>¿Quieres contactar conmigo?</h1>
                 <h2 className='text-3xl md:text-5xl text-center text-ellipsis'>Por correo electrónico</h2>
                 <a 
-                    href="mailto:lasbolsitasdemariaje@gmail.com" 
+                    href={'mailto:lasbolsitasdemariaje@gmail.com?subject=Contacto&body=' +  encodeURIComponent('Hola Mariaje,')}
                     className='w-[98%] md:w-full mx-auto text-lg md:text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform'>
                     lasbolsitasdemariaje@gmail.com<Mail />
                 </a>
                 <h2 className='text-3xl  md:text-5xl text-center text-ellipsis'>o por whatsapp</h2>
                 <a 
-                    href={'https://wa.me/34697820927/?text=Hola!'}
+                    href={'https://wa.me/34697820927/?text=' + encodeURIComponent('Hola Mariaje,')}
                     target="_blank" 
                     className='w-[98%] md:w-full mx-auto text-xl md:text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
                     rel="noreferrer">
