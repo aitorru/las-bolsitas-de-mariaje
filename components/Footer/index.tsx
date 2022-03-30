@@ -11,7 +11,7 @@ const Footer: NextPage = () => {
                     <PhoneIcon />
                 </a>
             </div>
-            <h1 className='text-center text-md text-white'>Hecho con ♥️ por <a className='underline' href='https://github.com/aitorru'>Aitor Ruiz /</a></h1>
+            <h1 className='text-center text-md text-white'>Hecho con ♥️ por <a className='underline' href='https://github.com/aitorru'>Aitor Ruiz</a></h1>
         </div>
     );
 };
