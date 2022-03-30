@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             categories: await getCategories(),
             items: await getItems(context),
         },
-        revalidate: 86400, // In seconds
+        revalidate:  3600, // In seconds
     };
 };
 

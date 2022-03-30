@@ -24,7 +24,8 @@ const FullItem: NextPage<Props> = ({item}) => {
                 </div>
             </div>
             <div className='flex flex-col gap-10 justify-center mx-auto w-11/12'>
-                <h1 className='text-center text-5xl md:text-6xl text-ellipsis font-bold'>{item.nombre}</h1>
+                <h1 className='text-center text-4xl md:text-5xl text-ellipsis font-bold'>{item.nombre}</h1>
+                <h2 className='text-center text-xl text-ellipsis font-medium'>{item.descripcion}</h2>
                 <h2 className='text-center text-4xl font-semibold border-t-2 border-b-2 py-2 border-black/20'>{item.precio} €</h2>
                 <a 
                     href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'}
