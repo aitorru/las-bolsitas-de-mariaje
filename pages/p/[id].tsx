@@ -109,7 +109,7 @@ async function getItem(
             image: doc.data().image,
             categoria: doc.data().categoria,
             precio: doc.data().precio,
-            descripcion: doc.data().descripcion || '',
+            descripcion: doc.data().descripcion,
             blur: '',
         });
     });

@@ -84,7 +84,7 @@ async function getItems(): Promise<Item[]> {
                 nombre: docSnap.data().nombre,
                 image: docSnap.data().image,
                 precio: docSnap.data().precio,
-                descripcion: docSnap.data().descripction || '',
+                descripcion: docSnap.data().descripction,
                 blur: ''
             };
         } else {
