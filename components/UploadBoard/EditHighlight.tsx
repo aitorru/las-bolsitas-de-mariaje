@@ -37,7 +37,6 @@ const EditHighLight: NextPage<Props> = ({items, highlights}) => {
         const p6: HTMLSelectElement = e.target[5];
 
         console.log(p1.value, p2.value, p3.value, p4.value, p5.value, p6.value);
-
         const status = await axios.post('/api/highlight/modify', {
             p1: await findItemID(items, p1.value),
             p2: await findItemID(items, p2.value),
@@ -46,6 +45,7 @@ const EditHighLight: NextPage<Props> = ({items, highlights}) => {
             p5: await findItemID(items, p5.value),
             p6: await findItemID(items, p6.value),
         });
+        axios.post('/api/revalidate', {route: '/'});
         const end = Date.now() + (500);
         const colors = [
             Math.floor(Math.random()*16777215).toString(16), 

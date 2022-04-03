@@ -34,6 +34,5 @@ export default async function handler(
         const ref =  db.collection('highlight').doc(up.id);
         await ref.update({refID: up.refID});
     }));
-    await res.unstable_revalidate('/');
     res.status(200).json({ status: 200 });
 }

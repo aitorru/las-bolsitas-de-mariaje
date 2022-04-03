@@ -15,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const ref = await db.collection('categorias').doc(origin);
     // Update the category name
     await ref.update({nombre: destination});
-    await res.unstable_revalidate('/');
     res.status(200).json({ status: 200 });
     
 }

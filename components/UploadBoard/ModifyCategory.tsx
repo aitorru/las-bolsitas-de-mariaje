@@ -58,7 +58,12 @@ const ModifyCategory: NextPage<Props> = ({categories, items}) => {
             Math.floor(Math.random()*16777215).toString(16), 
             Math.floor(Math.random()*16777215).toString(16)
         ];
+        
         const status = await axios.post('/api/category/modify',{ origin: id, destination: categoryNameRef.current?.value });
+        categories.forEach(category => {
+            if(category.nombre !== id) axios.post('/api/revalidate', {route: `/c/${category.nombre}`});
+        });
+        axios.post('/api/revalidate', {route: '/'});
         if (status.status === 200) {
             router.prefetch('/dboard?mc');
             setisUploading(false);

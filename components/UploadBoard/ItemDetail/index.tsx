@@ -40,6 +40,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const handleDelete = async () => {
         const proceed = confirm('Vas a borrar (' + item.nombre  + '). ¿Quieres continuar?');
         if (proceed) {
+            axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
             const status = await axios.post('/api/delete', {id: item.id});
             if(status.status === 200 ) {
                 router.push('/dboard?ma');
@@ -71,13 +72,20 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
             }
         }
         const status = await axios.post('/api/modify', body);
+        // Always revalidate the product page
+        axios.post('/api/revalidate', {route: `/p/${nameForm.current?.value || item.nombre}`});
+        if(categoryForm.current?.value !== item.categoria) {
+            axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
+            axios.post('/api/revalidate', {route: `/c/${categoryForm.current?.value}`});
+        }
         const end = Date.now() + (500);
         const colors = [
             Math.floor(Math.random()*16777215).toString(16), 
             Math.floor(Math.random()*16777215).toString(16)
         ];
         //const status = await fetch('/api/modify', {method: 'POST', body});
-        if (status.status === 200){ 
+        if (status.status === 200){
+            
             setIsUploading(false);
             pride(end, colors);
             router.push('/dboard?ma', '', {scroll: false});
