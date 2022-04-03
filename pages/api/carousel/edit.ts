@@ -57,6 +57,7 @@ export default async function handler(
                         // Update firebase to end
                         ref.update({image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename});
                     }
+                    await res.unstable_revalidate('/');
                     res.status(200).json({ status: 200 });
                     return resolve('ok');
                 });

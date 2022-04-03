@@ -24,7 +24,7 @@ export default async function handler(
         {p1: Item, p2: Item, p3: Item, p4: Item, p5: Item, p6: Item } 
         = req.body;
         console.log(p1, p2, p3, p4, p5, p6);
-        // Make it simples making it an array
+        // Make it simpler making it an array
         const clientData = [p1, p2, p3, p4, p5, p6];
         let index = 0;
         const snapshot = await db.collection('highlight').orderBy('pos').get();
@@ -44,6 +44,7 @@ export default async function handler(
             const ref =  db.collection('highlight').doc(up.id);
             await ref.update({refID: up.refID});
         }));
+        await res.unstable_revalidate('/');
         res.status(200).json({ status: 200 });
     }
 }

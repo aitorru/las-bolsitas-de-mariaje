@@ -47,6 +47,9 @@ export default async function handler(
                             precio: fields.price
                         }
                     );
+                res.unstable_revalidate('/c/' + fields.category);	
+                // https://nextjs.org/blog/next-12-1
+                // https://vercel.com/docs/concepts/next.js/incremental-static-regeneration#on-demand-revalidation-(beta)
                 res.status(200).json({ status: 200 });
                 return resolve('ok');
             });

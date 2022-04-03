@@ -2,6 +2,7 @@ import Router from 'next/router';
 import Cookies from 'js-cookie';
 
 import jwt from 'jsonwebtoken';
+// import jwt from '@tsndr/cloudflare-worker-jwt';
 
 const SECRET_KEY = process.env.JWT_KEY;
 
@@ -9,8 +10,9 @@ const SECRET_KEY = process.env.JWT_KEY;
  * @params {jwtToken} extracted from cookies
  * @return {object} object of extracted token
  */
-export function verifyToken(jwtToken) {
+export async function verifyToken(jwtToken) {
     try {
+	
         return jwt.verify(jwtToken, SECRET_KEY);
     } catch (e) {
         console.log('e:', e);
