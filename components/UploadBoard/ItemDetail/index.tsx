@@ -73,8 +73,8 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         }
         const status = await axios.post('/api/modify', body);
         // Always revalidate the product page
-        axios.post('/api/revalidate', {route: `/p/${nameForm.current?.value || item.nombre}`});
-        if(categoryForm.current?.value !== item.categoria) {
+        axios.post('/api/revalidate', {route: `/p/${body.get('name') || item.nombre}`});
+        if(body.get('category') !== item.categoria) {
             console.log(categoryForm.current?.value, item.categoria);
             axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
             axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});

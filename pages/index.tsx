@@ -45,11 +45,18 @@ const Home: NextPage<Props> = (props) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
+    const [items, categories, carousel] = await Promise.all(
+        [
+            getItems(),
+            getCategories(),
+            getCarousel()
+        ]
+    );
     return {
         props: {
-            items: await getItems(),
-            categories: await getCategories(),
-            carousel: await getCarousel(),
+            items,
+            categories,
+            carousel,
         }, // will be passed to the page component as props
     };
 };

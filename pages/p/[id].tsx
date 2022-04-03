@@ -63,10 +63,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+    const [ categories, item ] = await Promise.all(
+        [
+            getCategories(), getItem(context)
+        ]
+    );
     return {
         props: {
-            categories: await getCategories(),
-            item: await getItem(context),
+            categories,
+            item,
         },
     };
 };

@@ -53,10 +53,16 @@ const CategoryName: NextPage<Props> = ({ categories, items }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+    const [categories, items] = await Promise.all(
+        [
+            getCategories(), 
+            getItems(context)
+        ]
+    );
     return {
         props: {
-            categories: await getCategories(),
-            items: await getItems(context),
+            categories,
+            items,
         },
     };
 };
