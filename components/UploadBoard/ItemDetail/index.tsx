@@ -75,8 +75,9 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         // Always revalidate the product page
         axios.post('/api/revalidate', {route: `/p/${nameForm.current?.value || item.nombre}`});
         if(categoryForm.current?.value !== item.categoria) {
+            console.log(categoryForm.current?.value, item.categoria);
             axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
-            axios.post('/api/revalidate', {route: `/c/${categoryForm.current?.value}`});
+            axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
         }
         const end = Date.now() + (500);
         const colors = [
