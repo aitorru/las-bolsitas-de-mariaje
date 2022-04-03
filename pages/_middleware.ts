@@ -23,5 +23,13 @@ export async function middleware(req: NextRequest) {
         }
         return NextResponse.redirect('/fire');
     }
+    if (req.nextUrl.pathname.startsWith('/api') && !req.nextUrl.pathname.startsWith('/api/login')) {
+        if(req.cookies.token) {
+            if(await jwt.verify(req.cookies.token.split(' ')[1], SECRET_KEY)) {
+                return NextResponse.next();
+            }
+        }
+        return NextResponse.error();
+    }
     return NextResponse.next();
 }
