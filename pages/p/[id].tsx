@@ -23,18 +23,18 @@ const Product: NextPage<Props> = ({categories, item}) => {
 
     if (router.isFallback) {
         return (
-            <div className='min-h-screen flex flex-col'>
+            <div className='flex flex-col min-h-screen'>
                 <Head>
                     <title>{id}</title>
                 </Head>
                 <Header categories={[{nombre: 'Cargando...'}]} />
-                <h1 className='text-center text-5xl'>Cargando...</h1>
+                <h1 className='text-5xl text-center'>Cargando...</h1>
             </div>
         );
     }
 
     return (
-        <div className='min-h-screen max-h-screen flex flex-col'>
+        <div className='flex flex-col max-h-screen min-h-screen'>
             <Head>
                 <title>{id}</title>
             </Head>
@@ -73,6 +73,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             categories,
             item,
         },
+        revalidate: 86400,
     };
 };
 

@@ -26,12 +26,12 @@ const Home: NextPage<Props> = (props) => {
                 <title>Las bolsitas de Mariaje</title>
                 <meta name="robots" content="index"/>
             </Head>
-            <div className="md:min-h-screen flex flex-col">
+            <div className="flex flex-col md:min-h-screen">
                 <Header categories={props.categories} />
                 <Hero />
             </div>
             <div className='flex flex-col md:gap-10'>
-                <h1 className="text-4xl md:text-6xl font-bold text-center py-5 text-ellipsis">
+                <h1 className="py-5 text-4xl font-bold text-center md:text-6xl text-ellipsis">
                     Promociones
                 </h1>
                 <CarouselElement carousel={props.carousel} />
@@ -58,6 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
             categories,
             carousel,
         }, // will be passed to the page component as props
+        revalidate: 86400,
     };
 };
 

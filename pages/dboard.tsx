@@ -114,7 +114,7 @@ const DBoard: NextPage<Props> = (
                 <title>Board</title>
                 <meta name="robots" content="nofollow"/>
             </Head>
-            <div className="flex flex-row bg-blue-700/50 shadow shadow-blue-700/50 m-5 rounded-2xl">
+            <div className="flex flex-row m-5 shadow bg-blue-700/50 shadow-blue-700/50 rounded-2xl">
                 <PageSelector
                     name="Subir articulo"
                     selected={subirArticuloSelected}
@@ -241,12 +241,20 @@ const DBoard: NextPage<Props> = (
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
+    const [ categories, items, highlights, carousel ] = await Promise.all(
+        [
+            getCategories(),
+            getItems(),
+            getHighlight(),
+            getCarousel(),
+        ]
+    );
     return {
         props: {
-            categories: await getCategories(),
-            items: await getItems(),
-            highlights: await getHighlight(),
-            carousel: await getCarousel(),
+            categories,
+            items,
+            highlights,
+            carousel,
         },
     };
 };
@@ -340,14 +348,14 @@ const PageSelector: NextPage<PropsPageSelector> = ({
 }) => {
     if (selected) {
         return (
-            <h1 className="bg-blue-600 p-3 shadow-lg shadow-blue-600/50 text-white rounded-xl m-2">
+            <h1 className="p-3 m-2 text-white bg-blue-600 shadow-lg shadow-blue-600/50 rounded-xl">
                 {name}
             </h1>
         );
     }
     return (
         <h1
-            className="bg-blue-300 p-3 shadow-sm shadow-blue-300/50 text-white rounded-xl m-2 cursor-pointer"
+            className="p-3 m-2 text-white bg-blue-300 cursor-pointer shadow-sm shadow-blue-300/50 rounded-xl"
             onClick={onClick}>
             {name}
         </h1>

@@ -64,6 +64,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
             categories,
             items,
         },
+        revalidate: 86400,
     };
 };
 
