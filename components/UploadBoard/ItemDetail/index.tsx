@@ -44,8 +44,8 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const handleDelete = async () => {
         const proceed = confirm('Vas a borrar (' + item.nombre  + '). ¿Quieres continuar?');
         if (proceed) {
-            axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
             const status = await axios.post('/api/delete', {id: item.id});
+            axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
             if(status.status === 200 ) {
                 router.push('/dboard?ma');
             }
@@ -78,6 +78,9 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         const status = await axios.post('/api/modify', body);
         // Always revalidate the product page
         axios.post('/api/revalidate', {route: `/p/${body.get('name') || item.nombre}`});
+        if(body.get('name') !== item.nombre) {
+            axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
+        }
         if(body.get('category') !== item.categoria) {
             console.log(categoryForm.current?.value, item.categoria);
             axios.post('/api/revalidate', {route: `/c/${item.categoria}`});

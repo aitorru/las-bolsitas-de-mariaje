@@ -51,9 +51,9 @@ const DeleteCategory: NextPage<Props> = ({categories, items}) => {
         }
 
         setisUploading(true);
+        const status = await axios.post('/api/category/delete',{ id: id });
         categories.forEach(category => axios.post('/api/revalidate', {route: `/c/${category.nombre}`}));
         axios.post('/api/revalidate', {route: '/'});
-        const status = await axios.post('/api/category/delete',{ id: id });
         if (status.status === 200) {
             router.prefetch('/dboard?bc');
             setisUploading(false);
