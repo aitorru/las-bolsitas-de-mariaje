@@ -36,7 +36,7 @@ export default async function handler(
                 .add(
                     {
                         image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename,
-                        imageUrl: url,
+                        imageUrl: url[0],
                         blur: plaiceholder,
                         nombre: fields.name,
                         categoria: fields.category,
@@ -59,7 +59,7 @@ async function blurAndScaleDown(path: string): Promise<string> {
             // TODO: Find the right values
             image.resize(image.getWidth() / 5, image.getHeight() / 5);
             image.quality(30);
-            image.gaussian(10);
+            image.blur(10);
             image.getBase64(Jimp.MIME_JPEG, (err, base64) => {
                 if(err) reject(err);
                 resolve(base64);

@@ -90,9 +90,10 @@ async function getItems(): Promise<Item[]> {
                 categoria: docSnap.data().categoria,
                 nombre: docSnap.data().nombre,
                 image: docSnap.data().image,
+                imageUrl: docSnap.data().imageUrl || '',
                 precio: docSnap.data().precio,
                 descripcion: docSnap.data().descripcion,
-                blur: ''
+                blur: docSnap.data().blur || '',
             };
         } else {
             return {
@@ -100,6 +101,7 @@ async function getItems(): Promise<Item[]> {
                 categoria: '',
                 nombre: '',
                 image: 'gs://las-bolsitas-de-mariaje.appspot.com/220px-Red_X.svg.png',
+                imageUrl: '',
                 precio: '-',
                 descripcion: '',
                 blur: '',
@@ -122,10 +124,14 @@ async function getItems(): Promise<Item[]> {
     }
     );
     const result: Item[] = await Promise.all(items.map(async (item) => {
+        if (item.imageUrl !== '') {
+            return item;
+        }
         return {
             id: item.id,
             nombre: item.nombre,
-            image: await getUrlFromRef(storage, item.image),
+            image: item.image,
+            imageUrl: await getUrlFromRef(storage, item.image),
             categoria: item.categoria,
             precio: item.precio,
             descripcion: item.descripcion,
@@ -134,11 +140,15 @@ async function getItems(): Promise<Item[]> {
     }));
     const whithPlaceHolder: Item[] = await Promise.all(
         result.map(async (item) => {
+            if(item.blur !== '') {
+                return item;
+            }
             return {
                 id: item.id,
                 nombre: item.nombre,
                 image: item.image,
-                blur: (await getPlaiceholder(item.image)).base64,
+                imageUrl: item.imageUrl,
+                blur: (await getPlaiceholder(item.imageUrl)).base64,
                 categoria: item.categoria,
                 precio: item.precio,
                 descripcion: item.descripcion
@@ -189,23 +199,32 @@ async function getCarousel(): Promise<Carousel[]> {
             id: doc.id,
             pos: doc.data().pos,
             image: doc.data().image,
-            blur: '',
+            imageUrl: doc.data().imageUrl || '',
+            blur: doc.data().blur || '',
         });
     });
     const result: Carousel[] = await Promise.all(carousel.map(async (item) => {
+        if(item.imageUrl !== '') {
+            return item;
+        }
         return {
             id: item.id,
-            image: await getUrlFromRef(storage, item.image),
+            image: item.image,
+            imageUrl: await getUrlFromRef(storage, item.image),
             blur: item.blur,
             pos: item.pos
         };
     }));
     const whithPlaceHolder: Carousel[] = await Promise.all(
         result.map(async (item) => {
+            if(item.blur !== '') {
+                return item;
+            }
             return {
                 id: item.id,
                 image: item.image,
-                blur: (await getPlaiceholder(item.image)).base64,
+                imageUrl: item.imageUrl,
+                blur: (await getPlaiceholder(item.imageUrl)).base64,
                 pos: item.pos
 
             };

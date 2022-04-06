@@ -8,14 +8,14 @@ interface Props {
 
 const FullItem: NextPage<Props> = ({item}) => {
     return (
-        <div className='container mx-auto grid md:grid-cols-2 gap-5 my-5 h-full max-h-full flex-grow justify-center items-center'>
+        <div className='container items-center justify-center flex-grow h-full max-h-full mx-auto my-5 grid md:grid-cols-2 gap-5'>
             <div className='relative w-[90%] min-h-[20rem] md:h-[80%] md:w-[80%] mx-auto'>
-                <div className='h-full w-auto'>
+                <div className='w-auto h-full'>
                     <Image
                         className='shadow-2xl'
                         priority
                         alt={item.nombre}
-                        src={item.image}
+                        src={item.imageUrl}
                         placeholder='blur'
                         blurDataURL={item.blur}
                         layout={'fill'}
@@ -23,14 +23,14 @@ const FullItem: NextPage<Props> = ({item}) => {
                     />
                 </div>
             </div>
-            <div className='flex flex-col gap-10 justify-center mx-auto w-11/12'>
-                <h1 className='text-center text-4xl md:text-5xl text-ellipsis font-bold'>{item.nombre}</h1>
-                <h2 className='text-center text-xl text-ellipsis font-medium'>{item.descripcion}</h2>
-                <h2 className='text-center text-4xl font-semibold border-t-2 border-b-2 py-2 border-black/20'>{item.precio} €</h2>
+            <div className='flex flex-col justify-center w-11/12 mx-auto gap-10'>
+                <h1 className='text-4xl font-bold text-center md:text-5xl text-ellipsis'>{item.nombre}</h1>
+                <h2 className='text-xl font-medium text-center text-ellipsis'>{item.descripcion}</h2>
+                <h2 className='py-2 text-4xl font-semibold text-center border-t-2 border-b-2 border-black/20'>{item.precio} €</h2>
                 <a 
                     href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'}
                     target="_blank" 
-                    className='text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-2xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
+                    className='flex flex-row items-center justify-center px-10 py-3 mb-5 text-4xl font-bold text-center text-white bg-blue-700 shadow-2xl md:mb-0 shadow-blue-700/50 rounded-2xl hover:-translate-y-2 transition-transform' 
                     rel="noreferrer">Contactar<Phone /></a>
             </div>
         </div>

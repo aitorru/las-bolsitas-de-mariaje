@@ -305,11 +305,12 @@ async function getItems(): Promise<Item[]> {
         items.push({
             nombre: doc.data().nombre,
             image: doc.data().image,
+            imageUrl: doc.data().imageUrl || '',
             categoria: doc.data().categoria,
             precio: doc.data().precio,
             descripcion: doc.data().descripcion || '',
             id: doc.id,
-            blur: '',
+            blur: doc.data().blur || '',
         });
     });
     return items;
@@ -329,7 +330,8 @@ async function getCarousel(): Promise<Carousel[]> {
             id: doc.id,
             pos: doc.data().pos,
             image: doc.data().image,
-            blur: '',
+            imageUrl: doc.data().imageUrl,
+            blur: doc.data().imageUrl,
         });
     });
     return carousel;

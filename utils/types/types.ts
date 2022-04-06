@@ -4,7 +4,7 @@ type Item = {
     descripcion:   string;
     nombre:        string;
     image:         string;
-    imageUrl?:     string;
+    imageUrl:     string;
     precio:        string;
     blur:          string;
 };
@@ -18,10 +18,11 @@ type Highlight = {
     pos:    number;
 };
 type Carousel = {
-    id:     string;
-    image:  string;
-    blur:   string;
-    pos:    number;
+    id:     	string;
+    image:  	string;
+    imageUrl: 	string;
+    blur:   	string;
+    pos:    	number;
 }
 export type {
     Item,

@@ -26,6 +26,10 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const textAreaForm = createRef<HTMLTextAreaElement>();
     const [ isUploading, setIsUploading ] = useState<boolean>(false);
     useEffect(() => {
+        if (item.imageUrl !== '') {
+            imageTag.current?.setAttribute('src', item.imageUrl);
+            return;
+        }
         const storage = getStorage(app);
         const reference = ref(storage, item.image);
         getDownloadURL(reference).then((url) => {
@@ -105,7 +109,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     };
     return (
         <div className='flex flex-col'>
-            <div className='grid grid-cols-4 p-10 mt-2 rounded-xl items-center'>
+            <div className='items-center p-10 mt-2 grid grid-cols-4 rounded-xl'>
                 <img className=''
                     alt={item.nombre}
                     ref={imageTag}
@@ -126,7 +130,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                     />
                 </div>
             </div>
-            <button onClick={handleDelete} className='mb-4 bg-red-600 shadow-lg shadow-red-600/50 p-2 rounded-2xl text-white font-bold text-2xl hover:-translate-y-1 transition-transform'>Borrar</button>
+            <button onClick={handleDelete} className='p-2 mb-4 text-2xl font-bold text-white bg-red-600 shadow-lg shadow-red-600/50 rounded-2xl hover:-translate-y-1 transition-transform'>Borrar</button>
         </div>
     );
 };
