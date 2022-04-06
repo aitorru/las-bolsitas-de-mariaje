@@ -50,8 +50,8 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
             Math.floor(Math.random()*16777215).toString(16)
         ];
         // Revalidate the category. The fallback will create the product page
-        axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
         const status = await axios.post('/api/upload', body);
+        axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
         if (status.status === 200){ 
             setIsUploading(false);
             pride(end, colors);

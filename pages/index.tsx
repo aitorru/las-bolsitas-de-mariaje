@@ -58,7 +58,6 @@ export const getStaticProps: GetStaticProps = async () => {
             categories,
             carousel,
         }, // will be passed to the page component as props
-        revalidate: 86400,
     };
 };
 
