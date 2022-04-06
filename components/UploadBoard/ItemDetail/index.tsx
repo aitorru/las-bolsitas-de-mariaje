@@ -39,7 +39,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
             xhr.send();
             imageTag.current?.setAttribute('src', url);
         });
-    }, [imageTag, item.image]);
+    }, [imageTag, item.image, item.imageUrl]);
 
     const handleDelete = async () => {
         const proceed = confirm('Vas a borrar (' + item.nombre  + '). ¿Quieres continuar?');

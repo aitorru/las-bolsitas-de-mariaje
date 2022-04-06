@@ -1,10 +1,5 @@
-/* middleware */
-import {
-    getAppCookies,
-    verifyToken
-} from '../../../middleware/utils';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import db, { bucket } from '../../../utils/db';
+import db from '../../../utils/db';
 import { Item } from '../../../utils/types/types';
 
 export default async function handler(

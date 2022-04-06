@@ -2,7 +2,6 @@ import { NextPage } from 'next';
 import { createRef, FormEventHandler, useState } from 'react';
 import axios from '../../utils/fetch';
 import { useRouter } from 'next/router';
-import ModifyCategoryForm from './CategoryForm/ModifyCategoryForm';
 import DeleteCategoryForm from './CategoryForm/DeleteCategoryForm';
 
 type Categories = {
@@ -27,7 +26,8 @@ const DeleteCategory: NextPage<Props> = ({categories, items}) => {
     const [isUploading, setisUploading] = useState(false);
     const categoryOriginRef = createRef<HTMLSelectElement>();
 
-    const handleCategoryChange: FormEventHandler<HTMLFormElement> = async (event) => {
+    const handleCategoryChange: FormEventHandler<HTMLFormElement> 
+    = async (event) => {
         // meh
         event.preventDefault();
 
@@ -63,7 +63,11 @@ const DeleteCategory: NextPage<Props> = ({categories, items}) => {
         }
     };
 
-    return <DeleteCategoryForm onSubmit={handleCategoryChange} categories={categories} categoryForm={categoryOriginRef} isUploading={isUploading}  />;
+    return <DeleteCategoryForm 
+        onSubmit={handleCategoryChange} 
+        categories={categories} 
+        categoryForm={categoryOriginRef} 
+        isUploading={isUploading}  />;
 };
 
 export default DeleteCategory;

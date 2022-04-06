@@ -124,6 +124,7 @@ const findItemID = async (
             nombre: '',
             categoria: '',
             image: '',
+            imageUrl: '',
             precio: '',
             blur: '',
             descripcion: '',

@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs';
-import axios from '../../utils/fetch';
 import jwt from 'jsonwebtoken';
 import db from '../../utils/db/index';
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -8,7 +7,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 const KEY: string =
   process.env.JWT_KEY === undefined ? '' : process.env.JWT_KEY;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler
+(req: NextApiRequest, res: NextApiResponse) {
     try {
         return await new Promise<void>((resolve, reject) => {
             console.log(req.body);
@@ -43,7 +43,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         return resolve();
                     }
                     if (user) {
-                        const userUsername = user.username, userPassword = user.password;
+                        const userUsername = user.username, 
+                            userPassword = user.password;
                         /* Check and compare password */
                         bcrypt
                             .compare(password, userPassword)

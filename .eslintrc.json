@@ -4,6 +4,7 @@
         "es2021": true,
         "node": true
     },
+    "ignorePatterns": ["/processor/dist/*.js", "/processor/dist/*.js.map"],
     "settings": {
         "react": "detect"
     },

@@ -17,7 +17,7 @@ export const config = {
 export default async function handler(
     req: NextApiRequest, res: NextApiResponse
 ) {
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
         const form = new formidable.IncomingForm();
         form.on('error', console.error);
         form.parse(req, async function (err, fields, files: any) {

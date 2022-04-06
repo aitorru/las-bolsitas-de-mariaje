@@ -15,7 +15,16 @@ interface Props {
     categories: Categories[];
 }
 
-const ModifyCategoryForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, isNameRequired, categories, categoryForm }) => {
+const ModifyCategoryForm: NextPage<Props> = 
+(
+    {
+        onSubmit, 
+        isUploading, 
+        nameForm, 
+        isNameRequired, 
+        categories, 
+        categoryForm 
+    }) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
