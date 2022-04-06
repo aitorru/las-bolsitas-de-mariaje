@@ -64,7 +64,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
             categories,
             items,
         },
-        revalidate: 86400,
     };
 };
 
@@ -90,30 +89,39 @@ async function getItems(
             id: doc.id,
             nombre: doc.data().nombre,
             image: doc.data().image,
+            imageUrl: doc.data().imageUrl || '',
             categoria: doc.data().categoria,
             precio: doc.data().precio,
             descripcion: doc.data().descripcion,
-            blur: '',
+            blur: doc.data().blur || '',
         });
     });
     const result: Item[] = await Promise.all(items.map(async (item) => {
+        if (item.imageUrl !== '') {
+            return item;
+        }
         return {
             id: item.id,
             nombre: item.nombre,
-            image: await getUrlFromRef(storage, item.image),
+            image: item.image,
+            imageUrl: await getUrlFromRef(storage, item.image),
             categoria: item.categoria,
             precio: item.precio,
             descripcion: item.descripcion,
-            blur: '',
+            blur: item.blur,
         };
     }));
     const whithPlaceHolder: Item[] = await Promise.all(
         result.map(async (item) => {
+            if (item.blur !== '') {
+                return item;
+            }
             return {
                 id: item.id,
                 nombre: item.nombre,
                 image: item.image,
-                blur: (await getPlaiceholder(item.image)).base64,
+                imageUrl: item.imageUrl,
+                blur: (await getPlaiceholder(item.imageUrl)).base64,
                 categoria: item.categoria,
                 descripcion: item.descripcion,
                 precio: item.precio,

@@ -2,7 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import db, { bucket } from '../../utils/db';
 import { Item } from '../../utils/types/types';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler
+(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.body;
     const ref = db.collection('articulos').doc(id);
     const doc = await ref.get();

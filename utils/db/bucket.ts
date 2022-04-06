@@ -9,7 +9,10 @@ const serviceAccount = JSON.parse(b64_to_utf8(process?.env?.SECRET_JSON || '' ))
 
 initializeApp({
     credential: cert(serviceAccount),
-    
 });
+const storage = getStorage();
+export default storage.bucket();
+export {
+    storage,
+};
 
-export default getStorage().bucket();

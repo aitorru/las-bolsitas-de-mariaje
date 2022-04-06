@@ -17,7 +17,9 @@ if (!admin.apps.length) {
     }
 }
 const bucket = admin.storage().bucket();
+const storage = admin.storage();
 export default admin.firestore();
 export {
-    bucket
+    bucket,
+    storage,
 };

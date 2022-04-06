@@ -1,10 +1,6 @@
 import { NextPage } from 'next';
 import { FormEventHandler, RefObject } from 'react';
 
-type Categories = {
-    nombre: string;
-};
-
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
     nameForm: RefObject<HTMLInputElement>;
@@ -12,7 +8,8 @@ interface Props {
     isNameRequired?: boolean;
 }
 
-const CategoryForm: NextPage<Props> = ({onSubmit, isUploading, nameForm, isNameRequired }) => {
+const CategoryForm: NextPage<Props> = 
+({onSubmit, isUploading, nameForm, isNameRequired }) => {
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
