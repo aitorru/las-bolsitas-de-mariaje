@@ -42,7 +42,7 @@ const Hero: NextPage = () => {
             </div>
             <a 
                 href='#destacados' 
-                className='hidden lg:flex w-fit mx-auto mb-20 justify-center bg-blue-700 shadow-2xl shadow-blue-700/50 text-white px-10 p-5 rounded-2xl text-lg font-semibold items-center gap-5'>
+                className='hidden lg:flex w-fit mx-auto mb-20 justify-center bg-blue-700 shadow-2xl shadow-blue-700/50 text-white px-10 p-3 rounded-2xl text-3xl font-semibold items-center gap-5 hover:scale-105 transition-transform'>
                 Ver nuestra tienda <Arrow />
             </a>
         </div>
@@ -50,7 +50,7 @@ const Hero: NextPage = () => {
 };
 
 const Arrow = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" className="h-[1.4rem] w-[1.4rem] animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    return <svg xmlns="http://www.w3.org/2000/svg" className="h-[1.8rem] w-[1.8rem] animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l-4 4m0 0l-4-4m4 4V3" />
     </svg>;
 };

@@ -28,7 +28,7 @@ const Product: NextPage<Props> = ({categories, item}) => {
                     <title>{id}</title>
                 </Head>
                 <Header categories={[{nombre: 'Cargando...'}]} />
-                <h1 className='text-5xl text-center'>Cargando...</h1>
+                <LoadingFullPage />
             </div>
         );
     }
@@ -163,3 +163,18 @@ async function getUrlFromRef(
 
 export default Product;
 
+
+function LoadingFullPage() {
+    return (<div className='container items-center justify-center flex-grow h-full max-h-full mx-auto my-5 grid md:grid-cols-2 gap-5'>
+        <div className='relative w-[90%] min-h-[20rem] md:h-[80%] md:w-[80%] mx-auto'>
+            <div className="bg-gray-300 w-96 h-96 animate-pulse rounded-sm opacity-10"></div>
+        </div>
+        <div className='flex flex-col justify-center w-11/12 mx-auto gap-10'>
+            <div className='bg-gray-300 w-full h-12 animate-pulse rounded-sm opacity-10'></div>
+            <div className='bg-gray-300 w-full h-12 animate-pulse rounded-sm opacity-10'></div>
+            <div className='bg-gray-300 w-full h-12 animate-pulse rounded-sm opacity-10'></div>
+            <a className='flex flex-row items-center justify-center px-10 py-3 mb-5 text-4xl font-bold text-center text-white bg-blue-700 opacity-30 cursor-not-allowed shadow-2xl md:mb-0 shadow-blue-700/50 rounded-2xl' rel="noreferrer">...</a>
+        </div>
+    </div>);
+}
+  

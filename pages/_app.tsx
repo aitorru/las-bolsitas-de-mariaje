@@ -51,7 +51,7 @@ const BackToTop: NextPage<{visible: boolean}> = ({ visible }) => {
 
     return (
         <button 
-            className={`sticky h-min z-20 right-6 p-2 rounded-xl bg-blue-700  shadow-blue-700/50 text-white transition-all duration-700 hover:scale-110 ${visible ? 'shadow-xl' : 'scale-0 hover:scale-0'}`}
+            className={`sticky h-min z-20 right-6 p-2 rounded-xl bg-blue-700  shadow-blue-700/50 text-white transition-all duration-700 hover:scale-105 ${visible ? 'shadow-sm' : 'scale-0 opacity-0 hover:scale-0'}`}
             onClick={() => {
                 window.scrollTo({top: 0});
             }}

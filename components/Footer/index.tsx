@@ -11,18 +11,18 @@ const Footer: NextPage = () => {
                     <PhoneIcon />
                 </a>
             </div>
-            <h1 className='text-center text-md text-white'>Hecho con ♥️ por <a className='underline' href='https://github.com/aitorru'>Aitor Ruiz</a></h1>
+            <h1 className='text-center text-md text-white cursor-default'>Hecho con <span className='hover:scale-110 transition-transform duration-400'>♥️</span> por <a className='underline' href='https://github.com/aitorru'>Aitor Ruiz</a></h1>
         </div>
     );
 };
 
 const FaceBookIcon = () => {
-    return <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='h-8 md:h-11'>
+    return <svg fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className='h-8 md:h-11 hover:scale-110 transition-transform duration-400'>
         <path d="M 5 3 C 3.897 3 3 3.897 3 5 L 3 19 C 3 20.103 3.897 21 5 21 L 11.621094 21 L 14.414062 21 L 19 21 C 20.103 21 21 20.103 21 19 L 21 5 C 21 3.897 20.103 3 19 3 L 5 3 z M 5 5 L 19 5 L 19.001953 19 L 14.414062 19 L 14.414062 15.035156 L 16.779297 15.035156 L 17.130859 12.310547 L 14.429688 12.310547 L 14.429688 10.574219 C 14.429687 9.7862188 14.649297 9.2539062 15.779297 9.2539062 L 17.207031 9.2539062 L 17.207031 6.8222656 C 16.512031 6.7512656 15.814234 6.71675 15.115234 6.71875 C 13.041234 6.71875 11.621094 7.9845938 11.621094 10.308594 L 11.621094 12.314453 L 9.2773438 12.314453 L 9.2773438 15.039062 L 11.621094 15.039062 L 11.621094 19 L 5 19 L 5 5 z"/>
     </svg>;
 };
 const PhoneIcon = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" className="h-8 md:h-11" fill="none" viewBox="0 0 24 24" stroke="#ffffff">
+    return <svg xmlns="http://www.w3.org/2000/svg" className="h-8 md:h-11 hover:scale-110 transition-transform duration-400" fill="none" viewBox="0 0 24 24" stroke="#ffffff">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
     </svg>;
 };

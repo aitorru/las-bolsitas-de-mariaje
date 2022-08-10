@@ -34,7 +34,7 @@ const Card: NextPage<Props> = ({ nombre, image, blur }) => {
                 {nombre}
             </h1>
             <Link passHref href={'/p/' + nombre}>
-                <a className="flex flex-row justify-center w-4/5 py-3 mx-auto mt-auto font-semibold text-center text-white bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl hover:-translate-y-1 transition-transform">
+                <a className="flex flex-row justify-center w-4/5 py-3 mx-auto mt-auto font-semibold text-center text-white bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl hover:scale-105 transition-transform">
                 Más información<Plus />
                 </a>
             </Link>
