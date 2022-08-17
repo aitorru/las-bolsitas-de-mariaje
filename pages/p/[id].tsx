@@ -119,12 +119,10 @@ async function getItem(
             blur: doc.data().blur || '',
         });
     });
+    console.log(items);
     if(items[0].blur && items[0].imageUrl) {
-        console.log('DB blur working', items[0]);
         return items[0];
     }
-    
-    console.log('DB blur NOT working', items[0]);
     const result: Item[] = await Promise.all(items.map(async (item) => {
         return {
             id: item.id,

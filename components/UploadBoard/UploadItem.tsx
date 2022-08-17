@@ -28,7 +28,7 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
 
         setIsUploading(true);
         const body = new FormData();
-        body.append('name', nameForm.current?.value || '');
+        body.append('name', nameForm.current?.value.replace(/\s+/g, ' ').trim() || '');
         body.append('category', categoryForm.current?.value || '');
         body.append('price', priceForm.current?.value || '');
         body.append('descripcion', textAreaForm.current?.value || '');

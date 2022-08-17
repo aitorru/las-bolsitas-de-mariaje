@@ -20,8 +20,8 @@ type Highlight = {
 type Carousel = {
     id:     	string;
     image:  	string;
-    imageUrl: 	string;
-    blur:   	string;
+    imageUrl?: 	string;
+    blur?:   	string;
     pos:    	number;
 }
 export type {

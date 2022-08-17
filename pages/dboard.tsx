@@ -317,6 +317,7 @@ async function getItems(): Promise<Item[]> {
 }
 
 async function getCarousel(): Promise<Carousel[]> {
+    // TODO: Carousel is not blured in the db
     const db = (await import('../utils/db/webDB')).default;
     const { collection, getDocs, query, orderBy } = await import(
         'firebase/firestore/lite'
@@ -330,8 +331,8 @@ async function getCarousel(): Promise<Carousel[]> {
             id: doc.id,
             pos: doc.data().pos,
             image: doc.data().image,
-            imageUrl: doc.data().imageUrl,
-            blur: doc.data().imageUrl,
+            imageUrl: doc.data().imageUrl || '',
+            blur: doc.data().imageUrl || '',
         });
     });
     return carousel;
