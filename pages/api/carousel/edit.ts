@@ -27,7 +27,6 @@ export default async function handler(
             const {
                 image,
             } = doc.data() as Carousel;
-            console.log(fields, doc.data());
             if(Object.keys(files).length !== 0) {
                 console.log('Updating image...');
                 // Get rid of gs://las-bolsitas-de-mariaje.appspot.com/ 61qv3+vfz3L._AC_UX385_.jpg

@@ -223,7 +223,7 @@ async function getCarousel(): Promise<Carousel[]> {
                 id: item.id,
                 image: item.image,
                 imageUrl: item.imageUrl,
-                blur: (await getPlaiceholder(item.imageUrl)).base64,
+                blur: (await getPlaiceholder(item.imageUrl == undefined ? '' : item.imageUrl)).base64,
                 pos: item.pos
 
             };

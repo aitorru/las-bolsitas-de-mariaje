@@ -119,7 +119,6 @@ async function getItem(
             blur: doc.data().blur || '',
         });
     });
-    console.log(items);
     if(items[0].blur && items[0].imageUrl) {
         return items[0];
     }
