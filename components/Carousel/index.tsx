@@ -21,7 +21,7 @@ const CarouselElement: NextPage<Props> = ({carousel}) => {
                                 className='h-full shrink-0' 
                                 placeholder='blur'
                                 blurDataURL={item.blur}
-                                src={item.imageUrl}/>
+                                src={item.imageUrl == undefined ? '' : item.imageUrl}/>
                         </div>
 
                         )
