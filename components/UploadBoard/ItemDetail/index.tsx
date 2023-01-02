@@ -67,10 +67,10 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
         body.append('descripcion', textAreaForm.current?.value || '');
         const files = imageForm.current?.files;
         if (files === null) {
-            console.log('Empty');
+            //
         } else {
             if(files === undefined){
-                console.log('Empty');
+                //
             } else {
                 body.append('image', files[0]);
             }
@@ -82,7 +82,6 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
             axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
         }
         if(body.get('category') !== item.categoria) {
-            console.log(categoryForm.current?.value, item.categoria);
             axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
             axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
         }

@@ -8,7 +8,6 @@ export default async function handler(
     const { p1, p2, p3, p4, p5, p6 }: 
         {p1: Item, p2: Item, p3: Item, p4: Item, p5: Item, p6: Item } 
         = req.body;
-    console.log(p1, p2, p3, p4, p5, p6);
     // Make it simpler making it an array
     const clientData = [p1, p2, p3, p4, p5, p6];
     let index = 0;

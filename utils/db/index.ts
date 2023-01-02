@@ -13,7 +13,7 @@ if (!admin.apps.length) {
             storageBucket: 'gs://las-bolsitas-de-mariaje.appspot.com'
         });
     } catch (error: any) {
-        console.log('Firebase admin initialization error', error.stack);
+        //
     }
 }
 const bucket = admin.storage().bucket();
