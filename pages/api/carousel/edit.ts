@@ -21,14 +21,13 @@ export default async function handler(
         const form = new formidable.IncomingForm();
         form.on('error', console.error);
         form.parse(req, async function (err, fields, files: any) {
-            if (err) console.log(err);
+            // if (err) # console.log(err);
             const ref = db.collection('carousel').doc(fields.id as string);
             const doc = await ref.get();
             const {
                 image,
             } = doc.data() as Carousel;
             if(Object.keys(files).length !== 0) {
-                console.log('Updating image...');
                 // Get rid of gs://las-bolsitas-de-mariaje.appspot.com/ 61qv3+vfz3L._AC_UX385_.jpg
                 const sliced = image.split('/');
                 const file = bucket.file(files.image.originalFilename);

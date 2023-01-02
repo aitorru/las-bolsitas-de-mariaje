@@ -23,7 +23,7 @@ export default async function handler(
         form.parse(req, 
             async function 
             (err: string, fields: formidable.Fields, files: any) {
-                if (err) console.log(err);
+                //if (err) # console.log(err);
                 const ref = db.collection('articulos').doc(fields.id as string);
                 const doc = await ref.get();
                 const { 
@@ -32,26 +32,20 @@ export default async function handler(
                     precio,
                     descripcion,
                 } = doc.data() as Item;
-                console.log(fields, doc.data());
                 if (fields.name !== '') {
                 // If name is changed, update c p.
-                    console.log('Updating name...');
                     ref.update({nombre: fields.name});
                 }
                 if(fields.category !== categoria) {
-                    console.log('Updating category...');
                     ref.update({categoria: fields.category});
                 }
                 if(fields.price !== precio && fields.price !== '') {
-                    console.log('Updating price');
                     ref.update({precio: fields.price});
                 }
                 if(fields.descripcion !== descripcion) {
-                    console.log('Updating description');
                     ref.update({descripcion: fields.descripcion});
                 }
                 if(Object.keys(files).length !== 0) {
-                    console.log('Updating image...');
                     // Get rid of gs://las-bolsitas-de-mariaje.appspot.com/ 61qv3+vfz3L._AC_UX385_.jpg
                     const sliced = image.split('/');
                     // Operate as normal

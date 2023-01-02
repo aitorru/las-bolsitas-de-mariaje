@@ -36,7 +36,6 @@ const EditHighLight: NextPage<Props> = ({items, highlights}) => {
         // @ts-ignore
         const p6: HTMLSelectElement = e.target[5];
 
-        console.log(p1.value, p2.value, p3.value, p4.value, p5.value, p6.value);
         const status = await axios.post('/api/highlight/modify', {
             p1: await findItemID(items, p1.value),
             p2: await findItemID(items, p2.value),
@@ -88,7 +87,7 @@ NextPage<{hl: Highlight, items: Item[]}> = (
     const [value, setvalue] = useState('');
     useEffect(() => {
         getNameFromID(hl.refID)
-            .then(name => {setvalue(name); console.log('Setting ' + name);});
+            .then(name => {setvalue(name);});
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (

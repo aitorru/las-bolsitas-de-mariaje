@@ -16,27 +16,29 @@ const Card: NextPage<Props> = ({ nombre, image, blur }) => {
             <div>
                 <div className='relative h-[20rem]'>
                     <Link passHref href={'/p/' + nombre}>
-                        <a>
-                            <Image
-                                className="rounded-xl"
-                                alt={nombre}
-                                src={image}
-                                placeholder='blur'
-                                blurDataURL={blur}
-                                layout={'fill'} 
-                                objectFit={'contain'}
-                            />
-                        </a>
+
+                        <Image
+                            className="rounded-xl"
+                            alt={nombre}
+                            src={image}
+                            placeholder='blur'
+                            blurDataURL={blur}
+                            layout={'fill'} 
+                            objectFit={'contain'}
+                        />
+
                     </Link>
                 </div>
             </div>
             <h1 className="w-4/5 mx-auto my-3 text-3xl font-bold text-center">
                 {nombre}
             </h1>
-            <Link passHref href={'/p/' + nombre}>
-                <a className="flex flex-row justify-center w-4/5 py-3 mx-auto mt-auto font-semibold text-center text-white bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl hover:scale-105 transition-transform">
+            <Link
+                passHref
+                href={'/p/' + nombre}
+                className="flex flex-row justify-center w-4/5 py-3 mx-auto mt-auto font-semibold text-center text-white bg-blue-700 shadow-2xl shadow-blue-700/10 rounded-xl hover:scale-105 transition-transform">
                 Más información<Plus />
-                </a>
+
             </Link>
         </div>
     );

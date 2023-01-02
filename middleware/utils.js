@@ -15,7 +15,6 @@ export async function verifyToken(jwtToken) {
 	
         return jwt.verify(jwtToken, SECRET_KEY);
     } catch (e) {
-        console.log('e:', e);
         return null;
     }
 }

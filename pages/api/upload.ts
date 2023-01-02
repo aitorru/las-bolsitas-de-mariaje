@@ -23,7 +23,7 @@ export default async function handler(
         const form = new formidable.IncomingForm();
         form.on('error', console.error );
         form.parse(req, async function (err, fields, files: any) {
-            if(err) console.log(err);
+            // if(err) # console.log(err);
             const file = bucket.file(files.image.originalFilename);
             const fileToSave = file.save(fs.readFileSync(files.image.filepath));
             const [url, plaiceholder] = await Promise.all(
