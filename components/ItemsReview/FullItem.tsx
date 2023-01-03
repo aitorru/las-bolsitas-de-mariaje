@@ -9,17 +9,16 @@ interface Props {
 const FullItem: NextPage<Props> = ({item}) => {
     return (
         <div className='container items-center justify-center flex-grow h-full max-h-full mx-auto my-5 grid md:grid-cols-2 gap-5'>
-            <div className='relative w-[90%] min-h-[20rem] md:h-[80%] md:w-[80%] mx-auto'>
-                <div className='w-auto h-full'>
+            <div className='w-[90%] min-h-[20rem] md:h-[80%] md:w-[80%] mx-auto'>
+                <div className='relative w-auto h-full'>
                     <Image
-                        className='shadow-2xl'
                         priority
                         alt={item.nombre}
                         src={item.imageUrl}
                         placeholder='blur'
                         blurDataURL={item.blur}
-                        layout={'fill'}
-                        objectFit={'contain'}
+                        fill={true}
+                        style={{objectFit: 'contain'}}
                     />
                 </div>
             </div>

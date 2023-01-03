@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Logo from '../../public/logo.png';
 
 const Hero: NextPage = () => {

@@ -47,9 +47,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                     passHref
                     href={'/contactar'}
                     className="hidden md:block text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-md2 shadow-blue-700/50 rounded-xl text-white hover:scale-105 transition-transform">
-                    
           Contactar
-                    
                 </Link>
                 
                 <div className='md:hidden w-full flex justify-end relative text-left'

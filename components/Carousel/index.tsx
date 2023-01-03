@@ -9,7 +9,7 @@ interface Props {
 const CarouselElement: NextPage<Props> = ({carousel}) => {
     return (
         <div className='flex flex-col justify-center flex-grow w-11/12 mx-auto my-auto'>
-            <div className='relative overflow-hidden shadow-xl rounded-xl bg-pink-200/20 md:shadow-lg'>
+            <div className='relative overflow-hidden shadow-xl rounded-xl bg-gray-200/20 md:shadow-lg'>
                 <div className='relative w-full md:h-[60vh] h-[40vh] flex gap-5 snap-mandatory snap-x overflow-x-auto md:py-2'>
                     <div className='md:pr-[23vw]'></div>
                     {

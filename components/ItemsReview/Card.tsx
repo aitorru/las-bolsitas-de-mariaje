@@ -12,7 +12,7 @@ interface Props {
 const Card: NextPage<Props> = ({ nombre, image, blur }) => {
 
     return (
-        <div className="flex flex-col h-full min-w-full p-5 mx-auto border-2 border-blue-700 shadow-xl rounded-xl shadow-blue-700/50 min-h-fit">
+        <div className="flex flex-col h-full min-w-full p-5 mx-auto border-2 border-gray-400/50 hover:border-gray-400/80 shadow-lg hover:shadow-xl rounded-xl min-h-fit transition-all">
             <div>
                 <div className='relative h-[20rem]'>
                     <Link passHref href={'/p/' + nombre}>
@@ -23,8 +23,8 @@ const Card: NextPage<Props> = ({ nombre, image, blur }) => {
                             src={image}
                             placeholder='blur'
                             blurDataURL={blur}
-                            layout={'fill'} 
-                            objectFit={'contain'}
+                            fill={true}
+                            style={{objectFit: 'contain'}}
                         />
 
                     </Link>
