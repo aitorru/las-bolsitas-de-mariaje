@@ -33,8 +33,9 @@ export default async function handler(
                     descripcion,
                 } = doc.data() as Item;
                 if (fields.name !== '') {
-                // If name is changed, update c p.
-                    ref.update({nombre: fields.name});
+                    // If name is changed, update c p.
+                    const name = fields.name as string;
+                    ref.update({nombre: name.replace('/', '')});
                 }
                 if(fields.category !== categoria) {
                     ref.update({categoria: fields.category});

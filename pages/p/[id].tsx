@@ -92,7 +92,6 @@ async function getCategories(): Promise<Categories[]> {
 async function getItem(
     context: GetStaticPropsContext<ParsedUrlQuery, PreviewData>
 ) {
-    // TODO: Clean this up. Images are now being blured in the server.
     const db = (await import('../../utils/db/webDB')).default;
     const { collection, getDocs, query, where } = await import(
         'firebase/firestore/lite'
