@@ -36,10 +36,15 @@ export default async function handler(
                     [
                         file.getSignedUrl({action: 'read', expires: '03-09-2491'}),
                         blurAndScaleDown(files.image.filepath),
-                        bucket.file(sliced[sliced.length - 1]).delete(),
                         file.save(fs.readFileSync(files.image.filepath)),
                     ]
                 );
+                // Delete the old image but do not fail if it doesn not exists
+                try {
+                    bucket.file(sliced[sliced.length - 1]).delete()
+                } catch (error) {
+                    console.error(error);
+                }
                 // Update firebase to end
                 ref.update({
                     image: 'gs://las-bolsitas-de-mariaje.appspot.com/' + files.image.originalFilename,
