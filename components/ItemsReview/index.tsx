@@ -13,7 +13,7 @@ const ItemsReview: NextPage<Props> = ({ items, title }) => {
                 <h1 className="py-5 text-4xl font-bold text-center md:text-6xl text-ellipsis">
                     {title}
                 </h1>
-                <div className="w-11/12 mx-auto my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-32 md:w-full">
+                <div className="w-11/12 mx-auto my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-10 md:w-full">
                     {items.map((item) => (
                         <Card 
                             key={item.id} 
