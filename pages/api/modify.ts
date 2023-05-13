@@ -57,7 +57,6 @@ export default async function handler(
                             file.getSignedUrl({action: 'read', expires: '03-09-2491'}),
                             blurAndScaleDown(files.image.filepath),
                             file.save(files.image.filepath),
-                            bucket.file(sliced[sliced.length - 1]).delete(),
                         ]
                     );
                     try {
@@ -87,7 +86,6 @@ async function blurAndScaleDown(path: string): Promise<string> {
     return new Promise(async (resolve, reject) => {
         try {
             const image = await Jimp.read(path);
-            // TODO: Find the right values
             image.resize(image.getWidth() / 5, image.getHeight() / 5);
             image.quality(30);
             image.blur(10);
