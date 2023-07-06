@@ -41,7 +41,7 @@ const Product: NextPage<Props> = ({categories}) => {
                         697 820 927<Phone />
                     </a>
                 </div>
-                <Image alt="Código QR para contactar" className={`hidden lg:block ${animate_qr ? 'scale-100' : 'scale-0 hidden'} transition ease-in-out duration-1000 relative object-scale-down w-1/4`} src={QR} />
+                <Image alt="Código QR para contactar" priority={true} className={`hidden lg:block ${animate_qr ? 'scale-100' : 'scale-0 hidden'} transition ease-in-out duration-1000 relative object-scale-down w-1/4`} src={QR} />
             </div>
         </div>
     );
