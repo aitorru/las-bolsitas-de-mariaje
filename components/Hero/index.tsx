@@ -31,7 +31,7 @@ const Hero: NextPage = () => {
                     buf y mucho más... 
                     </h2>
                 </div>
-                <div className="hidden md:flex md:justify-center md:skew-y-3">
+                <div className="hidden md:flex md:justify-center">
                     <Image
                         alt="Logo de la pagina"
                         src={Logo}

@@ -2,11 +2,20 @@ import { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Header from '../components/Header';
 import { Category } from '../utils/types/types';
+import Image from 'next/image';
+import QR from '../public/qr-code.png';
+import { useEffect, useState } from 'react';
 interface Props {
     categories: Category[];
 }
 
 const Product: NextPage<Props> = ({categories}) => {
+
+    const [animate_qr, set_animate_qr] = useState<boolean>(false);
+
+    useEffect(() => {
+        setTimeout(() => {set_animate_qr(true);}, 500);
+    }, []);
 
     return (
         <div className='min-h-screen max-h-screen flex flex-col'>
@@ -14,24 +23,26 @@ const Product: NextPage<Props> = ({categories}) => {
                 <title>Contacto</title>
             </Head>
             <Header categories={categories} />
-            <div className='container flex flex-col gap-7 max-w-fit mx-auto my-auto'>
-                <h1 className='text-4xl md:text-6xl text-center font-semibold'>¿Quieres contactar conmigo?</h1>
-                <h2 className='text-3xl md:text-5xl text-center text-ellipsis'>Por correo electrónico</h2>
-                <a 
-                    href={'mailto:lasbolsitasdemariaje@gmail.com?subject=Contacto&body=' +  encodeURIComponent('Hola Mariaje,')}
-                    className='w-[98%] md:w-full mx-auto text-lg md:text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform'>
+            <div className={`container flex flex-row gap-7 max-w-fit mx-auto my-auto justify-around ${animate_qr ? '' : 'translate-x-60'} transition-all duration-1000`}>
+                <div className=' flex flex-col gap-7 transition'>
+                    <h1 className='text-4xl md:text-6xl text-center font-semibold'>¿Quieres contactar conmigo?</h1>
+                    <h2 className='text-3xl md:text-5xl text-center text-ellipsis'>Por correo electrónico</h2>
+                    <a 
+                        href={'mailto:lasbolsitasdemariaje@gmail.com?subject=Contacto&body=' +  encodeURIComponent('Hola Mariaje,')}
+                        className='w-[98%] md:w-full mx-auto text-lg md:text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform'>
                     lasbolsitasdemariaje@gmail.com<Mail />
-                </a>
-                <h2 className='text-3xl  md:text-5xl text-center text-ellipsis'>o por whatsapp</h2>
-                <a 
-                    href={'https://wa.me/34697820927/?text=' + encodeURIComponent('Hola Mariaje,')}
-                    target="_blank" 
-                    className='w-[98%] md:w-full mx-auto text-xl md:text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
-                    rel="noreferrer">
+                    </a>
+                    <h2 className='text-3xl  md:text-5xl text-center text-ellipsis'>o por whatsapp</h2>
+                    <a 
+                        href={'https://wa.me/34697820927/?text=' + encodeURIComponent('Hola Mariaje,')}
+                        target="_blank" 
+                        className='w-[98%] md:w-full mx-auto text-xl md:text-4xl text-white px-10 py-3 mb-5 md:mb-0 bg-blue-700 shadow-xl shadow-blue-700/50 rounded-2xl text-center font-bold flex flex-row justify-center items-center hover:-translate-y-2 transition-transform' 
+                        rel="noreferrer">
                         697 820 927<Phone />
-                </a>
+                    </a>
+                </div>
+                <Image alt="Código QR para contactar" className={`hidden lg:block ${animate_qr ? 'scale-100' : 'scale-0 hidden'} transition ease-in-out duration-1000 relative object-scale-down w-1/4`} src={QR} />
             </div>
-            
         </div>
     );
 };
