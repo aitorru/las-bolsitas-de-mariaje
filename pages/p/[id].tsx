@@ -135,12 +135,15 @@ async function getItem(
     }));
     const whithPlaceHolder: Item[] = await Promise.all(
         result.map(async (item) => {
+            const buffer = await fetch(item.imageUrl).then(async (res) =>
+                Buffer.from(await res.arrayBuffer())
+            );
             return {
                 id: item.id,
                 nombre: item.nombre,
                 image: item.image,
                 imageUrl: item.imageUrl,
-                blur: (await getPlaiceholder(item.imageUrl)).base64,
+                blur: (await getPlaiceholder(buffer)).base64,
                 categoria: item.categoria,
                 descripcion: item.descripcion,
                 precio: item.precio,
