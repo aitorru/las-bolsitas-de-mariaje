@@ -142,12 +142,15 @@ async function getItems(): Promise<Item[]> {
             if(item.blur !== '') {
                 return item;
             }
+            const buffer = await fetch(item.imageUrl).then(async (res) =>
+                Buffer.from(await res.arrayBuffer())
+            );
             return {
                 id: item.id,
                 nombre: item.nombre,
                 image: item.image,
                 imageUrl: item.imageUrl,
-                blur: (await getPlaiceholder(item.imageUrl)).base64,
+                blur: (await getPlaiceholder(buffer)).base64,
                 categoria: item.categoria,
                 precio: item.precio,
                 descripcion: item.descripcion
@@ -219,11 +222,21 @@ async function getCarousel(): Promise<Carousel[]> {
             if(item.blur !== '') {
                 return item;
             }
+            let buffer;
+            if (item.imageUrl === undefined) {
+                // Create an empty buffer
+                buffer = Buffer.alloc(0);
+            } else {
+                buffer = await fetch(item.imageUrl).then(async (res) =>
+                    Buffer.from(await res.arrayBuffer())
+                );
+            }
+            
             return {
                 id: item.id,
                 image: item.image,
                 imageUrl: item.imageUrl,
-                blur: (await getPlaiceholder(item.imageUrl == undefined ? '' : item.imageUrl)).base64,
+                blur: (await getPlaiceholder(buffer)).base64,
                 pos: item.pos
 
             };
