@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 //import jwt from 'jsonwebtoken';
-import jose from "jose";
+import * as jose from "jose";
 const SECRET_KEY = process.env.JWT_KEY || "";
 
 export async function middleware(req: NextRequest) {
