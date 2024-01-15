@@ -23,6 +23,8 @@ export async function middleware(req: NextRequest) {
     console.log("Token found");
     const token = req.cookies.get("token")?.value;
     console.log(token);
+    console.log(token?.split(" ")[1]);
+    console.log(await jwt.verify(token?.split(" ")[1] || "", SECRET_KEY));
     if (await jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
       console.log("Token verified");
       return NextResponse.next();
