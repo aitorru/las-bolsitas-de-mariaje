@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 //import jwt from 'jsonwebtoken';
-import jwt from "@tsndr/cloudflare-worker-jwt";
+import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.JWT_KEY || "";
 
 export async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname === "/fire" && req.cookies.get("token")) {
     const token = req.cookies.get("token")?.value;
     try {
-      if (await jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
+      if (jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
         return NextResponse.redirect(new URL("/dboard", req.url));
       }
     } catch (error) {
@@ -24,8 +24,8 @@ export async function middleware(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     console.log(token);
     console.log(token?.split(" ")[1]);
-    console.log(await jwt.verify(token?.split(" ")[1] || "", SECRET_KEY));
-    if (await jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
+    console.log(jwt.verify(token?.split(" ")[1] || "", SECRET_KEY));
+    if (jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
       console.log("Token verified");
       return NextResponse.next();
     }
@@ -38,7 +38,7 @@ export async function middleware(req: NextRequest) {
   ) {
     if (req.cookies.get("token")) {
       const token = req.cookies.get("token")?.value;
-      if (await jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
+      if (jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
         return NextResponse.next();
       }
     }
