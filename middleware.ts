@@ -1,14 +1,17 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 //import jwt from 'jsonwebtoken';
-import jwt from "jsonwebtoken";
+import jose from "jose";
 const SECRET_KEY = process.env.JWT_KEY || "";
 
 export async function middleware(req: NextRequest) {
+  var enc = new TextEncoder();
   if (req.nextUrl.pathname === "/fire" && req.cookies.get("token")) {
     const token = req.cookies.get("token")?.value;
     try {
-      if (jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
+      if (
+        await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY))
+      ) {
         return NextResponse.redirect(new URL("/dboard", req.url));
       }
     } catch (error) {
@@ -24,8 +27,12 @@ export async function middleware(req: NextRequest) {
     const token = req.cookies.get("token")?.value;
     console.log(token);
     console.log(token?.split(" ")[1]);
-    console.log(jwt.verify(token?.split(" ")[1] || "", SECRET_KEY));
-    if (jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
+    console.log(
+      await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY)),
+    );
+    if (
+      await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY))
+    ) {
       console.log("Token verified");
       return NextResponse.next();
     }
@@ -38,7 +45,9 @@ export async function middleware(req: NextRequest) {
   ) {
     if (req.cookies.get("token")) {
       const token = req.cookies.get("token")?.value;
-      if (jwt.verify(token?.split(" ")[1] || "", SECRET_KEY)) {
+      if (
+        await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY))
+      ) {
         return NextResponse.next();
       }
     }
