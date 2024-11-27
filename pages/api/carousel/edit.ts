@@ -1,4 +1,3 @@
-/* eslint-disable no-async-promise-executor */
 import formidable from "formidable";
 import fs from "fs";
 import db, { bucket } from "../../../utils/db/index";
@@ -20,65 +19,72 @@ export default async function handler(
 ) {
   try {
     const form = new formidable.IncomingForm();
-    form.on("error", (err) => {
-      console.error("Form error:", err);
-      res.status(500).json({ status: 500, message: "Form parsing error" });
-    });
-    form.parse(req, async (err, fields, files: any) => {
-      if (err) {
-        console.error("Parse error:", err);
-        return res.status(500).json({ status: 500, message: "Form parse error" });
-      }
-      console.log("Files:", files);
-      if (!fields.id) {
-        console.error("ID is required");
-        return res.status(400).json({ status: 400, message: "id is required" });
-      }
-      if (typeof fields.id !== "string") {
-        console.error("ID must be a string");
-        return res.status(400).json({ status: 400, message: "id must be a string" });
-      }
+    const { fields, files } = await form.parse(req);
+    console.log("Fields:", fields);
+    console.log("Files:", files);
+
+    if (!fields.id) {
+      console.error("ID is required");
+      return res.status(400).json({ status: 400, message: "id is required" });
+    }
+    if (typeof fields.id !== "string") {
+      console.error("ID must be a string");
+      return res.status(400).json({ status: 400, message: "id must be a string" });
+    }
+
+    const ref = db.collection("carousel").doc(fields.id);
+    const doc = await ref.get();
+    if (!doc.exists) {
+      console.error("Document not found");
+      return res.status(404).json({ status: 404, message: "Document not found" });
+    }
+    const { image } = doc.data() as Carousel;
+
+    if (Object.keys(files).length !== 0) {
+      console.log("Processing image upload");
+      // Obtener el nombre de archivo actual
+      const sliced = image.split("/");
+      const oldFilename = sliced[sliced.length - 1];
+      console.log("Old image filename:", oldFilename);
+
+      const newFilename = files.image.originalFilename;
+      console.log("New image filename:", newFilename);
+      const file = bucket.file(newFilename);
+
       try {
-        const ref = db.collection("carousel").doc(fields.id as string);
-        const doc = await ref.get();
-        if (!doc.exists) {
-          console.error("Document not found");
-          return res.status(404).json({ status: 404, message: "Document not found" });
-        }
-        const { image } = doc.data() as Carousel;
-        if (Object.keys(files).length !== 0) {
-          // Get rid of gs://las-bolsitas-de-mariaje.appspot.com/ 61qv3+vfz3L._AC_UX385_.jpg
-          const sliced = image.split("/");
-          const file = bucket.file(files.image.originalFilename);
-          // Operate as normal
-          const [url, blur] = await Promise.all(
-            [
-              file.getSignedUrl({ action: "read", expires: "03-09-2491" }),
-              blurAndScaleDown(files.image.filepath),
-              file.save(fs.readFileSync(files.image.filepath)),
-            ],
-          );
-          // Delete the old image but do not fail if it doesn not exists
-          try {
-            bucket.file(sliced[sliced.length - 1]).delete();
-          } catch (error) {
-            console.error(error);
-          }
-          // Update firebase to end
-          ref.update({
-            image: "gs://las-bolsitas-de-mariaje.appspot.com/" +
-              files.image.originalFilename,
-            imageUrl: url[0],
-            blur: blur,
-          });
-        }
-        console.log("Update successful");
-        return res.status(200).json({ status: 200 });
+        // Guardar el nuevo archivo
+        await file.save(fs.readFileSync(files.image.filepath));
+        console.log("File saved to storage");
+
+        // Generar URL firmada
+        const [url] = await file.getSignedUrl({ action: "read", expires: "03-09-2491" });
+        console.log("Signed URL:", url);
+
+        // Generar imagen borrosa
+        const blur = await blurAndScaleDown(files.image.filepath);
+        console.log("Blur image generated");
+
+        // Eliminar la imagen antigua
+        await bucket.file(oldFilename).delete();
+        console.log("Old image deleted");
+
+        // Actualizar documento en Firebase
+        await ref.update({
+          image: "gs://las-bolsitas-de-mariaje.appspot.com/" + newFilename,
+          imageUrl: url,
+          blur: blur,
+        });
+        console.log("Firestore document updated");
       } catch (error) {
-        console.error("Processing error:", error);
-        return res.status(500).json({ status: 500, message: "Internal server error" });
+        console.error("Error processing image:", error);
+        return res.status(500).json({ status: 500, message: "Error processing image" });
       }
-    });
+    } else {
+      console.log("No files uploaded");
+    }
+
+    console.log("Update successful");
+    return res.status(200).json({ status: 200 });
   } catch (error) {
     console.error("Handler error:", error);
     return res.status(500).json({ status: 500, message: "Internal server error" });
@@ -86,20 +92,17 @@ export default async function handler(
 }
 
 async function blurAndScaleDown(path: string): Promise<string> {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    try {
-      const image = await Jimp.read(path);
-      // TODO: Find the right values
-      image.resize(image.getWidth() / 5, image.getHeight() / 5);
-      image.quality(30);
-      image.blur(10);
-      image.getBase64(Jimp.MIME_JPEG, (err, base64) => {
-        if (err) reject(err);
-        resolve(base64);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
+  try {
+    const image = await Jimp.read(path);
+    // Ajustar los valores según sea necesario
+    image.resize(image.getWidth() / 5, image.getHeight() / 5);
+    image.quality(30);
+    image.blur(10);
+
+    const base64 = await image.getBase64Async(Jimp.MIME_JPEG);
+    return base64;
+  } catch (error) {
+    console.error("Error in blurAndScaleDown:", error);
+    throw error;
+  }
 }
