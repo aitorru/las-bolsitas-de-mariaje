@@ -13,71 +13,98 @@ export const config = {
   },
 };
 
+async function validateId(id: any): Promise<string> {
+  if (!id) {
+    throw { status: 400, message: "ID is required" };
+  }
+  if (typeof id !== "string") {
+    throw { status: 400, message: "ID must be a string" };
+  }
+  return id;
+}
+
+async function getCarouselItem(id: string) {
+  const ref = db.collection("carousel").doc(id);
+  const doc = await ref.get();
+  if (!doc.exists) {
+    throw { status: 404, message: "Document not found" };
+  }
+  return { ref, data: doc.data() as Carousel };
+}
+
+async function processImage(files: formidable.Files, imagePath: string) {
+  const imageFile = files.image as formidable.File | undefined;
+
+  if (!imageFile) {
+    throw { status: 400, message: "Image file is required" };
+  }
+
+  const newFilename = imageFile.originalFilename as string;
+  const file = bucket.file(newFilename);
+
+  await file.save(fs.readFileSync(imageFile.filepath));
+  console.log("File saved to storage");
+
+  const [url] = await file.getSignedUrl({ action: "read", expires: "03-09-2491" });
+  console.log("Signed URL:", url);
+
+  const blur = await blurAndScaleDown(imageFile.filepath);
+  console.log("Blur image generated");
+
+  const sliced = imagePath.split("/");
+  const oldFilename = sliced[sliced.length - 1];
+
+  await bucket.file(oldFilename).delete();
+  console.log("Old image deleted");
+
+  return {
+    image: "gs://las-bolsitas-de-mariaje.appspot.com/" + newFilename,
+    imageUrl: url,
+    blur: blur,
+  };
+}
+
+async function blurAndScaleDown(imagePath: string): Promise<string> {
+  try {
+    const image = await Jimp.read(imagePath);
+    image.resize(image.getWidth() / 5, image.getHeight() / 5);
+    image.quality(30);
+    image.blur(10);
+
+    const base64 = await image.getBase64Async(Jimp.MIME_JPEG);
+    return base64;
+  } catch (error: any) {
+    console.error("Error in blurAndScaleDown:", error);
+    throw new Error(`Error processing image: ${error.message}`);
+  }
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   try {
     const form = new formidable.IncomingForm();
-    const { fields, files } = await form.parse(req);
+    const [fields, files] = await form.parse(req);
+
     console.log("Fields:", fields);
     console.log("Files:", files);
 
-    if (!fields.id) {
-      console.error("ID is required");
-      return res.status(400).json({ status: 400, message: "id is required" });
-    }
-    if (typeof fields.id !== "string") {
-      console.error("ID must be a string");
-      return res.status(400).json({ status: 400, message: "id must be a string" });
-    }
-
-    const ref = db.collection("carousel").doc(fields.id);
-    const doc = await ref.get();
-    if (!doc.exists) {
-      console.error("Document not found");
-      return res.status(404).json({ status: 404, message: "Document not found" });
-    }
-    const { image } = doc.data() as Carousel;
+    const id = await validateId(fields.id);
+    const { ref, data } = await getCarouselItem(id);
+    const { image } = data;
 
     if (Object.keys(files).length !== 0) {
       console.log("Processing image upload");
-      // Obtener el nombre de archivo actual
-      const sliced = image.split("/");
-      const oldFilename = sliced[sliced.length - 1];
-      console.log("Old image filename:", oldFilename);
-
-      const newFilename = files.image.originalFilename;
-      console.log("New image filename:", newFilename);
-      const file = bucket.file(newFilename);
-
       try {
-        // Guardar el nuevo archivo
-        await file.save(fs.readFileSync(files.image.filepath));
-        console.log("File saved to storage");
-
-        // Generar URL firmada
-        const [url] = await file.getSignedUrl({ action: "read", expires: "03-09-2491" });
-        console.log("Signed URL:", url);
-
-        // Generar imagen borrosa
-        const blur = await blurAndScaleDown(files.image.filepath);
-        console.log("Blur image generated");
-
-        // Eliminar la imagen antigua
-        await bucket.file(oldFilename).delete();
-        console.log("Old image deleted");
-
-        // Actualizar documento en Firebase
-        await ref.update({
-          image: "gs://las-bolsitas-de-mariaje.appspot.com/" + newFilename,
-          imageUrl: url,
-          blur: blur,
-        });
+        const updateData = await processImage(files, image);
+        await ref.update(updateData);
         console.log("Firestore document updated");
-      } catch (error) {
-        console.error("Error processing image:", error);
-        return res.status(500).json({ status: 500, message: "Error processing image" });
+      } catch (processError: any) {
+        console.error("Error processing image:", processError);
+        return res
+          .status(processError.status || 500)
+          .json({ status: processError.status || 500, message: processError.message || "Failed to process image" });
       }
     } else {
       console.log("No files uploaded");
@@ -85,24 +112,11 @@ export default async function handler(
 
     console.log("Update successful");
     return res.status(200).json({ status: 200 });
-  } catch (error) {
+
+  } catch (error: any) {
     console.error("Handler error:", error);
-    return res.status(500).json({ status: 500, message: "Internal server error" });
-  }
-}
-
-async function blurAndScaleDown(path: string): Promise<string> {
-  try {
-    const image = await Jimp.read(path);
-    // Ajustar los valores según sea necesario
-    image.resize(image.getWidth() / 5, image.getHeight() / 5);
-    image.quality(30);
-    image.blur(10);
-
-    const base64 = await image.getBase64Async(Jimp.MIME_JPEG);
-    return base64;
-  } catch (error) {
-    console.error("Error in blurAndScaleDown:", error);
-    throw error;
+    const status = error.status || 500;
+    const message = error.message || "Internal server error";
+    return res.status(status).json({ status, message });
   }
 }
