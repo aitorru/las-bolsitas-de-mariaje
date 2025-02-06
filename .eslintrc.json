@@ -4,7 +4,10 @@
         "es2021": true,
         "node": true
     },
-    "ignorePatterns": ["/processor/dist/*.js", "/processor/dist/*.js.map"],
+    "ignorePatterns": [
+        "/processor/dist/*.js",
+        "/processor/dist/*.js.map"
+    ],
     "settings": {
         "react": "detect"
     },
@@ -38,7 +41,7 @@
             }
         ],
         "indent": [
-            "error",
+            "warn",
             4
         ],
         "quotes": [
@@ -48,6 +51,7 @@
         "semi": [
             "warn",
             "always"
-        ]
+        ],
+        "@typescript-eslint/no-explicit-any": "off"
     }
 }
