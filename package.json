@@ -25,7 +25,7 @@
 		"jose": "^5.2.0",
 		"js-cookie": "^3.0.5",
 		"jsonwebtoken": "^9.0.2",
-		"next": "14.0.4",
+		"next": "^13.1.1",
 		"nextjs-progressbar": "^0.0.16",
 		"plaiceholder": "^3.0.0",
 		"react": "18.2.0",
