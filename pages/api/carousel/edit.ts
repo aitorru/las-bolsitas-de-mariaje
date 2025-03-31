@@ -84,7 +84,9 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   try {
+    console.log("Request method:", req.method);
     const form = new formidable.IncomingForm();
+    console.log("Parsing form data");
     const [fields, files] = await form.parse(req);
 
     console.log("Fields:", fields);
