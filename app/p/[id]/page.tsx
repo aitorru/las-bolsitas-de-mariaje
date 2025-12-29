@@ -7,7 +7,7 @@ import FullItem from "../../../components/ItemsReview/FullItem";
 import { Item } from "../../../utils/types/types";
 import { getPlaiceholder } from "plaiceholder";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 type Categories = {
   nombre: string;
@@ -17,23 +17,6 @@ type Props = {
   params: { id?: string };
   searchParams?: { id?: string };
 };
-
-export async function generateStaticParams() {
-  const db = (await import("../../../utils/db/webDB")).default;
-  const { collection, getDocs } = await import("firebase/firestore/lite");
-  const itemsColletion = collection(db, "articulos");
-  const snapshot = await getDocs(itemsColletion);
-  const paths: { id: string }[] = [];
-  snapshot.forEach((doc) => {
-    const nombre = doc.data().nombre;
-    if (typeof nombre === "string" && nombre.length > 0) {
-      paths.push({
-        id: encodeURIComponent(nombre),
-      });
-    }
-  });
-  return paths;
-}
 
 export async function generateMetadata({
   params,
