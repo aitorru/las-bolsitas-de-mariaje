@@ -47,9 +47,6 @@ export default async function ProductPage({ params, searchParams }: Props) {
   return (
     <div className="flex flex-col max-h-screen min-h-screen">
       <Header categories={categories} />
-      <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
-        headers: {JSON.stringify(debugHeaders)}
-      </pre>
       <FullItem item={item} />
     </div>
   );
