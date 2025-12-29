@@ -7,11 +7,11 @@ type Categories = {
 
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
-    nameForm: RefObject<HTMLInputElement>;
-    priceForm: RefObject<HTMLInputElement>;
-    categoryForm: RefObject<HTMLSelectElement>;
-    imageForm: RefObject<HTMLInputElement>;
-    textAreaForm: RefObject<HTMLTextAreaElement>;
+    nameForm: RefObject<HTMLInputElement | null>;
+    priceForm: RefObject<HTMLInputElement | null>;
+    categoryForm: RefObject<HTMLSelectElement | null>;
+    imageForm: RefObject<HTMLInputElement | null>;
+    textAreaForm: RefObject<HTMLTextAreaElement | null>;
     categories: Categories[];
     descripcion: string;
     isUploading: boolean;
