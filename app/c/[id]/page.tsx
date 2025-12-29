@@ -23,9 +23,12 @@ export async function generateStaticParams() {
   const snapshot = await getDocs(itemsColletion);
   const paths: { id: string }[] = [];
   snapshot.forEach((doc) => {
-    paths.push({
-      id: doc.data().nombre,
-    });
+    const nombre = doc.data().nombre;
+    if (typeof nombre === "string" && nombre.length > 0) {
+      paths.push({
+        id: nombre,
+      });
+    }
   });
   return paths;
 }
@@ -39,9 +42,10 @@ export async function generateMetadata({
 }
 
 export default async function CategoryPage({ params }: Props) {
+  const categoryId = decodeParam(params.id);
   const [categories, items] = await Promise.all([
     getCategories(),
-    getItems(params.id),
+    getItems(categoryId),
   ]);
 
   return (
@@ -54,6 +58,9 @@ export default async function CategoryPage({ params }: Props) {
 }
 
 async function getItems(categoryId: string) {
+  if (!categoryId) {
+    return [];
+  }
   const db = (await import("../../../utils/db/webDB")).default;
   const { collection, getDocs, query, where } = await import(
     "firebase/firestore/lite"
@@ -138,4 +145,12 @@ async function getCategories(): Promise<Categories[]> {
     });
   });
   return categories;
+}
+
+function decodeParam(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch (error) {
+    return value;
+  }
 }

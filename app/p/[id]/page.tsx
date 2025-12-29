@@ -23,9 +23,12 @@ export async function generateStaticParams() {
   const snapshot = await getDocs(itemsColletion);
   const paths: { id: string }[] = [];
   snapshot.forEach((doc) => {
-    paths.push({
-      id: doc.data().nombre,
-    });
+    const nombre = doc.data().nombre;
+    if (typeof nombre === "string" && nombre.length > 0) {
+      paths.push({
+        id: nombre,
+      });
+    }
   });
   return paths;
 }
@@ -39,9 +42,10 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: Props) {
+  const itemId = decodeParam(params.id);
   const [categories, item] = await Promise.all([
     getCategories(),
-    getItem(params.id),
+    getItem(itemId),
   ]);
 
   if (!item) {
@@ -71,6 +75,9 @@ async function getCategories(): Promise<Categories[]> {
 }
 
 async function getItem(id: string): Promise<Item | null> {
+  if (!id) {
+    return null;
+  }
   const db = (await import("../../../utils/db/webDB")).default;
   const { collection, getDocs, query, where } = await import(
     "firebase/firestore/lite"
@@ -142,4 +149,12 @@ async function getUrlFromRef(
   const reference = ref(storage, image);
   const url = await getDownloadURL(reference);
   return url;
+}
+
+function decodeParam(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch (error) {
+    return value;
+  }
 }
