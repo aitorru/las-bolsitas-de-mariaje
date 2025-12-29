@@ -26,7 +26,7 @@ export async function generateStaticParams() {
     const nombre = doc.data().nombre;
     if (typeof nombre === "string" && nombre.length > 0) {
       paths.push({
-        id: nombre,
+        id: encodeURIComponent(nombre),
       });
     }
   });
@@ -36,8 +36,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
+  const itemId = decodeParam(params.id);
   return {
-    title: params.id,
+    title: itemId,
   };
 }
 

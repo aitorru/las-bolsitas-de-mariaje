@@ -36,7 +36,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                         {categories.map((category) => (
                             <li key={category.nombre}>
                                 <Link
-                                    href={'/c/' + category.nombre}
+                                    href={"/c/" + encodeURIComponent(category.nombre)}
                                     className='text-lg underline-offset-4'>
                                     {category.nombre}
                                 </Link>
@@ -78,7 +78,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                             {categories.map((category) => (
                                 <Link
                                     key={category.nombre}
-                                    href={'/c/' + category.nombre}
+                                    href={"/c/" + encodeURIComponent(category.nombre)}
                                     className='text-gray-700 block px-4 py-2 underline text-lg font-semibold'
                                     onClick={() => setMenuVisible(false)}>
                                     {category.nombre}
