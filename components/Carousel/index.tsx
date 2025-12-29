@@ -15,8 +15,9 @@ const CarouselElement: NextPage<Props> = ({carousel}) => {
                     {
                         carousel.map((item) => <div key={item.id} className="relative w-5/6 h-full overflow-hidden rounded-lg snap-center snap-always shrink-0 first:pl-8 last:pr-8 md:w-3/6">
                             <Image
-                                layout='fill'
-                                objectFit='contain'
+                                fill
+                                style={{ objectFit: 'contain' }}
+                                sizes="(min-width: 768px) 50vw, 80vw"
                                 alt='Promocion'
                                 className='h-full shrink-0' 
                                 placeholder='blur'
