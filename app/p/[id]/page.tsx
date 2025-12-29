@@ -13,7 +13,8 @@ type Categories = {
 };
 
 type Props = {
-  params: { id: string };
+  params: { id?: string };
+  searchParams?: { id?: string };
 };
 
 export async function generateStaticParams() {
@@ -36,14 +37,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
-  const itemId = decodeParam(params.id);
+  const itemId = decodeParam(params.id ?? "");
   return {
-    title: itemId,
+    title: itemId || "Producto",
   };
 }
 
-export default async function ProductPage({ params }: Props) {
-  const itemId = decodeParam(params.id);
+export default async function ProductPage({ params, searchParams }: Props) {
+  const rawId = params.id ?? searchParams?.id ?? "";
+  const itemId = decodeParam(rawId);
   const [categories, item] = await Promise.all([
     getCategories(),
     getItem(itemId),
@@ -57,8 +59,8 @@ export default async function ProductPage({ params }: Props) {
     <div className="flex flex-col max-h-screen min-h-screen">
       <Header categories={categories} />
       <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
-        debug: id="{itemId}" item={item ? "yes" : "no"} categories=
-        {categories.length}
+        debug: raw="{String(rawId)}" id="{String(itemId)}" item=
+        {item ? "yes" : "no"} categories={categories.length}
       </div>
       <FullItem item={item} />
     </div>
