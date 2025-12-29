@@ -3,7 +3,7 @@ import { FormEventHandler, RefObject } from 'react';
 
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
-    nameForm: RefObject<HTMLInputElement>;
+    nameForm: RefObject<HTMLInputElement | null>;
     isUploading: boolean;
     isNameRequired?: boolean;
 }
