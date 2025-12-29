@@ -26,7 +26,7 @@ export async function generateStaticParams() {
     const nombre = doc.data().nombre;
     if (typeof nombre === "string" && nombre.length > 0) {
       paths.push({
-        id: nombre,
+        id: encodeURIComponent(nombre),
       });
     }
   });
@@ -36,25 +36,27 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
+  const categoryId = decodeParam(params.id);
   return {
-    title: params.id,
+    title: categoryId,
   };
 }
 
 export default async function CategoryPage({ params }: Props) {
+  const categoryId = decodeParam(params.id);
   const [categories, items] = await Promise.all([
     getCategories(),
-    getItems(params.id),
+    getItems(categoryId),
   ]);
 
   return (
     <>
       <Header categories={categories} />
       <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
-        debug: id="{params.id}" items={items.length} categories=
+        debug: id="{categoryId}" items={items.length} categories=
         {categories.length}
       </div>
-      <ItemsReview title={params.id} items={items} />
+      <ItemsReview title={categoryId} items={items} />
       <Footer />
     </>
   );
@@ -148,4 +150,12 @@ async function getCategories(): Promise<Categories[]> {
     });
   });
   return categories;
+}
+
+function decodeParam(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch (error) {
+    return value;
+  }
 }

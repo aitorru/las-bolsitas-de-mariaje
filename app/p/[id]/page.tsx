@@ -26,7 +26,7 @@ export async function generateStaticParams() {
     const nombre = doc.data().nombre;
     if (typeof nombre === "string" && nombre.length > 0) {
       paths.push({
-        id: nombre,
+        id: encodeURIComponent(nombre),
       });
     }
   });
@@ -36,15 +36,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
+  const itemId = decodeParam(params.id);
   return {
-    title: params.id,
+    title: itemId,
   };
 }
 
 export default async function ProductPage({ params }: Props) {
+  const itemId = decodeParam(params.id);
   const [categories, item] = await Promise.all([
     getCategories(),
-    getItem(params.id),
+    getItem(itemId),
   ]);
 
   if (!item) {
@@ -55,7 +57,7 @@ export default async function ProductPage({ params }: Props) {
     <div className="flex flex-col max-h-screen min-h-screen">
       <Header categories={categories} />
       <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
-        debug: id="{params.id}" item={item ? "yes" : "no"} categories=
+        debug: id="{itemId}" item={item ? "yes" : "no"} categories=
         {categories.length}
       </div>
       <FullItem item={item} />
@@ -152,4 +154,12 @@ async function getUrlFromRef(
   const reference = ref(storage, image);
   const url = await getDownloadURL(reference);
   return url;
+}
+
+function decodeParam(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch (error) {
+    return value;
+  }
 }
