@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import NextNprogress from "nextjs-progressbar";
 
 type Props = {
   children: ReactNode;
@@ -25,19 +24,6 @@ export default function AppShell({ children }: Props) {
 
   return (
     <>
-      <NextNprogress
-        color="rgb(238, 153, 59)"
-        startPosition={0.7}
-        stopDelayMs={200}
-        height={3}
-        showOnShallow={true}
-        options={{
-          easing: "ease",
-          speed: 1000,
-          showSpinner: false,
-          trickleSpeed: 800,
-        }}
-      />
       <div className="h-0 sticky origin-right top-[90vh] z-10 overflow-x-clip flex justify-end">
         <BackToTop visible={passTheVisiblePoint} />
       </div>
