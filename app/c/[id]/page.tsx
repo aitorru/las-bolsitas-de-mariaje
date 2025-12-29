@@ -50,6 +50,10 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <>
       <Header categories={categories} />
+      <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
+        debug: id="{params.id}" items={items.length} categories=
+        {categories.length}
+      </div>
       <ItemsReview title={params.id} items={items} />
       <Footer />
     </>

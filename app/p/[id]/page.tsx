@@ -54,6 +54,10 @@ export default async function ProductPage({ params }: Props) {
   return (
     <div className="flex flex-col max-h-screen min-h-screen">
       <Header categories={categories} />
+      <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
+        debug: id="{params.id}" item={item ? "yes" : "no"} categories=
+        {categories.length}
+      </div>
       <FullItem item={item} />
     </div>
   );
