@@ -1,6 +1,5 @@
 import { FirebaseStorage } from "firebase/storage";
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import ItemsReview from "../../../components/ItemsReview";
@@ -36,16 +35,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const resolvedSearch = await Promise.resolve(searchParams ?? {});
   const rawId = resolvedParams.id ?? resolvedSearch.id ?? "";
   const categoryId = decodeParam(rawId);
-  const requestHeaders = await headers();
-  const debugHeaders = {
-    "x-matched-path": requestHeaders.get("x-matched-path") ?? "",
-    "x-nextjs-pathname": requestHeaders.get("x-nextjs-pathname") ?? "",
-    "x-nextjs-page": requestHeaders.get("x-nextjs-page") ?? "",
-    "x-invoke-path": requestHeaders.get("x-invoke-path") ?? "",
-    "x-invoke-query": requestHeaders.get("x-invoke-query") ?? "",
-    "x-url": requestHeaders.get("x-url") ?? "",
-    "x-vercel-id": requestHeaders.get("x-vercel-id") ?? "",
-  };
   const [categories, items] = await Promise.all([
     getCategories(),
     getItems(categoryId),
@@ -54,17 +43,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   return (
     <>
       <Header categories={categories} />
-      <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
-        debug: raw={String(rawId)} id={String(categoryId)} items=
-        {items.length} categories={categories.length}
-      </div>
-      <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
-        params: {JSON.stringify(resolvedParams)} searchParams:{" "}
-        {JSON.stringify(resolvedSearch)}
-      </pre>
-      <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
-        headers: {JSON.stringify(debugHeaders)}
-      </pre>
       <ItemsReview title={categoryId} items={items} />
       <Footer />
     </>
