@@ -47,7 +47,7 @@ export async function generateMetadata({
 export default async function ProductPage({ params, searchParams }: Props) {
   const rawId = params.id ?? searchParams?.id ?? "";
   const itemId = decodeParam(rawId);
-  const requestHeaders = headers();
+  const requestHeaders = await headers();
   const debugHeaders = {
     "x-matched-path": requestHeaders.get("x-matched-path") ?? "",
     "x-nextjs-pathname": requestHeaders.get("x-nextjs-pathname") ?? "",
