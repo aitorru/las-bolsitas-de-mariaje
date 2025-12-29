@@ -13,22 +13,28 @@ type Categories = {
   nombre: string;
 };
 
+type RouteParams = { id?: string };
+type RouteSearch = { id?: string };
+
 type Props = {
-  params: { id?: string };
-  searchParams?: { id?: string };
+  params: RouteParams | Promise<RouteParams>;
+  searchParams?: RouteSearch | Promise<RouteSearch>;
 };
 
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
-  const itemId = decodeParam(params.id ?? "");
+  const resolvedParams = await Promise.resolve(params);
+  const itemId = decodeParam(resolvedParams.id ?? "");
   return {
     title: itemId || "Producto",
   };
 }
 
 export default async function ProductPage({ params, searchParams }: Props) {
-  const rawId = params.id ?? searchParams?.id ?? "";
+  const resolvedParams = await Promise.resolve(params);
+  const resolvedSearch = await Promise.resolve(searchParams ?? {});
+  const rawId = resolvedParams.id ?? resolvedSearch.id ?? "";
   const itemId = decodeParam(rawId);
   const requestHeaders = await headers();
   const debugHeaders = {
@@ -57,8 +63,8 @@ export default async function ProductPage({ params, searchParams }: Props) {
         {item ? "yes" : "no"} categories={categories.length}
       </div>
       <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
-        params: {JSON.stringify(params)} searchParams:{" "}
-        {JSON.stringify(searchParams)}
+        params: {JSON.stringify(resolvedParams)} searchParams:{" "}
+        {JSON.stringify(resolvedSearch)}
       </pre>
       <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
         headers: {JSON.stringify(debugHeaders)}
