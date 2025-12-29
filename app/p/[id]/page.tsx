@@ -59,9 +59,13 @@ export default async function ProductPage({ params, searchParams }: Props) {
     <div className="flex flex-col max-h-screen min-h-screen">
       <Header categories={categories} />
       <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
-        debug: raw="{String(rawId)}" id="{String(itemId)}" item=
+        debug: raw={String(rawId)} id={String(itemId)} item=
         {item ? "yes" : "no"} categories={categories.length}
       </div>
+      <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
+        params: {JSON.stringify(params)} searchParams:{" "}
+        {JSON.stringify(searchParams)}
+      </pre>
       <FullItem item={item} />
     </div>
   );

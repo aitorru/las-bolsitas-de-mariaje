@@ -55,9 +55,13 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     <>
       <Header categories={categories} />
       <div className="mx-auto w-11/12 md:w-9/12 text-xs text-gray-500">
-        debug: raw="{String(rawId)}" id="{String(categoryId)}" items=
+        debug: raw={String(rawId)} id={String(categoryId)} items=
         {items.length} categories={categories.length}
       </div>
+      <pre className="mx-auto w-11/12 md:w-9/12 text-[10px] text-gray-400 whitespace-pre-wrap break-all">
+        params: {JSON.stringify(params)} searchParams:{" "}
+        {JSON.stringify(searchParams)}
+      </pre>
       <ItemsReview title={categoryId} items={items} />
       <Footer />
     </>
