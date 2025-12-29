@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-//import jwt from 'jsonwebtoken';
 import * as jose from "jose";
+
 const SECRET_KEY = process.env.JWT_KEY || "";
 
-export async function middleware(req: NextRequest) {
-  var enc = new TextEncoder();
+export async function proxy(req: NextRequest) {
+  const enc = new TextEncoder();
   if (req.nextUrl.pathname === "/fire" && req.cookies.get("token")) {
     const token = req.cookies.get("token")?.value;
     try {

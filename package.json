@@ -1,7 +1,7 @@
 {
 	"name": "las-bolsitas-de-mariaje",
 	"private": true,
-	"packageManager": "npm@10.8.2",
+	"packageManager": "yarn@1.22.19",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",

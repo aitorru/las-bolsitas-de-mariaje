@@ -2,7 +2,24 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: ['storage.googleapis.com', 'firebasestorage.googleapis.com', 'upload.wikimedia.org', 'las-bolsitas-de-mariaje.appspot.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'storage.googleapis.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'firebasestorage.googleapis.com',
+            },
+            {
+                protocol: 'https',
+                hostname: 'upload.wikimedia.org',
+            },
+            {
+                protocol: 'https',
+                hostname: 'las-bolsitas-de-mariaje.appspot.com',
+            },
+        ],
     },
 };
 
