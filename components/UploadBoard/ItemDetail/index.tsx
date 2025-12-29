@@ -1,14 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/prop-types */
-import axios from '../../../utils/fetch';
+"use client";
+
 import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { createRef, FormEventHandler, useEffect, useState } from 'react';
 import { app } from '../../../utils/db/webDB';
 import { Category, Item } from '../../../utils/types/types';
 import pride from '../../../utils/pride';
+import { deleteItemAction, modifyItemAction } from '../../../app/dboard/actions';
 const ItemForm = dynamic(() => import('../ItemForm'));
 
 interface Props {
@@ -44,9 +46,8 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
     const handleDelete = async () => {
         const proceed = confirm('Vas a borrar (' + item.nombre  + '). ¿Quieres continuar?');
         if (proceed) {
-            const status = await axios.post('/api/delete', {id: item.id});
-            axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
-            if(status.status === 200 ) {
+            const result = await deleteItemAction(item.id);
+            if(result.status === 200 ) {
                 router.push('/dboard?ma');
             }
         } else {
@@ -75,37 +76,21 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                 body.append('image', files[0]);
             }
         }
-        const status = await axios.post('/api/modify', body);
-        // Always revalidate the product page
-        axios.post('/api/revalidate', {route: `/p/${body.get('name') || item.nombre}`});
-        if(body.get('name') !== item.nombre) {
-            axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
-        }
-        if(body.get('category') !== item.categoria) {
-            axios.post('/api/revalidate', {route: `/c/${item.categoria}`});
-            axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
-        }
+        const result = await modifyItemAction(body);
         const end = Date.now() + (500);
         const colors = [
             Math.floor(Math.random()*16777215).toString(16), 
             Math.floor(Math.random()*16777215).toString(16)
         ];
         //const status = await fetch('/api/modify', {method: 'POST', body});
-        if (status.status === 200){
+        if (result.status === 200){
             
             setIsUploading(false);
             pride(end, colors);
-            router.push('/dboard?ma', '', {scroll: false});
+            router.push('/dboard?ma');
         } else {
-            if((await axios.post('/api/modify', body)).status === 200){
-                setIsUploading(false);
-                pride(end, colors);
-                router.push('/dboard?ma', '', {scroll: false});
-            } else {
-                setIsUploading(false);
-                alert('Modificacion incorrecta');
-            }
-            
+            setIsUploading(false);
+            alert('Modificacion incorrecta');
         }
         
     };
@@ -140,4 +125,3 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
 
 
 export default ItemDetail;
-

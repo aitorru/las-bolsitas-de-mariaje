@@ -1,12 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/prop-types */
+"use client";
+
 import { NextPage } from 'next';
 import { createRef, useEffect, useState } from 'react';
 import { app } from '../../utils/db/webDB';
 import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 import { Carousel } from '../../utils/types/types';
-import axios from '../../utils/fetch/index';
 import pride from '../../utils/pride';
+import { updateCarouselAction } from '../../app/dboard/actions';
 //import ItemDetail from './ItemDetail';
 
 interface Props {
@@ -67,18 +69,13 @@ const CarouselEditDetail: NextPage<PassProps> = ({item}) => {
                 body.append('image', files[0]);
             }
         }
-        const status = await axios.post('/api/carousel/edit', body);
-        if(status.status === 200) {
+        const result = await updateCarouselAction(body);
+        if(result.status === 200) {
             pride(end, colors);
             setIsUploading(false);
         } else {
-            if(((await axios.post('/api/carousel/edit', body)).status === 200)){
-                pride(end, colors);
-                setIsUploading(false);
-            } else {
-                alert('Modificacion incorrecta');
-                setIsUploading(false);
-            }
+            alert('Modificacion incorrecta');
+            setIsUploading(false);
         }
     };
     return (

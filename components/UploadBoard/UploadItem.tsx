@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
-import axios from '../../utils/fetch';
+"use client";
+
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { createRef, FormEventHandler, useState } from 'react';
 import pride from '../../utils/pride';
+import { uploadItemAction } from '../../app/dboard/actions';
 const ItemForm = dynamic(() => import('./ItemForm'));
 
 type Categories = {
@@ -50,20 +52,13 @@ const UploadItem: NextPage<Props> = ({ categories }) => {
             Math.floor(Math.random()*16777215).toString(16)
         ];
         // Revalidate the category. The fallback will create the product page
-        const status = await axios.post('/api/upload', body);
-        axios.post('/api/revalidate', {route: `/c/${body.get('category')}`});
-        if (status.status === 200){ 
+        const result = await uploadItemAction(body);
+        if (result.status === 200){ 
             setIsUploading(false);
             pride(end, colors);
             router.push('/dboard');
 
         } else {
-            if((await axios.post('/api/upload', body)).status === 200){
-                setIsUploading(false);
-                pride(end, colors);
-                router.push('/dboard');
-                return;
-            }
             setIsUploading(false);
             alert('Subida incorrenta');
         }
