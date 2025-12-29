@@ -26,7 +26,7 @@ export async function generateStaticParams() {
     const nombre = doc.data().nombre;
     if (typeof nombre === "string" && nombre.length > 0) {
       paths.push({
-        id: encodeURIComponent(nombre),
+        id: nombre,
       });
     }
   });
@@ -36,17 +36,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata> {
-  const itemId = decodeParam(params.id);
   return {
-    title: itemId,
+    title: params.id,
   };
 }
 
 export default async function ProductPage({ params }: Props) {
-  const itemId = decodeParam(params.id);
   const [categories, item] = await Promise.all([
     getCategories(),
-    getItem(itemId),
+    getItem(params.id),
   ]);
 
   if (!item) {
@@ -150,12 +148,4 @@ async function getUrlFromRef(
   const reference = ref(storage, image);
   const url = await getDownloadURL(reference);
   return url;
-}
-
-function decodeParam(value: string) {
-  try {
-    return decodeURIComponent(value);
-  } catch (error) {
-    return value;
-  }
 }
