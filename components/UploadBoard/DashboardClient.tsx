@@ -43,7 +43,7 @@ const DBoardClient: NextPage<Props> = ({
   const [editarPromociones, setEditarPromociones] = useState(false);
 
   useEffect(() => {
-    if (searchParams.size === 0) return;
+    if (!searchParams || searchParams.size === 0) return;
     if (searchParams.has("ma")) {
       setmodificarArticuloSelected(true);
       setBorrarCategoria(false);
