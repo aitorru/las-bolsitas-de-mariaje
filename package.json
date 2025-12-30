@@ -14,8 +14,6 @@
 		"@types/jsonwebtoken": "^9.0.5",
 		"@typescript-eslint/eslint-plugin": "^8.50.1",
 		"@typescript-eslint/parser": "^8.50.1",
-		"axios": "^1.6.2",
-		"axios-retry": "^4.0.0",
 		"bcryptjs": "^2.4.3",
 		"canvas-confetti": "^1.9.2",
 		"eslint-plugin-react": "^7.33.2",
