@@ -9,9 +9,11 @@ export async function proxy(req: NextRequest) {
   if (req.nextUrl.pathname === "/fire" && req.cookies.get("token")) {
     const token = req.cookies.get("token")?.value;
     try {
-      if (
-        await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY))
-      ) {
+      const verified = await jose.jwtVerify(
+        token?.split(" ")[1] || "",
+        enc.encode(SECRET_KEY),
+      );
+      if (verified) {
         return NextResponse.redirect(new URL("/dboard", req.url));
       }
     } catch (error) {
@@ -19,24 +21,21 @@ export async function proxy(req: NextRequest) {
     }
   }
   if (req.nextUrl.pathname === "/dboard" && !req.cookies.get("token")) {
-    console.log("No token found");
     return NextResponse.redirect(new URL("/fire", req.url));
   }
   if (req.nextUrl.pathname === "/dboard" && req.cookies.get("token")) {
-    console.log("Token found");
     const token = req.cookies.get("token")?.value;
-    console.log(token);
-    console.log(token?.split(" ")[1]);
-    console.log(
-      await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY)),
-    );
-    if (
-      await jose.jwtVerify(token?.split(" ")[1] || "", enc.encode(SECRET_KEY))
-    ) {
-      console.log("Token verified");
-      return NextResponse.next();
+    try {
+      const verified = await jose.jwtVerify(
+        token?.split(" ")[1] || "",
+        enc.encode(SECRET_KEY),
+      );
+      if (verified) {
+        return NextResponse.next();
+      }
+    } catch (error) {
+      //
     }
-    console.log("Token not verified");
     return NextResponse.redirect(new URL("/fire", req.url));
   }
   if (req.nextUrl.pathname.startsWith("/api")) {
