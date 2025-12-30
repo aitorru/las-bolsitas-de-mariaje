@@ -39,10 +39,7 @@ export async function proxy(req: NextRequest) {
     console.log("Token not verified");
     return NextResponse.redirect(new URL("/fire", req.url));
   }
-  if (
-    req.nextUrl.pathname.startsWith("/api") &&
-    !req.nextUrl.pathname.startsWith("/api/login")
-  ) {
+  if (req.nextUrl.pathname.startsWith("/api")) {
     if (req.cookies.get("token")) {
       const token = req.cookies.get("token")?.value;
       if (
