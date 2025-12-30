@@ -1,9 +1,11 @@
+"use client";
+
 import { NextPage } from 'next';
 import { createRef, FormEventHandler, useState } from 'react';
-import axios from '../../utils/fetch';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import ModifyCategoryForm from './CategoryForm/ModifyCategoryForm';
 import pride from '../../utils/pride';
+import { modifyCategoryAction } from '../../app/dboard/actions';
 
 type Categories = {
     id: string;
@@ -59,13 +61,11 @@ const ModifyCategory: NextPage<Props> = ({categories, items}) => {
             Math.floor(Math.random()*16777215).toString(16)
         ];
         
-        const status = await axios.post('/api/category/modify',{ origin: id, destination: categoryNameRef.current?.value });
-        categories.forEach(category => {
-            if(category.nombre !== id) axios.post('/api/revalidate', {route: `/c/${category.nombre}`});
-        });
-        axios.post('/api/revalidate', {route: '/'});
-        if (status.status === 200) {
-            router.prefetch('/dboard?mc');
+        const result = await modifyCategoryAction(
+            id,
+            categoryNameRef.current?.value || ''
+        );
+        if (result.status === 200) {
             setisUploading(false);
             pride(end, colors);
             router.push('/dboard?mc');

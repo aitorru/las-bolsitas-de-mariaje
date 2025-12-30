@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import axios from '../../utils/fetch';
+"use client";
+
 import { NextPage } from 'next';
 import { createRef, FormEventHandler, useEffect, useState } from 'react';
 import { Item, Highlight } from '../../utils/types/types';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import pride from '../../utils/pride';
+import { updateHighlightsAction } from '../../app/dboard/actions';
 
 interface Props {
     highlights: Highlight[];
@@ -36,22 +38,22 @@ const EditHighLight: NextPage<Props> = ({items, highlights}) => {
         // @ts-ignore
         const p6: HTMLSelectElement = e.target[5];
 
-        const status = await axios.post('/api/highlight/modify', {
-            p1: await findItemID(items, p1.value),
-            p2: await findItemID(items, p2.value),
-            p3: await findItemID(items, p3.value),
-            p4: await findItemID(items, p4.value),
-            p5: await findItemID(items, p5.value),
-            p6: await findItemID(items, p6.value),
-        });
-        axios.post('/api/revalidate', {route: '/'});
+        const result = await updateHighlightsAction(
+            [
+                (await findItemID(items, p1.value)).id,
+                (await findItemID(items, p2.value)).id,
+                (await findItemID(items, p3.value)).id,
+                (await findItemID(items, p4.value)).id,
+                (await findItemID(items, p5.value)).id,
+                (await findItemID(items, p6.value)).id,
+            ]
+        );
         const end = Date.now() + (500);
         const colors = [
             Math.floor(Math.random()*16777215).toString(16), 
             Math.floor(Math.random()*16777215).toString(16)
         ];
-        if (status.status === 200) {
-            router.prefetch('/dboard?eh');
+        if (result.status === 200) {
             pride(end, colors);
             router.push('/dboard?eh');
         } else {

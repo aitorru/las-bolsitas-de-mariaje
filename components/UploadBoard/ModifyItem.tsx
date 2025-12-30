@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+"use client";
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { createRef, useEffect, useState } from 'react';

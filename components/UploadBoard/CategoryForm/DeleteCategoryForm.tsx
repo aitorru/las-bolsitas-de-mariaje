@@ -8,7 +8,7 @@ type Categories = {
 
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
-    categoryForm: RefObject<HTMLSelectElement>;
+    categoryForm: RefObject<HTMLSelectElement | null>;
     isUploading: boolean;
     categories: Categories[];
 }

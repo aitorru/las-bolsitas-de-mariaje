@@ -1,3 +1,5 @@
+'use client';
+
 import { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,7 +20,7 @@ const Header: NextPage<Props> = ({ categories }) => {
     return (
         <div className="h-fit w-full py-2 shadow">
             <div className="container mx-auto flex flex-row justify-around h-full content-center items-center w-11/12 md:w-full">
-                <Link passHref href={'/'} legacyBehavior>
+                <Link href={'/'}>
                     <Image
                         alt="Logo de la pagina"
                         src={Logo}
@@ -34,8 +36,7 @@ const Header: NextPage<Props> = ({ categories }) => {
                         {categories.map((category) => (
                             <li key={category.nombre}>
                                 <Link
-                                    passHref
-                                    href={'/c/' + category.nombre}
+                                    href={"/c/" + encodeURIComponent(category.nombre)}
                                     className='text-lg underline-offset-4'>
                                     {category.nombre}
                                 </Link>
@@ -44,7 +45,6 @@ const Header: NextPage<Props> = ({ categories }) => {
                     </ul>
                 </div>
                 <Link
-                    passHref
                     href={'/contactar'}
                     className="hidden md:block text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-md2 shadow-blue-700/50 rounded-xl text-white hover:scale-105 transition-transform">
           Contactar
@@ -78,15 +78,13 @@ const Header: NextPage<Props> = ({ categories }) => {
                             {categories.map((category) => (
                                 <Link
                                     key={category.nombre}
-                                    passHref
-                                    href={'/c/' + category.nombre}
+                                    href={"/c/" + encodeURIComponent(category.nombre)}
                                     className='text-gray-700 block px-4 py-2 underline text-lg font-semibold'
                                     onClick={() => setMenuVisible(false)}>
                                     {category.nombre}
                                 </Link>
                             ))}
                             <Link
-                                passHref
                                 href={'/contactar'}
                                 className='bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white block w-[90%] mx-auto text-center p-1 text-lg font-semibold mb-2'>
                                 Contactar

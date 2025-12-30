@@ -1,9 +1,11 @@
+"use client";
+
 import { NextPage } from 'next';
 import { createRef, FormEventHandler, useState } from 'react';
 import CategoryForm from './CategoryForm';
-import axios from '../../utils/fetch';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import pride from '../../utils/pride';
+import { uploadCategoryAction } from '../../app/dboard/actions';
 
 const UploadCategory: NextPage = () => {
     const router = useRouter();
@@ -20,9 +22,10 @@ const UploadCategory: NextPage = () => {
             Math.floor(Math.random()*16777215).toString(16), 
             Math.floor(Math.random()*16777215).toString(16)
         ];
-        const status = await axios.post('/api/category/upload',{ name: categoryNameRef.current?.value });
-        if (status.status === 200) {
-            router.prefetch('/dboard?cc');
+        const result = await uploadCategoryAction(
+            categoryNameRef.current?.value || ''
+        );
+        if (result.status === 200) {
             setisUploading(false);
             pride(end, colors);
             router.push('/dboard?cc');

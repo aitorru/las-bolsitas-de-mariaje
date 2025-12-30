@@ -18,6 +18,7 @@ const FullItem: NextPage<Props> = ({item}) => {
                     blurDataURL={item.blur}
                     fill={true}
                     style={{objectFit: 'contain'}}
+                    sizes="(min-width: 1024px) 40vw, 80vw"
                 />
             </div>
             <div className='flex flex-col justify-center w-11/12 mx-auto gap-10'>

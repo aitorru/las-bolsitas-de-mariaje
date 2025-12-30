@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import Logo from '../../public/logo.png';
 
 const Hero: NextPage = () => {
@@ -11,8 +11,8 @@ const Hero: NextPage = () => {
                         <Image
                             alt="Logo de la pagina"
                             src={Logo}
-                            layout={'intrinsic'}
                             placeholder={'blur'}
+                            sizes="(min-width: 768px) 40vw, 60vw"
 
                         />
                     </div>
@@ -35,8 +35,8 @@ const Hero: NextPage = () => {
                     <Image
                         alt="Logo de la pagina"
                         src={Logo}
-                        layout={'intrinsic'}
                         placeholder={'blur'}
+                        sizes="(min-width: 1024px) 30vw, 40vw"
                     />
                 </div>
             </div>

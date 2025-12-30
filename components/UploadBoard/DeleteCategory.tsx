@@ -1,8 +1,10 @@
+"use client";
+
 import { NextPage } from 'next';
 import { createRef, FormEventHandler, useState } from 'react';
-import axios from '../../utils/fetch';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import DeleteCategoryForm from './CategoryForm/DeleteCategoryForm';
+import { deleteCategoryAction } from '../../app/dboard/actions';
 
 type Categories = {
     id: string;
@@ -51,11 +53,8 @@ const DeleteCategory: NextPage<Props> = ({categories, items}) => {
         }
 
         setisUploading(true);
-        const status = await axios.post('/api/category/delete',{ id: id });
-        categories.forEach(category => axios.post('/api/revalidate', {route: `/c/${category.nombre}`}));
-        axios.post('/api/revalidate', {route: '/'});
-        if (status.status === 200) {
-            router.prefetch('/dboard?bc');
+        const result = await deleteCategoryAction(id);
+        if (result.status === 200) {
             setisUploading(false);
             alert('Eliminacion de categoria correcta');
             router.push('/dboard?bc');
