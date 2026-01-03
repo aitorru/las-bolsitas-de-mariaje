@@ -7,7 +7,7 @@ import CarouselElement from "../components/Carousel";
 import Footer from "../components/Footer";
 import { Highlight, Item, Carousel } from "../utils/types/types";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 type Categories = {
   nombre: string;

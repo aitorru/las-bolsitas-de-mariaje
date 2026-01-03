@@ -1,6 +1,7 @@
 import "../styles/index.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import AppShell from "../components/AppShell";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <AppShell>{children}</AppShell>
+        <Analytics />
       </body>
     </html>
   );
