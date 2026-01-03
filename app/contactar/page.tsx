@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Contacto",
 };
 
-export const revalidate = 3600;
+export const revalidate = 604800;
 
 export default async function ContactPage() {
   const categories = await getCategories();
