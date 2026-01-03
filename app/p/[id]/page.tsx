@@ -6,7 +6,7 @@ import FullItem from "../../../components/ItemsReview/FullItem";
 import { Item } from "../../../utils/types/types";
 import { getPlaiceholder } from "plaiceholder";
 
-export const revalidate = 86400;
+export const dynamic = "force-dynamic";
 
 type Categories = {
   nombre: string;
