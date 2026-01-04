@@ -57,7 +57,7 @@ export default function CartaPage() {
             className={`${manrope.className} mt-4 text-base text-stone-600 md:text-lg`}
           >
             Esta página guarda un mensaje pensado para ti. Eres la llama que nos
-            guia y nos recuerda todo lo que haces por nosotros.
+            guía y nos recuerda todo lo que haces por nosotros.
           </p>
         </div>
         <section className="w-full rounded-3xl border border-amber-100/80 bg-white/80 p-4 shadow-[0_30px_60px_-40px_rgba(120,113,108,0.7)] backdrop-blur sm:p-6 md:p-10">
@@ -73,7 +73,7 @@ export default function CartaPage() {
           <p
             className={`${manrope.className} mt-6 text-sm uppercase tracking-[0.35em] text-stone-400`}
           >
-            Con todo nuestro carino
+            Con todo nuestro cariño
           </p>
         </section>
       </main>
