@@ -21,13 +21,15 @@ export const metadata: Metadata = {
 };
 
 export default function CartaPage() {
-  const carta = `Hola, Amatxu
+  const carta = `
+  Hola, Amatxu:
 
-Aunque ya tengamos a tus dos hijis independizados, seguimos sintiendo tu cariño y tu amor como si aún viviéramos contigo. Nos has dado todo lo que hemos deseado y mucho más, pero, sobre todo, un amor incondicional e infinito.
+  Aunque ya tengas a tus dos hijis independizados, sigo sintiendo tu cariño y tu amor como si aún viviéramos juntos. Me has dado todo lo que he deseado y mucho más, pero, sobre todo, un amor incondicional e infinito.
 
-Tu amor nos guía y nos da esperanza en los días en los que más lo necesitamos. Siempre tenemos una madre con la que poder contar para todo: desde esos días en los que puedo estar más triste y necesito a alguien que me escuche, hasta los días en los que estoy eufórico y necesito compartirlo con alguien.
+  Tu amor me guía y me da esperanza en los días en los que más lo necesito. Siempre tengo una madre con la que puedo contar para todo: desde esos días en los que estoy más triste y necesito a alguien que me escuche, hasta los días en los que estoy eufórico y necesito compartirlo contigo.
 
-Esta página, junto con la vela que te he regalado, simbolizan tu luz. La luz que emanas. Esa luz que te hace especial.`;
+  Esta página, junto con la vela que te he regalado, simbolizan tu luz. La luz que emanas, esa luz que te hace especial. Todo lo que soy hoy tiene mucho de ti, de tu manera de querer, de cuidar y de estar siempre presente.
+  `;
   const parrafos = carta.split(/\n\s*\n/).map((parrafo) => parrafo.trim());
 
   return (
@@ -62,9 +64,8 @@ Esta página, junto con la vela que te he regalado, simbolizan tu luz. La luz qu
           {parrafos.map((parrafo, index) => (
             <p
               key={`${index}-${parrafo.slice(0, 12)}`}
-              className={`${playfair.className} text-2xl leading-relaxed text-stone-700 md:text-3xl ${
-                index > 0 ? "mt-6" : ""
-              }`}
+              className={`${playfair.className} text-2xl leading-relaxed text-stone-700 md:text-3xl ${index > 0 ? "mt-6" : ""
+                }`}
             >
               {parrafo}
             </p>
