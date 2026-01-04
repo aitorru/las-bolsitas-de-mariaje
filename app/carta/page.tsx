@@ -37,24 +37,18 @@ export default function CartaPage() {
         </div>
 
         <div className="text-center">
-          <p
-            className={`${manrope.className} text-xs uppercase tracking-[0.45em] text-stone-500 md:text-sm`}
-          >
-            Carta semi-secreta
-          </p>
           <h1
             className={`${playfair.className} mt-4 text-4xl font-semibold text-stone-800 md:text-6xl`}
           >
-            Para mama, nuestra luz
+            Para ama, nuestra luz
           </h1>
           <p
             className={`${manrope.className} mt-4 text-base text-stone-600 md:text-lg`}
           >
-            Esta pagina guarda un mensaje pensado para ti. Es la llama que nos
+            Esta página guarda un mensaje pensado para ti. Eres la llama que nos
             guia y nos recuerda todo lo que haces por nosotros.
           </p>
         </div>
-
         <section className="w-full rounded-3xl border border-amber-100/80 bg-white/80 p-8 shadow-[0_30px_60px_-40px_rgba(120,113,108,0.7)] backdrop-blur md:p-10">
           <p
             className={`${playfair.className} text-2xl leading-relaxed text-stone-700 md:text-3xl`}
