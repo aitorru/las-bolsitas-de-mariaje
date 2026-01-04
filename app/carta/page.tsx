@@ -53,8 +53,13 @@ export default function CartaPage() {
           <p
             className={`${playfair.className} text-2xl leading-relaxed text-stone-700 md:text-3xl`}
           >
-            [PLACEHOLDER] Aqui ira el texto completo de la carta. Puedes pegar tu
-            mensaje cuando lo tengas listo.
+            Hola, Amatxu
+
+            Aunque ya tengamos a tus dos hijis independizados, seguimos sintiendo tu cariño y tu amor como si aún viviéramos contigo. Nos has dado todo lo que hemos deseado y mucho más, pero, sobre todo, un amor incondicional e infinito.
+
+            Tu amor nos guía y nos da esperanza en los días en los que más lo necesitamos. Siempre tenemos una madre con la que poder contar para todo: desde esos días en los que puedo estar más triste y necesito a alguien que me escuche, hasta los días en los que estoy eufórico y necesito compartirlo con alguien.
+
+            Esta página, junto con la vela que te he regalado, simbolizan tu luz. La luz que emanas. Esa luz que te hace especial.
           </p>
           <p
             className={`${manrope.className} mt-6 text-sm uppercase tracking-[0.35em] text-stone-400`}
