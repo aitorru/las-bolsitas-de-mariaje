@@ -37,7 +37,7 @@ export default function CartaPage() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.25),_transparent_60%),radial-gradient(circle_at_70%_30%,_rgba(234,88,12,0.15),_transparent_55%),radial-gradient(circle_at_20%_80%,_rgba(120,113,108,0.2),_transparent_50%)]" />
       <div className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
       <div className="absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-orange-200/30 blur-3xl" />
-      <main className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center gap-10 px-6 py-16 md:py-24">
+      <main className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center gap-10 px-3 py-12 sm:px-6 md:py-24">
         <div className="relative h-40 w-40">
           <div className="absolute bottom-0 left-1/2 h-20 w-12 -translate-x-1/2 rounded-full bg-stone-200 shadow-[0_20px_50px_-20px_rgba(120,113,108,0.45)]" />
           <div className="absolute bottom-0 left-1/2 h-12 w-16 -translate-x-1/2 rounded-3xl bg-stone-100 shadow-inner shadow-amber-100/80" />
@@ -60,7 +60,7 @@ export default function CartaPage() {
             guia y nos recuerda todo lo que haces por nosotros.
           </p>
         </div>
-        <section className="w-full rounded-3xl border border-amber-100/80 bg-white/80 p-8 shadow-[0_30px_60px_-40px_rgba(120,113,108,0.7)] backdrop-blur md:p-10">
+        <section className="w-full rounded-3xl border border-amber-100/80 bg-white/80 p-4 shadow-[0_30px_60px_-40px_rgba(120,113,108,0.7)] backdrop-blur sm:p-6 md:p-10">
           {parrafos.map((parrafo, index) => (
             <p
               key={`${index}-${parrafo.slice(0, 12)}`}
