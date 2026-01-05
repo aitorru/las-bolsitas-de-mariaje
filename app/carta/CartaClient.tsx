@@ -23,8 +23,11 @@ Aunque ya tengas a tus dos hijis independizados, sigo sintiendo tu cariño y tu 
 Tu amor me guía y me da esperanza en los días en los que más lo necesito. Siempre tengo una madre con la que puedo contar para todo: desde esos días en los que estoy más triste y necesito a alguien que me escuche, hasta los días en los que estoy eufórico y necesito compartirlo contigo.
 
 Esta página, junto con la vela que te he regalado, simbolizan tu luz. La luz que emanas, esa luz que te hace especial. Todo lo que soy hoy tiene mucho de ti, de tu manera de querer, de cuidar y de estar siempre presente.`,
-    Adrian:
-      "Ama, muchas gracias por todo lo que nos ayudas cada día con Beni, con comida o trayendo y llevando tantas cosas. Gracias por seguir siempre de buen humor incluso cuando te fallamos o cuando Iñigo te hace rabiar escondiendote a Benito. Que nunca nos falte tu sonrisa :) ;;;",
+    Adrian: `Ama, muchas gracias por todo lo que nos ayudas cada día con Beni, con comida o trayendo y llevando tantas cosas.
+
+Gracias por seguir siempre de buen humor incluso cuando te fallamos o cuando Iñigo te hace rabiar escondiendote a Benito.
+
+Que nunca nos falte tu sonrisa :)`,
   };
   const [autor, setAutor] = useState<keyof typeof cartas>("Aitor");
   const parrafos = cartas[autor]
