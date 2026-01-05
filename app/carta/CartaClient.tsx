@@ -1,0 +1,107 @@
+"use client";
+
+import { Playfair_Display, Manrope } from "next/font/google";
+import { useState } from "react";
+import FirePlace from "../../components/Fireplace";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+export default function CartaClient() {
+  const cartas = {
+    Aitor: `Hola, Amatxu:
+
+Aunque ya tengas a tus dos hijis independizados, sigo sintiendo tu cariño y tu amor como si aún viviéramos juntos. Me has dado todo lo que he deseado y mucho más, pero, sobre todo, un amor incondicional e infinito.
+
+Tu amor me guía y me da esperanza en los días en los que más lo necesito. Siempre tengo una madre con la que puedo contar para todo: desde esos días en los que estoy más triste y necesito a alguien que me escuche, hasta los días en los que estoy eufórico y necesito compartirlo contigo.
+
+Esta página, junto con la vela que te he regalado, simbolizan tu luz. La luz que emanas, esa luz que te hace especial. Todo lo que soy hoy tiene mucho de ti, de tu manera de querer, de cuidar y de estar siempre presente.`,
+    Adrian:
+      "Ama, muchas gracias por todo lo que nos ayudas cada día con Beni, con comida o trayendo y llevando tantas cosas. Gracias por seguir siempre de buen humor incluso cuando te fallamos o cuando Iñigo te hace rabiar escondiendote a Benito. Que nunca nos falte tu sonrisa :) ;;;",
+  };
+  const [autor, setAutor] = useState<keyof typeof cartas>("Aitor");
+  const parrafos = cartas[autor]
+    .split(/\n\s*\n/)
+    .flatMap((parrafo) => parrafo.split(/;;;/))
+    .map((parrafo) => parrafo.trim())
+    .filter(Boolean);
+
+  return (
+    <div className="min-h-screen bg-amber-50 text-stone-800 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.25),_transparent_60%),radial-gradient(circle_at_70%_30%,_rgba(234,88,12,0.15),_transparent_55%),radial-gradient(circle_at_20%_80%,_rgba(120,113,108,0.2),_transparent_50%)]" />
+      <div className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+      <div className="absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-orange-200/30 blur-3xl" />
+      <main className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center gap-10 px-3 py-12 sm:px-6 md:py-24">
+        <div className="relative h-40 w-40">
+          <div className="absolute bottom-0 left-1/2 h-20 w-12 -translate-x-1/2 rounded-full bg-stone-200 shadow-[0_20px_50px_-20px_rgba(120,113,108,0.45)]" />
+          <div className="absolute bottom-0 left-1/2 h-12 w-16 -translate-x-1/2 rounded-3xl bg-stone-100 shadow-inner shadow-amber-100/80" />
+          <div className="absolute bottom-10 left-1/2 h-8 w-[2px] -translate-x-1/2 bg-stone-500/60" />
+          <div className="relative h-full w-full">
+            <FirePlace />
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h1
+            className={`${playfair.className} mt-4 text-4xl font-semibold text-stone-800 md:text-6xl`}
+          >
+            Para ama, nuestra luz
+          </h1>
+          <p
+            className={`${manrope.className} mt-4 text-base text-stone-600 md:text-lg`}
+          >
+            Esta página guarda un mensaje pensado para ti. Eres la llama que nos
+            guía y nos recuerda todo lo que haces por nosotros.
+          </p>
+        </div>
+        <section className="w-full rounded-3xl border border-amber-100/80 bg-white/80 p-4 shadow-[0_30px_60px_-40px_rgba(120,113,108,0.7)] backdrop-blur sm:p-6 md:p-10">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+            <p
+              className={`${manrope.className} text-xs uppercase tracking-[0.35em] text-stone-400`}
+            >
+              Selecciona la carta
+            </p>
+            <div className="flex rounded-full border border-amber-100/70 bg-white/80 p-1 shadow-inner">
+              {(["Aitor", "Adrian"] as const).map((nombre) => (
+                <button
+                  key={nombre}
+                  type="button"
+                  onClick={() => setAutor(nombre)}
+                  className={`${manrope.className} rounded-full px-4 py-1 text-sm font-semibold transition ${
+                    autor === nombre
+                      ? "bg-amber-200 text-stone-800 shadow-sm"
+                      : "text-stone-500 hover:text-stone-700"
+                  }`}
+                >
+                  {nombre}
+                </button>
+              ))}
+            </div>
+          </div>
+          {parrafos.map((parrafo, index) => (
+            <p
+              key={`${index}-${parrafo.slice(0, 12)}`}
+              className={`${playfair.className} text-2xl leading-relaxed text-stone-700 md:text-3xl ${
+                index > 0 ? "mt-6" : ""
+              }`}
+            >
+              {parrafo}
+            </p>
+          ))}
+          <p
+            className={`${manrope.className} mt-6 text-sm uppercase tracking-[0.35em] text-stone-400`}
+          >
+            Con todo nuestro cariño
+          </p>
+        </section>
+      </main>
+    </div>
+  );
+}
