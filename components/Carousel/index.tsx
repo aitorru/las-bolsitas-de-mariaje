@@ -18,18 +18,34 @@ const CarouselElement = ({ carousel }: Props) => {
   useEffect(() => {
     const root = track.current;
     if (!root) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActive(Number((entry.target as HTMLElement).dataset.index));
-          }
+    // The slide whose left edge is closest to the track's start is the current one; at the end
+    // of the strip the last slides can't reach the start, so the last one wins there.
+    const update = () => {
+      const slides = root.querySelectorAll<HTMLElement>("[data-index]");
+      if (slides.length === 0) return;
+      if (root.scrollLeft >= root.scrollWidth - root.clientWidth - 2) {
+        setActive(slides.length - 1);
+        return;
+      }
+      const start = root.scrollLeft + parseFloat(getComputedStyle(root).paddingLeft);
+      let best = 0;
+      slides.forEach((slide, index) => {
+        if (
+          Math.abs(slide.offsetLeft - start) <
+          Math.abs(slides[best].offsetLeft - start)
+        ) {
+          best = index;
         }
-      },
-      { root, threshold: 0.6 },
-    );
-    root.querySelectorAll("[data-index]").forEach((el) => io.observe(el));
-    return () => io.disconnect();
+      });
+      setActive(best);
+    };
+    update();
+    root.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      root.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, [carousel.length]);
 
   const goTo = (index: number) => {
@@ -37,7 +53,7 @@ const CarouselElement = ({ carousel }: Props) => {
     const slide = root?.querySelector<HTMLElement>(`[data-index="${index}"]`);
     if (!root || !slide) return;
     root.scrollTo({
-      left: slide.offsetLeft - (root.clientWidth - slide.clientWidth) / 2,
+      left: slide.offsetLeft - parseFloat(getComputedStyle(root).paddingLeft),
       behavior: "smooth",
     });
   };

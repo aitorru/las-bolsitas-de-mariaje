@@ -48,7 +48,6 @@ body {
   z-index: 20;
   background: color-mix(in srgb, var(--pt-bg) 78%, transparent);
   backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-bottom: 1px solid var(--pt-border);
 }
 
@@ -131,6 +130,7 @@ body {
   font: 500 var(--pt-text-sm) / 1 var(--pt-font-sans);
   text-decoration: none;
   white-space: nowrap;
+  cursor: pointer;
   transition:
     background-color var(--pt-duration-base) var(--pt-ease),
     border-color var(--pt-duration-base) var(--pt-ease),
@@ -354,13 +354,16 @@ body {
 }
 
 .lb-carousel__track {
+  /* offsetParent for the slides, so their offsetLeft is measured from the track. */
+  position: relative;
   display: flex;
   gap: var(--pt-space-4);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  /* Room on both ends so the first and last slides can sit in the centre. */
-  padding: 4px calc((100% - var(--slide)) / 2);
+  /* Slides start at the page gutter, lined up with the section title. */
+  padding: 4px var(--lb-gutter);
+  scroll-padding-inline: var(--lb-gutter);
   border-radius: var(--pt-radius-xl);
 }
 
@@ -377,7 +380,7 @@ body {
   position: relative;
   flex: 0 0 var(--slide);
   height: clamp(260px, 52vh, 540px);
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   border-radius: var(--pt-radius-xl);
   overflow: hidden;
   background: var(--pt-bg-raised);
@@ -599,6 +602,18 @@ body {
   border-radius: var(--pt-radius-xl) var(--pt-radius-xl) 0 0;
 }
 
+/* The night field glows brightest where the copy sits: a dark wash over the left side keeps
+   the text readable and lets the dots come through on the right. */
+.lb-footer__field > .pt-dotfield__content {
+  background: linear-gradient(
+    100deg,
+    rgb(21 18 31 / 0.94) 0%,
+    rgb(21 18 31 / 0.86) 45%,
+    rgb(21 18 31 / 0.35) 80%,
+    rgb(21 18 31 / 0.1) 100%
+  );
+}
+
 .lb-footer__inner {
   max-width: var(--lb-max);
   margin: 0 auto;
@@ -624,7 +639,11 @@ body {
 }
 
 .lb-footer__title em {
-  color: var(--pt-fg-muted);
+  color: var(--pt-blush);
+}
+
+.lb-footer__brand .pt-body {
+  color: var(--pt-fg);
 }
 
 .lb-footer__links {
@@ -638,7 +657,7 @@ body {
   padding-top: var(--pt-space-5);
   border-top: 1px solid var(--pt-border);
   font-size: var(--pt-text-xs);
-  color: var(--pt-fg-subtle);
+  color: var(--pt-fg-muted);
 }
 
 .lb-footer__credit svg {
@@ -648,7 +667,7 @@ body {
 }
 
 .lb-footer__credit a {
-  color: var(--pt-fg-muted);
+  color: var(--pt-fg);
   text-underline-offset: 3px;
 }
 
@@ -676,7 +695,7 @@ body {
   pointer-events: auto;
 }
 
-/* ── Full-screen pages (login, carta) ───────────────────────── */
+/* ── Full-screen pages (login) ─────────────────────────────── */
 .lb-fullscreen {
   min-height: 100vh;
   min-height: 100dvh;
@@ -706,6 +725,17 @@ body {
   margin-bottom: var(--pt-space-2);
 }
 
+/* The login page burns in ember tones, so its one loud button follows the flame. */
+.lb-login .pt-button--aurora {
+  background-image: var(--pt-gradient-ember);
+}
+
+.lb-login .pt-button--aurora:hover:not(:disabled) {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.35) inset,
+    0 10px 30px -12px var(--pt-coral);
+}
+
 /* A box for the CSS flame in components/Fireplace (it positions itself inside it). */
 .lb-candle {
   position: relative;
@@ -714,89 +744,139 @@ body {
   margin: var(--pt-space-5) auto 0;
 }
 
-.lb-candle--lg {
-  width: 160px;
-  height: 160px;
-}
-
-.lb-candle__wax {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 48px;
-  height: 80px;
-  transform: translateX(-50%);
-  border-radius: var(--pt-radius-pill);
-  background: linear-gradient(90deg, var(--pt-mist-200), var(--pt-mist-50) 45%, var(--pt-mist-300));
-  box-shadow: 0 20px 50px -20px rgb(60 30 90 / 0.45);
-}
-
-.lb-candle__plate {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 72px;
-  height: 14px;
-  transform: translate(-50%, 50%);
-  border-radius: 50%;
-  background: var(--pt-mist-300);
-}
-
-.lb-carta {
-  max-width: 780px;
+/* ── Admin panel (/dboard) ──────────────────────────────────── */
+.lb-admin {
   min-height: 100vh;
-  min-height: 100dvh;
-  margin: 0 auto;
-  padding: var(--pt-space-8) var(--pt-space-3);
-  box-sizing: border-box;
+  padding-bottom: var(--pt-space-8);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--pt-space-6);
-}
-
-.lb-carta__head {
-  display: grid;
-  justify-items: center;
-  gap: var(--pt-space-3);
-  text-align: center;
-}
-
-.lb-carta__title {
-  font-size: clamp(46px, 8vw, 84px);
-}
-
-.lb-carta__card {
-  width: 100%;
-}
-
-.lb-carta__bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--pt-space-3);
-  margin-bottom: var(--pt-space-5);
-}
-
-.lb-carta__text {
-  display: grid;
   gap: var(--pt-space-5);
 }
 
-.lb-carta__text p {
-  font-size: clamp(24px, 3.2vw, 31px);
-  line-height: 1.22;
-  letter-spacing: -0.01em;
+.lb-admin__tabs {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  gap: var(--pt-space-2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: var(--pt-space-4) var(--lb-gutter);
+  border-bottom: 1px solid var(--pt-border);
+  background: color-mix(in srgb, var(--pt-bg) 82%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
 }
 
-.lb-carta__sign {
-  margin: var(--pt-space-6) 0 0;
+.lb-admin__tabs .lb-chip {
+  height: 36px;
+  padding: 0 16px;
 }
 
-@media (max-width: 640px) {
-  .lb-carta__card.pt-glass--pad-lg > .pt-glass__body {
-    padding: var(--pt-space-4);
-  }
+.lb-label {
+  text-align: center;
+  font-family: var(--pt-font-display);
+  font-size: 30px;
+  line-height: 1.1;
+  color: var(--pt-fg);
+}
+
+.lb-input {
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: var(--pt-radius-md);
+  border: 1px solid var(--pt-border-strong);
+  background: var(--pt-bg-raised);
+  color: var(--pt-fg);
+  font: 400 var(--pt-text-md) / 1.4 var(--pt-font-sans);
+  transition:
+    border-color var(--pt-duration-base) var(--pt-ease),
+    box-shadow var(--pt-duration-base) var(--pt-ease);
+}
+
+.lb-input:focus {
+  outline: 0;
+  border-color: var(--pt-focus);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pt-focus) 18%, transparent);
+}
+
+.lb-input--area {
+  resize: vertical;
+}
+
+.lb-input[type="file"] {
+  padding: 8px;
+}
+
+.lb-input::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: var(--pt-radius-pill);
+  background: var(--pt-fg);
+  color: var(--pt-bg);
+  font: 500 var(--pt-text-sm) / 1 var(--pt-font-sans);
+  cursor: pointer;
+}
+
+.lb-admin__submit {
+  width: 100%;
+  margin-top: var(--pt-space-3);
+}
+
+.lb-admin__danger.pt-button {
+  align-self: center;
+  background: var(--pt-gradient-ember);
+  color: #fff;
+}
+
+.lb-warning {
+  display: flex;
+  align-items: center;
+  gap: var(--pt-space-4);
+  padding: var(--pt-space-4) var(--pt-space-5);
+  border-radius: var(--pt-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--pt-coral) 40%, transparent);
+  background: color-mix(in srgb, var(--pt-coral) 10%, var(--pt-bg-raised));
+  color: var(--pt-ink-900);
+  font-size: var(--pt-text-md);
+}
+
+.lb-warning svg {
+  flex: none;
+  color: var(--pt-coral);
+}
+
+.lb-admin-row {
+  padding: var(--pt-space-3) var(--pt-space-4);
+  border-radius: var(--pt-radius-lg);
+  border: 1px solid var(--pt-border);
+  background: var(--pt-bg-raised);
+  cursor: pointer;
+  transition: border-color var(--pt-duration-base) var(--pt-ease);
+}
+
+.lb-admin-row:hover,
+.lb-admin-row[open] {
+  border-color: var(--pt-border-strong);
+}
+
+.lb-admin-row__head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pt-space-3);
+  list-style: none;
+  font-weight: 500;
+  user-select: none;
+}
+
+.lb-admin-row__head::-webkit-details-marker {
+  display: none;
+}
+
+.lb-admin-row__head > :first-child {
+  color: var(--pt-fg-muted);
+}
+
+.lb-admin-row__head > :last-child {
+  text-align: right;
 }

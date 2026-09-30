@@ -30,7 +30,6 @@
   background: rgb(255 255 255 / 0.16);
   border-color: rgb(255 255 255 / 0.4);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .pt-badge__dot {
