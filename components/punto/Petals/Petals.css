@@ -1,0 +1,114 @@
+.pt-petals {
+  /* Tile colours: top-left, top-right, bottom-left, bottom-right. */
+  --t1: #7b7590;
+  --t2: #e8456f;
+  --t3: #a34fd8;
+  --t4: #ff4f5e;
+  --glow: rgb(255 214 232 / 0.9);
+  width: 100%;
+  height: 100%;
+  container-type: size;
+}
+
+.pt-petals--aurora {
+  --t1: #7c5cf5;
+  --t2: #e8399a;
+  --t3: #b257e6;
+  --t4: #ff5b4a;
+}
+
+/* The logo's hearts, in reading order: blue, orange, green, pink. */
+.pt-petals--mariaje {
+  --t1: #3aaee8;
+  --t2: #f09a38;
+  --t3: #9ec23e;
+  --t4: #e0468f;
+  --glow: rgb(255 244 214 / 0.95);
+}
+
+.pt-petals--mist {
+  --t1: #d6d2e6;
+  --t2: #ead4e2;
+  --t3: #d8cfea;
+  --t4: #f0d6dc;
+  --glow: rgb(255 255 255 / 0.95);
+}
+
+.pt-petals--ink {
+  --t1: #37324a;
+  --t2: #514b66;
+  --t3: #221e31;
+  --t4: #37324a;
+  --glow: rgb(255 159 200 / 0.8);
+}
+
+/*
+ * The light lives behind the tiles and only shows through the seams, so the
+ * sparkle is literally the space the four rounded corners leave free.
+ */
+.pt-petals__grid {
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  gap: calc(var(--gap) * 100cqmin);
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(closest-side, var(--glow), transparent 70%) center / 60cqmin 60cqmin no-repeat,
+    radial-gradient(closest-side, color-mix(in srgb, var(--glow) 55%, transparent), transparent);
+}
+
+.pt-petals__tile {
+  opacity: 0.82;
+  border-radius: calc(var(--round) * 100cqmin);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.18),
+    inset 0 0 calc(8cqmin) rgb(255 255 255 / 0.06);
+}
+
+.pt-petals__tile:nth-child(1) {
+  background: radial-gradient(
+    120% 120% at 30% 30%,
+    var(--t1),
+    color-mix(in srgb, var(--t1) 80%, var(--t2))
+  );
+}
+.pt-petals__tile:nth-child(2) {
+  background: radial-gradient(
+    120% 120% at 70% 30%,
+    var(--t2),
+    color-mix(in srgb, var(--t2) 80%, var(--t4))
+  );
+}
+.pt-petals__tile:nth-child(3) {
+  background: radial-gradient(
+    120% 120% at 30% 70%,
+    var(--t3),
+    color-mix(in srgb, var(--t3) 80%, var(--t4))
+  );
+}
+.pt-petals__tile:nth-child(4) {
+  background: radial-gradient(
+    120% 120% at 70% 70%,
+    var(--t4),
+    color-mix(in srgb, var(--t4) 85%, var(--t3))
+  );
+}
+
+.pt-petals--animated .pt-petals__grid {
+  animation: pt-petals-glow 6s var(--pt-ease-in-out) infinite alternate;
+}
+
+@keyframes pt-petals-glow {
+  from {
+    filter: brightness(0.96) saturate(0.95);
+  }
+  to {
+    filter: brightness(1.06) saturate(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-petals--animated .pt-petals__grid {
+    animation: none;
+  }
+}

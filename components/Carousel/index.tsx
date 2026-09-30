@@ -1,38 +1,113 @@
-import { NextPage } from 'next';
-import Image from 'next/image';
-import { Carousel } from '../../utils/types/types';
+"use client";
+
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { Carousel } from "../../utils/types/types";
+import { ChevronLeft, ChevronRight } from "../Icons";
+import { Button } from "../punto";
 
 interface Props {
-    carousel: Carousel[];
+  carousel: Carousel[];
 }
 
-const CarouselElement: NextPage<Props> = ({carousel}) => {
-    return (
-        <div className='flex flex-col justify-center flex-grow w-11/12 mx-auto my-auto'>
-            <div className='relative overflow-hidden shadow-xl rounded-xl bg-gray-200/20 md:shadow-lg'>
-                <div className='relative w-full md:h-[60vh] h-[40vh] flex gap-5 snap-mandatory snap-x overflow-x-auto md:py-2'>
-                    <div className='md:pr-[23vw]'></div>
-                    {
-                        carousel.map((item) => <div key={item.id} className="relative w-5/6 h-full overflow-hidden rounded-lg snap-center snap-always shrink-0 first:pl-8 last:pr-8 md:w-3/6">
-                            <Image
-                                fill
-                                style={{ objectFit: 'contain' }}
-                                sizes="(min-width: 768px) 50vw, 80vw"
-                                alt='Promocion'
-                                className='h-full shrink-0' 
-                                placeholder='blur'
-                                blurDataURL={item.blur}
-                                src={item.imageUrl == undefined ? '' : item.imageUrl}/>
-                        </div>
+/** Scroll-snap strip of promotions with a row of dots that follows the slide in view. */
+const CarouselElement = ({ carousel }: Props) => {
+  const track = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(0);
 
-                        )
-                    }
-                    <div className='md:pr-[23vw]'></div>
-                </div>
-            </div>   
-        </div>
-
+  useEffect(() => {
+    const root = track.current;
+    if (!root) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(Number((entry.target as HTMLElement).dataset.index));
+          }
+        }
+      },
+      { root, threshold: 0.6 },
     );
+    root.querySelectorAll("[data-index]").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [carousel.length]);
 
+  const goTo = (index: number) => {
+    const root = track.current;
+    const slide = root?.querySelector<HTMLElement>(`[data-index="${index}"]`);
+    if (!root || !slide) return;
+    root.scrollTo({
+      left: slide.offsetLeft - (root.clientWidth - slide.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  };
+
+  if (carousel.length === 0) return null;
+
+  return (
+    <div className="lb-carousel">
+      <div
+        ref={track}
+        className="lb-carousel__track"
+        role="region"
+        aria-roledescription="carrusel"
+        aria-label="Promociones"
+        tabIndex={0}
+      >
+        {carousel.map((item, index) => (
+          <div
+            key={item.id}
+            data-index={index}
+            className="lb-carousel__slide"
+            aria-roledescription="diapositiva"
+            aria-label={`${index + 1} de ${carousel.length}`}
+          >
+            <Image
+              fill
+              style={{ objectFit: "contain" }}
+              sizes="(min-width: 768px) 60vw, 88vw"
+              alt="Promoción"
+              placeholder={item.blur ? "blur" : "empty"}
+              blurDataURL={item.blur}
+              src={item.imageUrl ?? ""}
+            />
+          </div>
+        ))}
+      </div>
+      {carousel.length > 1 && (
+        <div className="lb-carousel__controls">
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label="Anterior"
+            icon={<ChevronLeft />}
+            disabled={active === 0}
+            onClick={() => goTo(active - 1)}
+          />
+          <div className="lb-carousel__dots">
+            {carousel.map((item, index) => (
+              <button
+                key={item.id}
+                type="button"
+                className="lb-carousel__dot pt-focusable"
+                aria-label={`Ir a la promoción ${index + 1}`}
+                aria-current={index === active ? "true" : undefined}
+                onClick={() => goTo(index)}
+              />
+            ))}
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            aria-label="Siguiente"
+            icon={<ChevronRight />}
+            disabled={active === carousel.length - 1}
+            onClick={() => goTo(active + 1)}
+          />
+        </div>
+      )}
+    </div>
+  );
 };
+
 export default CarouselElement;

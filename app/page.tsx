@@ -22,18 +22,21 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex flex-col md:min-h-screen">
-        <Header categories={categories} />
-        <Hero />
-      </div>
-      <div className="flex flex-col md:gap-10">
-        <h1 className="py-5 text-4xl font-bold text-center md:text-6xl text-ellipsis">
-          Promociones
-        </h1>
-        <CarouselElement carousel={carousel} />
-      </div>
-      <div id="destacados">
-        <ItemsReview title="Destacados" items={items} />
+      <Header categories={categories} />
+      <Hero />
+      {carousel.length > 0 && (
+        <section className="lb-section">
+          <div className="lb-section__head">
+            <div>
+              <span className="pt-eyebrow">Ahora mismo</span>
+              <h2 className="pt-display lb-section__title">Promociones</h2>
+            </div>
+          </div>
+          <CarouselElement carousel={carousel} />
+        </section>
+      )}
+      <div id="destacados" className="lb-anchor">
+        <ItemsReview eyebrow="La tienda" title="Destacados" items={items} />
       </div>
       <Footer />
     </>
