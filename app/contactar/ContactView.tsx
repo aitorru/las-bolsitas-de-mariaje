@@ -18,7 +18,9 @@ export default function ContactView({ categories }: Props) {
         palette="mariaje"
         surface="theme"
         motion="breathe"
-        pixel={2}
+        gap={9}
+        dotSize={0.5}
+        intensity={0.55}
         seed={23}
         className="lb-hero lb-contact"
       >
