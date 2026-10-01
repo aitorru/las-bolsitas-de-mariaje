@@ -9,6 +9,7 @@ import { ref, getDownloadURL, getStorage } from 'firebase/storage';
 import { Carousel } from '../../utils/types/types';
 import pride from '../../utils/pride';
 import { updateCarouselAction } from '../../app/dboard/actions';
+import { buttonClassName } from '../punto';
 //import ItemDetail from './ItemDetail';
 
 interface Props {
@@ -86,13 +87,13 @@ const CarouselEditDetail: NextPage<PassProps> = ({item}) => {
                     <input type="file"
                         accept="image/*"
                         ref={imageForm}
-                        className='border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl'
+                        className="lb-input"
                     />
                 </form>
             </div>
             <button
                 onClick={handleSubmit}
-                className='bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform'>
+                className={buttonClassName("aurora", "lg", "lb-admin__submit")}>
                 Subir{isUploading && <FireIcon />}
             </button>
         </div>

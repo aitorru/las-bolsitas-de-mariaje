@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import { FormEventHandler, RefObject } from 'react';
+import { buttonClassName } from '../../punto';
 
 type Categories = {
     nombre: string;
@@ -37,58 +38,58 @@ const ItemForm: NextPage<Props> = (
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
-        <label className="text-center text-3xl">
+        <label className="lb-label">
           Nombre
         </label>
         <input
             type="text"
             placeholder='Bolsa...'
             required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
+            className="lb-input"
             ref={nameForm}
         />
-        <label className="text-center text-3xl">
+        <label className="lb-label">
           Descripcion
         </label>
         <textarea
             placeholder='Tela...'
             required={isNameRequired}
             defaultValue={descripcion}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl resize-y"
+            className="lb-input lb-input--area"
             ref={textAreaForm}
         />
-        <label className="text-center text-3xl">
+        <label className="lb-label">
           Precio
         </label>
         <input
             type="text"
             placeholder='10.95'
             required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
+            className="lb-input"
             ref={priceForm}
         />
-        <label className="text-center text-3xl">
+        <label className="lb-label">
           Categoria
         </label>
         <select
             defaultValue={defaultOption}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"
+            className="lb-input"
             ref={categoryForm}>
             {categories.map((category) => (
                 <option key={category.nombre}>{category.nombre}</option>
             ))}
         </select>
-        <label className="text-center text-3xl">Imagen</label>
+        <label className="lb-label">Imagen</label>
         <input
             type="file"
             accept="image/*"
             required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
+            className="lb-input"
             ref={imageForm}
         />
         <button
             type="submit"
-            className="bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
+            className={buttonClassName("aurora", "lg", "lb-admin__submit")}>
           Enviar{isUploading && <FireIcon />}
         </button>
     </form>;

@@ -1,44 +1,85 @@
-/* eslint-disable @next/next/no-img-element */
-import Image from 'next/image';
-import { NextPage } from 'next';
-import { Item } from '../../utils/types/types';
+import Image from "next/image";
+import Link from "next/link";
+import { formatPrice } from "../../utils/price";
+import { Item } from "../../utils/types/types";
+import { Chat, ChevronRight, Mail } from "../Icons";
+import { ButtonLink, GlassCard } from "../punto";
+
 interface Props {
-    item: Item;
+  item: Item;
 }
 
-const FullItem: NextPage<Props> = ({item}) => {
-    return (
-        <div className='container items-center justify-center flex-grow h-full max-h-full mx-auto my-5 grid md:grid-cols-2 gap-5'>
-            <div className='relative w-[90%] min-h-[20rem] md:h-[80%] md:w-[80%] mx-auto'>
-                <Image
-                    priority
-                    alt={item.nombre}
-                    src={item.imageUrl}
-                    placeholder='blur'
-                    blurDataURL={item.blur}
-                    fill={true}
-                    style={{objectFit: 'contain'}}
-                    sizes="(min-width: 1024px) 40vw, 80vw"
-                />
-            </div>
-            <div className='flex flex-col justify-center w-11/12 mx-auto gap-10'>
-                <h1 className='text-4xl font-bold text-center md:text-5xl text-ellipsis'>{item.nombre}</h1>
-                <h2 className='text-xl font-medium text-center text-ellipsis'>{item.descripcion}</h2>
-                <h2 className='py-2 text-4xl font-semibold text-center border-t-2 border-b-2 border-black/20'>{item.precio} €</h2>
-                <a 
-                    href={'https://wa.me/34697820927/?text=Hola! Estoy interesado/a en ' + item.nombre + '.'}
-                    target="_blank" 
-                    className='flex flex-row items-center justify-center px-10 py-3 mb-5 text-4xl font-bold text-center text-white bg-blue-700 shadow-2xl md:mb-0 shadow-blue-700/50 rounded-2xl hover:-translate-y-2 transition-transform' 
-                    rel="noreferrer">Contactar<Phone /></a>
-            </div>
+const FullItem = ({ item }: Props) => {
+  const saludo = `Hola! Estoy interesado/a en ${item.nombre}.`;
+  return (
+    <main className="lb-product">
+      <nav aria-label="Ruta" className="lb-crumbs">
+        <Link href="/">Inicio</Link>
+        {item.categoria && (
+          <>
+            <ChevronRight size={12} />
+            <Link href={"/c/" + encodeURIComponent(item.categoria)}>
+              {item.categoria}
+            </Link>
+          </>
+        )}
+        <ChevronRight size={12} />
+        <span aria-current="page">{item.nombre}</span>
+      </nav>
+      <div className="lb-product__grid">
+        <GlassCard tone="solid" padding="none" className="lb-product__media">
+          <Image
+            priority
+            alt={item.nombre}
+            src={item.imageUrl}
+            placeholder={item.blur ? "blur" : "empty"}
+            blurDataURL={item.blur}
+            fill
+            style={{ objectFit: "contain" }}
+            sizes="(min-width: 900px) 50vw, 92vw"
+          />
+        </GlassCard>
+        <div className="lb-product__info">
+          {item.categoria && (
+            <span className="pt-eyebrow">{item.categoria}</span>
+          )}
+          <h1 className="pt-display lb-product__title">{item.nombre}</h1>
+          {item.descripcion && (
+            <p className="pt-body lb-product__desc">{item.descripcion}</p>
+          )}
+          <div className="lb-product__price">
+            <span className="pt-eyebrow">Precio</span>
+            <p className="pt-display">{formatPrice(item.precio)}</p>
+          </div>
+          <div className="lb-actions">
+            <ButtonLink
+              href={"https://wa.me/34697820927/?text=" + encodeURIComponent(saludo)}
+              target="_blank"
+              rel="noreferrer"
+              variant="aurora"
+              size="lg"
+              icon={<Chat />}
+            >
+              Pedir por WhatsApp
+            </ButtonLink>
+            <ButtonLink
+              href={
+                "mailto:lasbolsitasdemariaje@gmail.com?subject=" +
+                encodeURIComponent(item.nombre) +
+                "&body=" +
+                encodeURIComponent(saludo)
+              }
+              variant="ghost"
+              size="lg"
+              icon={<Mail />}
+            >
+              Por correo
+            </ButtonLink>
+          </div>
         </div>
-    );
-};
-
-const Phone = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" className="h-[2.5rem] w-[2.5rem] ml-2" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-    </svg>;
+      </div>
+    </main>
+  );
 };
 
 export default FullItem;

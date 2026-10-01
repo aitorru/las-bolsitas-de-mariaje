@@ -8,9 +8,11 @@
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
+  # Node 24 LTS: the version Vercel builds with (package.json "engines").
   languages.javascript = {
     enable = true;
-    bun = {
+    package = pkgs.nodejs_24;
+    yarn = {
       enable = true;
       install.enable = true;
     };

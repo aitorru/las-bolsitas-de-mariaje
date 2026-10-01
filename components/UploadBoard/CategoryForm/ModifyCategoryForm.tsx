@@ -1,6 +1,7 @@
 //ModifyCategoryForm
 import { NextPage } from 'next';
 import { FormEventHandler, RefObject } from 'react';
+import { buttonClassName } from '../../punto';
 
 type Categories = {
     nombre: string;
@@ -29,33 +30,33 @@ const ModifyCategoryForm: NextPage<Props> =
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
         <h1 
-            className='flex flex-row align-middle p-5 bg-yellow-300/100 border-yellow-500 shadow-2xl shadow-yellow-300/50 border-2 rounded-xl gap-5 text-xl text-yellow-900'>
+            className='lb-warning'>
             <ExclamationIcon/>
             Comprueba que la categoria que vas a modificar esta vacia.
         </h1>
-        <label className="text-center text-3xl">
+        <label className="lb-label">
           Categoria a cambiar
         </label>
         <select
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white"
+            className="lb-input"
             ref={categoryForm}>
             {categories.map((category) => (
                 <option key={category.nombre}>{category.nombre}</option>
             ))}
         </select>
-        <label className="text-center text-3xl mt-20">
+        <label className="lb-label mt-20">
           Nombre destino de la categoria
         </label>
         <input
             type="text"
             placeholder='Bolsa...'
             required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
+            className="lb-input"
             ref={nameForm}
         />
         <button
             type="submit"
-            className="mt-20 bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
+            className={buttonClassName("aurora", "lg", "lb-admin__submit", "mt-20")}>
           Subir{isUploading && <FireIcon />}
         </button>
     </form>;

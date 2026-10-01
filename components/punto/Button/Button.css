@@ -1,0 +1,102 @@
+.pt-button {
+  --h: 40px;
+  --px: 18px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: var(--h);
+  padding: 0 var(--px);
+  border: 1px solid transparent;
+  border-radius: var(--pt-radius-pill);
+  font: 500 var(--pt-text-sm) / 1 var(--pt-font-sans);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform var(--pt-duration-fast) var(--pt-ease),
+    background-color var(--pt-duration-base) var(--pt-ease),
+    box-shadow var(--pt-duration-base) var(--pt-ease),
+    opacity var(--pt-duration-base) var(--pt-ease);
+}
+
+.pt-button--sm {
+  --h: 32px;
+  --px: 14px;
+  font-size: var(--pt-text-xs);
+}
+.pt-button--lg {
+  --h: 52px;
+  --px: 26px;
+  font-size: var(--pt-text-md);
+}
+
+.pt-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.pt-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pt-button--loading:disabled {
+  opacity: 0.85;
+  cursor: progress;
+}
+
+.pt-button__icon {
+  display: inline-flex;
+  margin-inline: -2px;
+}
+
+/* primary: ink on light, mist on dark */
+.pt-button--primary {
+  background: var(--pt-fg);
+  color: var(--pt-bg);
+}
+.pt-button--primary:hover:not(:disabled) {
+  box-shadow: 0 8px 24px -10px var(--pt-fg);
+}
+
+/* aurora: the one loud button */
+.pt-button--aurora {
+  background: var(--pt-gradient-aurora);
+  background-size: 160% 100%;
+  background-position: 0% 50%;
+  color: #fff;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 0.35) inset;
+  transition:
+    transform var(--pt-duration-fast) var(--pt-ease),
+    background-position var(--pt-duration-slow) var(--pt-ease),
+    box-shadow var(--pt-duration-base) var(--pt-ease);
+}
+.pt-button--aurora:hover:not(:disabled) {
+  background-position: 100% 50%;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.35) inset,
+    0 10px 30px -12px var(--pt-magenta);
+}
+
+/* glass: sits over DotField / imagery */
+.pt-button--glass {
+  background: rgb(255 255 255 / 0.18);
+  border-color: rgb(255 255 255 / 0.45);
+  color: inherit;
+  backdrop-filter: blur(12px) saturate(140%);
+}
+.pt-button--glass:hover:not(:disabled) {
+  background: rgb(255 255 255 / 0.3);
+}
+
+/* ghost */
+.pt-button--ghost {
+  background: transparent;
+  color: var(--pt-fg);
+  border-color: var(--pt-border-strong);
+}
+.pt-button--ghost:hover:not(:disabled) {
+  background: var(--pt-border);
+}
