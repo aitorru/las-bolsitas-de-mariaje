@@ -1,0 +1,94 @@
+.pt-dotloader {
+  --dot: 4px;
+  --gap: 3px;
+  display: inline-grid;
+  grid-template-columns: repeat(3, var(--dot));
+  gap: var(--gap);
+  vertical-align: middle;
+  flex: none;
+}
+
+.pt-dotloader--sm {
+  --dot: 3px;
+  --gap: 2px;
+}
+.pt-dotloader--lg {
+  --dot: 7px;
+  --gap: 5px;
+}
+
+.pt-dotloader__dot {
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.22;
+}
+
+/* Accent: each dot takes its own stop of violet → magenta → coral (by grid position). */
+.pt-dotloader--accent .pt-dotloader__dot {
+  background: color-mix(
+    in oklab,
+    color-mix(in oklab, var(--pt-violet), var(--pt-magenta) clamp(0%, calc(var(--p) * 200%), 100%)),
+    var(--pt-coral) clamp(0%, calc((var(--p) - 0.5) * 200%), 100%)
+  );
+}
+
+.pt-dotloader--wave .pt-dotloader__dot {
+  animation: pt-dot-wave 1.2s var(--pt-ease-in-out) infinite;
+  animation-delay: calc(var(--i) * 110ms);
+}
+
+.pt-dotloader--pulse .pt-dotloader__dot {
+  animation: pt-dot-pulse 1.6s var(--pt-ease-in-out) infinite;
+  animation-delay: calc(var(--i) * 60ms);
+}
+
+.pt-dotloader--orbit .pt-dotloader__dot {
+  animation: pt-dot-orbit 1.2s linear infinite;
+  animation-delay: calc(var(--i) * 150ms - 1.2s);
+}
+
+.pt-dotloader--orbit .pt-dotloader__dot--idle {
+  animation: none;
+  opacity: 0.12;
+}
+
+@keyframes pt-dot-wave {
+  0%,
+  60%,
+  100% {
+    opacity: 0.22;
+    transform: scale(0.8);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pt-dot-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes pt-dot-orbit {
+  0% {
+    opacity: 1;
+  }
+  40%,
+  100% {
+    opacity: 0.18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-dotloader .pt-dotloader__dot {
+    animation-duration: 3.2s;
+  }
+}

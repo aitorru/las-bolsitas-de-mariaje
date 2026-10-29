@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { ArrowUp } from "./Icons";
+import { Button } from "./punto";
 
 type Props = {
   children: ReactNode;
@@ -12,50 +14,27 @@ export default function AppShell({ children }: Props) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > window.screen.availHeight / 2.3) {
-        setPassTheVisiblePoint(true);
-      } else {
-        setPassTheVisiblePoint(false);
-      }
+      setPassTheVisiblePoint(
+        window.scrollY > window.screen.availHeight / 2.3,
+      );
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      <div className="h-0 sticky origin-right top-[90vh] z-10 overflow-x-clip flex justify-end">
-        <BackToTop visible={passTheVisiblePoint} />
-      </div>
       {children}
+      <Button
+        variant="primary"
+        aria-label="Volver arriba"
+        icon={<ArrowUp size={18} />}
+        className={`lb-top ${passTheVisiblePoint ? "is-visible" : ""}`}
+        tabIndex={passTheVisiblePoint ? 0 : -1}
+        onClick={() => {
+          window.scrollTo({ top: 0 });
+        }}
+      />
     </>
-  );
-}
-
-function BackToTop({ visible }: { visible: boolean }) {
-  return (
-    <button
-      className={`sticky h-min z-20 right-6 p-2 rounded-xl bg-blue-700 shadow-blue-700/50 text-white transition-all duration-700 hover:scale-105 ${
-        visible ? "shadow-sm" : "scale-0 opacity-0 hover:scale-0"
-      }`}
-      onClick={() => {
-        window.scrollTo({ top: 0 });
-      }}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-[2rem] w-[2rem]"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M8 7l4-4m0 0l4 4m-4-4v18"
-        />
-      </svg>
-    </button>
   );
 }

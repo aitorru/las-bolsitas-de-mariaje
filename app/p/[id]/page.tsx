@@ -1,6 +1,7 @@
 import { FirebaseStorage } from "firebase/storage";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import FullItem from "../../../components/ItemsReview/FullItem";
 import { Item } from "../../../utils/types/types";
@@ -45,10 +46,11 @@ export default async function ProductPage({ params, searchParams }: Props) {
   }
 
   return (
-    <div className="flex flex-col max-h-screen min-h-screen">
+    <>
       <Header categories={categories} />
       <FullItem item={item} />
-    </div>
+      <Footer />
+    </>
   );
 }
 

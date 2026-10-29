@@ -7,6 +7,7 @@ import { Item, Highlight } from '../../utils/types/types';
 import { useRouter } from 'next/navigation';
 import pride from '../../utils/pride';
 import { updateHighlightsAction } from '../../app/dboard/actions';
+import { buttonClassName } from '../punto';
 
 interface Props {
     highlights: Highlight[];
@@ -75,7 +76,7 @@ const EditHighLight: NextPage<Props> = ({items, highlights}) => {
             }
             <button
                 type="submit"
-                className=" bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
+                className={buttonClassName("aurora", "lg", "lb-admin__submit")}>
           Enviar{isUploading && <FireIcon />}
             </button>
         </form>
@@ -93,7 +94,7 @@ NextPage<{hl: Highlight, items: Item[]}> = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
-        <select key={hl.id} value={value} onChange={(e) => {setvalue(e.target.value);}} className='border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl bg-white'>
+        <select key={hl.id} value={value} onChange={(e) => {setvalue(e.target.value);}} className="lb-input">
             {items.map((item) => (
                 <option key={item.id}>{item.nombre}</option>
             ))}

@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import { FormEventHandler, RefObject } from 'react';
+import { buttonClassName } from '../../punto';
 
 interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
@@ -13,19 +14,19 @@ const CategoryForm: NextPage<Props> =
     return <form
         onSubmit={onSubmit}
         className="flex flex-col justify-center content-center w-11/12 md:w-9/12 mx-auto gap-3">
-        <label className="text-center text-3xl">
+        <label className="lb-label">
           Nombre
         </label>
         <input
             type="text"
             placeholder='Bolsa...'
             required={isNameRequired}
-            className="border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl"
+            className="lb-input"
             ref={nameForm}
         />
         <button
             type="submit"
-            className="bg-blue-600 shadow-xl shadow-blue-600/10 rounded-xl text-white p-2 font-semibold text-2xl flex justify-center items-center gap-5 hover:-translate-y-1 transition-transform">
+            className={buttonClassName("aurora", "lg", "lb-admin__submit")}>
           Subir{isUploading && <FireIcon />}
         </button>
     </form>;

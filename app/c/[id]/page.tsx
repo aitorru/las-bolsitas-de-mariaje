@@ -43,7 +43,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   return (
     <>
       <Header categories={categories} />
-      <ItemsReview title={categoryId} items={items} />
+      <ItemsReview eyebrow="Categoría" title={categoryId} items={items} />
       <Footer />
     </>
   );

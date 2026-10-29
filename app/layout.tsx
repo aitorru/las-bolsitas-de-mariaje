@@ -1,5 +1,8 @@
+import "../components/punto";
 import "../styles/index.css";
-import type { Metadata } from "next";
+import "../styles/site.css";
+import type { Metadata, Viewport } from "next";
+import { Instrument_Serif, Inter_Tight } from "next/font/google";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import AppShell from "../components/AppShell";
@@ -30,14 +33,31 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#eeecf5",
+};
+
+// Punto's two voices: a quiet serif to say, a tight sans to do.
+const display = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-display",
+});
+
+const sans = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
 export default function RootLayout({
   children,
 }: {
   children: ReactNode;
 }) {
   return (
-    <html lang="es">
-      <body>
+    <html lang="es" className={`${display.variable} ${sans.variable}`}>
+      <body data-pt-theme="light" className="pt-dot-paper">
         <AppShell>{children}</AppShell>
         <Analytics />
       </body>
