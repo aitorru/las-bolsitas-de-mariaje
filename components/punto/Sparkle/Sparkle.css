@@ -1,0 +1,28 @@
+.pt-sparkle {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+}
+
+.pt-sparkle--twinkle {
+  animation: pt-twinkle var(--pt-duration-breath) var(--pt-ease-in-out) infinite;
+  transform-origin: center;
+}
+
+@keyframes pt-twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.72) rotate(45deg);
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-sparkle--twinkle {
+    animation: none;
+  }
+}

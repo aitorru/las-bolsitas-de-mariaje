@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ContactClient from "./ContactClient";
+import ContactView from "./ContactView";
 import { Category } from "../../utils/types/types";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const revalidate = 604800;
 
 export default async function ContactPage() {
   const categories = await getCategories();
-  return <ContactClient categories={categories} />;
+  return <ContactView categories={categories} />;
 }
 
 async function getCategories(): Promise<Category[]> {

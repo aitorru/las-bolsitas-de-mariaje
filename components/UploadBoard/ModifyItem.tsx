@@ -47,9 +47,9 @@ const DetailElement: NextPage<SecondaryProps> = ({item, categories}) => {
     }, [detailElement]);
     
     return (
-        <details id={item.id} key={item.id} ref={detailElement} className='border-blue-600 shadow-lg shadow-blue-600/50 border-2 p-2 px-5 rounded-xl text-xl cursor-pointer'>
+        <details id={item.id} key={item.id} ref={detailElement} className='lb-admin-row'>
             <summary 
-                className={`list-none font-bold grid grid-cols-2 text-ellipsis overflow-hidden select-none ${isOpenned ? 'bg-blue-100 p-1 rounded-xl' : ''}`}
+                className='lb-admin-row__head'
             >
                 <h1 className=''>{item.categoria}</h1>
                 <h1 className='text-right'>{`${item.nombre} (${item.precio} €)`}</h1>

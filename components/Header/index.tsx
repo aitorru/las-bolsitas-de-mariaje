@@ -1,10 +1,8 @@
-'use client';
+"use client";
 
-import { NextPage } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import { createRef, useState } from 'react';
-import Logo from '../../public/logo.png';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ButtonLink, Petals } from "../punto";
 
 type Categories = {
   nombre: string;
@@ -13,95 +11,59 @@ interface Props {
   categories: Categories[];
 }
 
-const Header: NextPage<Props> = ({ categories }) => {
-    const [ menuVisible, setMenuVisible ] = useState<boolean>(false);
-    const dropDown = createRef<HTMLDivElement>();
+const Header = ({ categories }: Props) => {
+  const pathname = usePathname();
+  // Category paths are URL-encoded; compare against the decoded name.
+  const current = pathname?.startsWith("/c/")
+    ? safeDecode(pathname.slice(3))
+    : null;
 
-    return (
-        <div className="h-fit w-full py-2 shadow">
-            <div className="container mx-auto flex flex-row justify-around h-full content-center items-center w-11/12 md:w-full">
-                <Link href={'/'}>
-                    <Image
-                        alt="Logo de la pagina"
-                        src={Logo}
-                        placeholder={'blur'}
-                        height={120}
-                        width={120}
-                        className="cursor-pointer"
-                    />
-                </Link>
-
-                <div className="hidden md:block">
-                    <ul className="flex flex-row gap-3 content-center font-bold underline flex-wrap items-center justify-center lg:w-11/12 mx-auto">
-                        {categories.map((category) => (
-                            <li key={category.nombre}>
-                                <Link
-                                    href={"/c/" + encodeURIComponent(category.nombre)}
-                                    className='text-lg underline-offset-4'>
-                                    {category.nombre}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <Link
-                    href={'/contactar'}
-                    className="hidden md:block text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-md2 shadow-blue-700/50 rounded-xl text-white hover:scale-105 transition-transform">
+  return (
+    <header className="lb-nav">
+      <div className="lb-nav__bar">
+        <Link href="/" className="lb-brand pt-focusable" aria-label="Inicio">
+          <span className="lb-brand__mark">
+            <Petals tone="mariaje" />
+          </span>
+          <span className="lb-brand__name">
+            Las bolsitas <em>de Mariaje</em>
+          </span>
+        </Link>
+        <ButtonLink
+          href="/contactar"
+          size="sm"
+          aria-current={pathname === "/contactar" ? "page" : undefined}
+        >
           Contactar
+        </ButtonLink>
+      </div>
+      {categories.length > 0 && (
+        <nav aria-label="Categorías" className="lb-cats">
+          <ul className="lb-cats__list">
+            {categories.map((category) => (
+              <li key={category.nombre}>
+                <Link
+                  href={"/c/" + encodeURIComponent(category.nombre)}
+                  className="lb-chip pt-focusable"
+                  aria-current={current === category.nombre ? "page" : undefined}
+                >
+                  {category.nombre}
                 </Link>
-                
-                <div className='md:hidden w-full flex justify-end relative text-left'
-                    onBlur={(e) => {
-                        if (!e.currentTarget.contains(e.relatedTarget)) {
-                            // code when clicked outside parent and children components
-                            setMenuVisible(false); 
-                            
-                        }
-                    }
-                    } >
-                    <button 
-                        className="text-2xl md:text-4xl text-center font-bold h-full py-3 px-5 md:px-10 bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white" 
-                        onClick={() => {
-                            setMenuVisible(!menuVisible);
-                        }}>
-                        <Burger />
-                    </button>
-                    <div 
-                        className="z-10 origin-top-right absolute right-0 top-20 mt-2 w-full mx-auto rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" 
-                        role="menu" 
-                        aria-orientation="vertical" 
-                        aria-labelledby="menu-button" 
-                        tabIndex={-1} 
-                        style={!menuVisible ? {display: 'none'} : {}} 
-                        ref={dropDown}>
-                        <div className="py-1 w-full" role="none">
-                            {categories.map((category) => (
-                                <Link
-                                    key={category.nombre}
-                                    href={"/c/" + encodeURIComponent(category.nombre)}
-                                    className='text-gray-700 block px-4 py-2 underline text-lg font-semibold'
-                                    onClick={() => setMenuVisible(false)}>
-                                    {category.nombre}
-                                </Link>
-                            ))}
-                            <Link
-                                href={'/contactar'}
-                                className='bg-blue-700 shadow-xl shadow-blue-700/10 rounded-xl text-white block w-[90%] mx-auto text-center p-1 text-lg font-semibold mb-2'>
-                                Contactar
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    );
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </header>
+  );
 };
 
-const Burger: NextPage = () => {
-    return <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-    </svg>;
-};
+function safeDecode(value: string) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
 
 export default Header;

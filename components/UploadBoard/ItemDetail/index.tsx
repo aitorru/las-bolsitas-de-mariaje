@@ -11,6 +11,7 @@ import { app } from '../../../utils/db/webDB';
 import { Category, Item } from '../../../utils/types/types';
 import pride from '../../../utils/pride';
 import { deleteItemAction, modifyItemAction } from '../../../app/dboard/actions';
+import { buttonClassName } from '../../punto';
 const ItemForm = dynamic(() => import('../ItemForm'));
 
 interface Props {
@@ -117,7 +118,7 @@ const ItemDetail: NextPage<Props> = ({ item, categories }) => {
                     />
                 </div>
             </div>
-            <button onClick={handleDelete} className='p-2 mb-4 text-2xl font-bold text-white bg-red-600 shadow-lg shadow-red-600/50 rounded-2xl hover:-translate-y-1 transition-transform'>Borrar</button>
+            <button onClick={handleDelete} className={buttonClassName("primary", "lg", "lb-admin__danger")}>Borrar</button>
         </div>
     );
 };

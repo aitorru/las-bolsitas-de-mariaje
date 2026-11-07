@@ -1,0 +1,60 @@
+.pt-badge {
+  --c: var(--pt-fg-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--pt-radius-pill);
+  border: 1px solid var(--pt-border);
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  color: var(--c);
+  font: 500 var(--pt-text-xs) / 1 var(--pt-font-sans);
+  white-space: nowrap;
+}
+
+.pt-badge--accent {
+  --c: var(--pt-accent);
+  border-color: color-mix(in srgb, var(--c) 30%, transparent);
+}
+.pt-badge--positive {
+  --c: #2f9e6e;
+  border-color: color-mix(in srgb, var(--c) 30%, transparent);
+}
+.pt-badge--negative {
+  --c: var(--pt-rose);
+  border-color: color-mix(in srgb, var(--c) 30%, transparent);
+}
+.pt-badge--glass {
+  --c: currentColor;
+  background: rgb(255 255 255 / 0.16);
+  border-color: rgb(255 255 255 / 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.pt-badge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.pt-badge__dot--pulse {
+  animation: pt-badge-pulse 1.8s var(--pt-ease-in-out) infinite;
+}
+
+@keyframes pt-badge-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 45%, transparent);
+  }
+  60% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--c) 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-badge__dot--pulse {
+    animation: none;
+  }
+}

@@ -96,8 +96,8 @@ const DBoardClient: NextPage<Props> = ({
   }, [searchParams]);
 
   return (
-    <div className="min-h-screen min-w-max max-w-[100vw] flex flex-col justify-start">
-      <div className="flex flex-row m-5 shadow bg-blue-700/50 shadow-blue-700/50 rounded-2xl">
+    <div className="lb-admin">
+      <nav aria-label="Secciones del panel" className="lb-admin__tabs">
         <PageSelector
           name="Subir articulo"
           selected={subirArticuloSelected}
@@ -196,7 +196,7 @@ const DBoardClient: NextPage<Props> = ({
             router.push("/dboard?up");
           }}
         />
-      </div>
+      </nav>
       {subirArticuloSelected && <UploadItem categories={categories} />}
       {modificarArticuloSelected && (
         <ModifyItem categories={categories} items={items} />
@@ -225,20 +225,15 @@ const PageSelector: NextPage<PropsPageSelector> = ({
   selected,
   onClick,
 }) => {
-  if (selected) {
-    return (
-      <h1 className="p-3 m-2 text-white bg-blue-600 shadow-lg shadow-blue-600/50 rounded-xl">
-        {name}
-      </h1>
-    );
-  }
   return (
-    <h1
-      className="p-3 m-2 text-white bg-blue-300 cursor-pointer shadow-sm shadow-blue-300/50 rounded-xl"
-      onClick={onClick}
+    <button
+      type="button"
+      className="lb-chip pt-focusable"
+      aria-current={selected ? "page" : undefined}
+      onClick={selected ? undefined : onClick}
     >
       {name}
-    </h1>
+    </button>
   );
 };
 

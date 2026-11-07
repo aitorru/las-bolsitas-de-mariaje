@@ -1,0 +1,19 @@
+.pt-dotfield {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.pt-dotfield__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: block;
+}
+
+.pt-dotfield__content {
+  position: relative;
+  height: 100%;
+}
